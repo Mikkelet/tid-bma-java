@@ -2,17 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_songs"
-        android:icon="@drawable/ic_launcher_background"
+        android:id="@+id/navigation_start_session"
         android:title="StartSession"/>
 
     <item
-        android:id="@+id/navigation_albums"
-        android:icon="@drawable/ic_launcher_background"
-        android:title="BlackList"/>
+        android:id="@+id/navigation_timer"
+        android:title="Timer"/>
 
     <item
-        android:id="@+id/navigation_artists"
-        android:icon="@drawable/ic_launcher_background"
-        android:title="Timer"/>
+        android:id="@+id/navigation_blacklist"
+        android:title="Blacklist"/>
 </menu>

@@ -20,6 +20,14 @@ public class StartSession extends Fragment {
         // Required empty public constructor
     }
 
+    public static StartSession newInstance() {
+
+        Bundle args = new Bundle();
+
+        StartSession fragment = new StartSession();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

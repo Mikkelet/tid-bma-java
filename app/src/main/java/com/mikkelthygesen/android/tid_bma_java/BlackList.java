@@ -20,6 +20,15 @@ public class BlackList extends Fragment {
         // Required empty public constructor
     }
 
+    public static BlackList newInstance() {
+        
+        Bundle args = new Bundle();
+        
+        BlackList fragment = new BlackList();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
