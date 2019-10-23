@@ -1,6 +1,7 @@
 package com.mikkelthygesen.android.tid_bma_java;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ import java.util.List;
 public class StartSession extends Fragment {
 
     private Spinner spinner;
+    private Button startBlock;
 
     public StartSession() {
         // Required empty public constructor
@@ -53,8 +56,24 @@ public class StartSession extends Fragment {
         if(arrayAdapter != null)
             spinner.setAdapter(arrayAdapter);
 
+        // button
+        initStartBlock(view);
         // Inflate the layout for this fragment
         return view;
+    }
+
+    private void initStartBlock(View view){
+        startBlock = view.findViewById(R.id.StartSessionButtonActivateBlock);
+        startBlock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =  getActivity().getPackageManager().getLaunchIntentForPackage("com.duolingo");
+                if (intent != null) {
+                    startActivity(intent);//null pointer check in case package name was not found
+                }
+            }
+        });
+
     }
 
 }
