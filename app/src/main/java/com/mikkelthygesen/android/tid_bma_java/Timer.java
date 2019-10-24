@@ -1,6 +1,5 @@
 package com.mikkelthygesen.android.tid_bma_java;
 
-
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -28,6 +27,7 @@ public class Timer extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
