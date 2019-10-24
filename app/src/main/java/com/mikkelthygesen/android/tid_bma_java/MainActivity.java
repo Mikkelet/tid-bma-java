@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
         startService(new Intent(this,BlockService.class));
 
+
         mBottomNavigationMenu = findViewById(R.id.bottomNavigationView);
         mBottomNavigationMenu.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
