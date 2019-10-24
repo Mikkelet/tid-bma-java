@@ -51,7 +51,7 @@ public class StartSession extends Fragment {
         myArraySpinner.add("SoloLearn");
         ArrayAdapter<String> arrayAdapter;
         if(this.isAdded())
-            arrayAdapter = new ArrayAdapter<String>(this.getContext(),R.layout.support_simple_spinner_dropdown_item,myArraySpinner);
+            arrayAdapter = new ArrayAdapter<>(this.getContext(),R.layout.support_simple_spinner_dropdown_item,myArraySpinner);
         else arrayAdapter = null;
         if(arrayAdapter != null)
             spinner.setAdapter(arrayAdapter);
