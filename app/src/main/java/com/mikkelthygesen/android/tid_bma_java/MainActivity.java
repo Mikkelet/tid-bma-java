@@ -14,6 +14,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private StartSession mStartSessionFragment = new StartSession();
+
     private BottomNavigationView mBottomNavigationMenu;
 
     @Override
@@ -21,14 +23,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        openFragment(mStartSessionFragment);
         mBottomNavigationMenu = findViewById(R.id.bottomNavigationView);
         mBottomNavigationMenu.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch(menuItem.getItemId()){
                     case R.id.navigation_start_session:
-                        StartSession startSession = StartSession.newInstance();
-                        openFragment(startSession);
+                        openFragment(mStartSessionFragment);
                         return true;
                     case R.id.navigation_blacklist:
                         BlackList blackList = BlackList.newInstance();
