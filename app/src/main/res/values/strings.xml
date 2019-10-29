@@ -7,5 +7,6 @@
     <string name="activate_block">Activate Block</string>
     <string name="StartSessionSpinnerExerciseProviders">Exercise provider</string>
     <string name="timer">Timer</string>
+    <string name="Blacklist_add_apps_button">Blacklist apps</string>
 
 </resources>
