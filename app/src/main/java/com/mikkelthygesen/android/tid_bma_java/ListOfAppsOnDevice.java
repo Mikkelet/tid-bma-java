@@ -36,13 +36,22 @@ public class ListOfAppsOnDevice extends Fragment implements Observer {
         super.onCreate(savedInstanceState);
     }
 
+    public static ListOfAppsOnDevice newInstance() {
+        
+        Bundle args = new Bundle();
+        
+        ListOfAppsOnDevice fragment = new ListOfAppsOnDevice();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_blacklist_recyclerview,container,false);
 
         //Skabelsen af det interactive recyclerview.
-        listOfAppsView = v.findViewById(R.id.BlackList_RecyclerView);
+        listOfAppsView = v.findViewById(R.id.listOfAppRecyclerView);
         listOfAppsView.setLayoutManager(new LinearLayoutManager(getActivity()));
         packageManager = getActivity().getPackageManager();
 

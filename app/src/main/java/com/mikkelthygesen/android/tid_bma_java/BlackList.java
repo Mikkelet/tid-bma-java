@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,12 +49,19 @@ public class BlackList extends Fragment {
         addAppsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ListOfAppsOnDevice.class);
-                startActivity(intent);
+                Fragment listOfAppsOnDevice = ListOfAppsOnDevice.newInstance();
+                openFragment(listOfAppsOnDevice);
             }
         });
 
         return v;
+    }
+
+    private void openFragment(Fragment fragment) {
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.MainFrameLayout, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
 }
