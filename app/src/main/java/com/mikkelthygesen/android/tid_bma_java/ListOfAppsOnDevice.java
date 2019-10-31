@@ -18,6 +18,7 @@ import java.util.Observer;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -105,9 +106,10 @@ public class ListOfAppsOnDevice extends Fragment implements Observer {
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(getActivity(), BlackList.class);
-            startActivity(intent);
+            Fragment blacklist = BlackList.newInstance();
+            openFragment(blacklist);
         }
+
     }
 
     private class AppsAdapter extends RecyclerView.Adapter<AppsHolder>{
@@ -145,5 +147,11 @@ public class ListOfAppsOnDevice extends Fragment implements Observer {
     }
     private boolean isSystemPackage(PackageInfo pkgInfo) {
         return (pkgInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
+    }
+    private void openFragment(Fragment fragment) {
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.MainFrameLayout, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }
