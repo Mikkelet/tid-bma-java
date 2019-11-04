@@ -34,7 +34,7 @@ public class BlackList extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_black_list, container, false);
 
-        dropdown = rootView.findViewById(R.id.spinnerItemTextView);
+        dropdown = rootView.findViewById(R.id.BlacklistSpinnerBlock);
         fillTheSpinner();
 
         return rootView;
