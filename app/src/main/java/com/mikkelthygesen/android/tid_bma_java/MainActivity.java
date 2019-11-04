@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
                         openFragment(mStartSessionFragment);
                         return true;
                     case R.id.navigation_blacklist:
-                        BlackList blackList = BlackList.newInstance();
+                        BlackList blackList = new BlackList();
                         openFragment(blackList);
                         return true;
                     case R.id.navigation_timer:
