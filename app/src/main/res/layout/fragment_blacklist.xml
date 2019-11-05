@@ -11,16 +11,6 @@
         android:layout_height="match_parent">
 
         <!-- Backscreen -->
-        <View
-            android:id="@+id/backscreen"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="-24dp"
-            android:background="@drawable/backscreen"
-            android:alpha="0.99"
-            />
 
         <TextView
             android:id="@+id/BlackListTextViewTitle"
@@ -28,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:text="Blacklist"
+            android:text="@string/blacklist_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -44,13 +34,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/BlackListTextViewTitle" />
 
-        <Spinner
-            android:id="@+id/blacklistSpinnerAdd"
+        <Button
+            android:id="@+id/blacklistButtonAdd"
             android:layout_width="395dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="77dp"
             android:layout_marginEnd="8dp"
+            android:text="@string/Blacklist_add_apps_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/BlacklistSpinnerBlock" />

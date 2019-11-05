@@ -8,5 +8,7 @@
     <string name="StartSessionSpinnerExerciseProviders">Exercise provider</string>
     <string name="timer">Timer</string>
     <string name="Timer_slider">Circular Slider</string>
+    <string name="Blacklist_add_apps_button">Blacklist apps</string>
+    <string name="blacklist_title">Blacklist</string>
 
 </resources>
