@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/block-my-app-git-tid-bma-java.iml" filepath="$PROJECT_DIR$/block-my-app-git-tid-bma-java.iml" />
       <module fileurl="file://$PROJECT_DIR$/tid-bma-java.iml" filepath="$PROJECT_DIR$/tid-bma-java.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/tid-bma-java-app.iml" filepath="$PROJECT_DIR$/app/tid-bma-java-app.iml" />
     </modules>
   </component>
 </project>
