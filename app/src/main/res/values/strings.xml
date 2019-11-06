@@ -7,6 +7,7 @@
     <string name="activate_block">Activate Block</string>
     <string name="StartSessionSpinnerExerciseProviders">Exercise provider</string>
     <string name="timer">Timer</string>
-    <string name="Timer_slider">Circular Slider</string>
+    <string name="SeekbarExercises" > Minutes in Exercises</string>
+    <string name="minutes_in_blocked_apps">Minutes in Blocked Apps</string>
 
 </resources>
