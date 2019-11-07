@@ -11,8 +11,6 @@
         android:layout_height="match_parent"
         tools:context=".StartSession">
 
-        <!-- Backscreen -->
-
         <TextView
             android:id="@+id/StartSessionTextViewTitle"
             android:layout_width="wrap_content"
