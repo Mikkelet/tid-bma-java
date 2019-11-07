@@ -34,7 +34,7 @@ public class DataTransferableObject extends Fragment {
         buttonAdd = (Button) rootView.findViewById(R.id.button_add);
 
 
-        addData(); //aufrufen der Methode addData
+        addData();
 
 
         return rootView;
