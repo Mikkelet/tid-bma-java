@@ -1,8 +1,8 @@
 package com.mikkelthygesen.android.tid_bma_java;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -12,8 +12,6 @@ import java.util.Observable;
 public class AppsDB extends Observable {
     private static AppsDB sAppsDB;
 
-    //private Context mContext;
-    //private SQLiteDatabase mDatabase;
     private static List<PackageInfo> appNames;
     private static PackageManager packageManager;
 
@@ -27,6 +25,7 @@ public class AppsDB extends Observable {
 
     private AppsDB (){
         appNames = new ArrayList<>();
+        createDB();
     }
 
     public List<PackageInfo> getAppsDB() {
@@ -46,7 +45,25 @@ public class AppsDB extends Observable {
         });
     }
 
-    public boolean addApp(PackageInfo packageInfo){
+    private void createDB(){
+
+        List<PackageInfo> packageInfoList = packageManager.
+                getInstalledPackages(PackageManager.GET_PERMISSIONS);
+
+        for(PackageInfo pi : packageInfoList){
+            boolean systemPackage = isSystemPackage(pi);
+            if(!systemPackage){
+                addApp(pi);
+            }
+        }
+        sortDB();
+    }
+
+    private boolean isSystemPackage(PackageInfo pkgInfo) {
+        return (pkgInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
+    }
+
+    private boolean addApp(PackageInfo packageInfo){
             appNames.add(packageInfo);
             updateObservers();
             return true;

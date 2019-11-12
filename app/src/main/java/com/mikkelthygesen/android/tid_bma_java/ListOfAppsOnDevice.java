@@ -51,22 +51,12 @@ public class ListOfAppsOnDevice extends Fragment implements Observer {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_blacklist_recyclerview,container,false);
 
-        //Skabelsen af det interactive recyclerview.
         listOfAppsView = v.findViewById(R.id.listOfAppRecyclerView);
         listOfAppsView.setLayoutManager(new LinearLayoutManager(getActivity()));
         packageManager = getActivity().getPackageManager();
 
-        List<PackageInfo> packageInfoList = packageManager.
-                getInstalledPackages(PackageManager.GET_PERMISSIONS);
-
         appsDB = AppsDB.get(getActivity());
-        for(PackageInfo pi : packageInfoList){
-            boolean systemPackage = isSystemPackage(pi);
-            if(!systemPackage){
-                appsDB.addApp(pi);
-            }
-        }
-        appsDB.sortDB();
+
 
         updateUI();
 
@@ -145,9 +135,7 @@ public class ListOfAppsOnDevice extends Fragment implements Observer {
         appsAdapter.notifyDataSetChanged();
         updateUI();
     }
-    private boolean isSystemPackage(PackageInfo pkgInfo) {
-        return (pkgInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
-    }
+
     private void openFragment(Fragment fragment) {
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.MainFrameLayout, fragment);
