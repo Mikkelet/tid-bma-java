@@ -13,26 +13,49 @@ public class AppsDB extends Observable {
     private static AppsDB sAppsDB;
 
     private static List<PackageInfo> appNames;
+    private static List<PackageInfo> appNamesBlacklist;
     private static PackageManager packageManager;
 
     public static AppsDB get(Context context) {
         if (appNames == null) {
-            sAppsDB = new AppsDB();
             packageManager = context.getPackageManager();
+            sAppsDB = new AppsDB();
         }
         return sAppsDB;
     }
 
     private AppsDB (){
         appNames = new ArrayList<>();
-        createDB();
+        appNamesBlacklist = new ArrayList<>();
+        createDB(packageManager);
+    }
+
+    public static List<PackageInfo> getAppNamesBlacklist() {
+        return appNamesBlacklist;
+    }
+
+    public static void setAppNamesBlacklist(PackageInfo packageInfo) {
+        appNamesBlacklist.add(packageInfo);
     }
 
     public List<PackageInfo> getAppsDB() {
         return appNames;
     }
 
-    public void sortDB(){
+    private void createDB(PackageManager packageManager){
+        List<PackageInfo> packageInfoList = packageManager.
+                getInstalledPackages(PackageManager.GET_PERMISSIONS);
+
+        for(PackageInfo pi : packageInfoList){
+            boolean systemPackage = isSystemPackage(pi);
+            if(!systemPackage){
+                appNames.add(pi);
+            }
+        }
+        sortDB();
+    }
+
+    private void sortDB(){
 
         Collections.sort(appNames, new Comparator<PackageInfo>() {
             public int compare(PackageInfo arg0, PackageInfo arg1) {
@@ -45,33 +68,14 @@ public class AppsDB extends Observable {
         });
     }
 
-    private void createDB(){
-
-        List<PackageInfo> packageInfoList = packageManager.
-                getInstalledPackages(PackageManager.GET_PERMISSIONS);
-
-        for(PackageInfo pi : packageInfoList){
-            boolean systemPackage = isSystemPackage(pi);
-            if(!systemPackage){
-                addApp(pi);
-            }
-        }
-        sortDB();
-    }
-
-    private boolean isSystemPackage(PackageInfo pkgInfo) {
-        return (pkgInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
-    }
-
-    private boolean addApp(PackageInfo packageInfo){
-            appNames.add(packageInfo);
+    private void addApp(PackageInfo packageInfo){
+            appNamesBlacklist.add(packageInfo);
             updateObservers();
-            return true;
     }
 
-    public  boolean deleteApp (PackageInfo appName){
-        appNames.remove(appName);
-        return true;
+    public void deleteApp (PackageInfo appName){
+        appNamesBlacklist.remove(appName);
+        updateObservers();
     }
 
     public PackageInfo getApp (PackageInfo appName){
@@ -83,10 +87,20 @@ public class AppsDB extends Observable {
         }
         return appName;
     }
+    public void blockedApps(PackageInfo packageInfo){
+        if(appNamesBlacklist.contains(packageInfo)){
+            deleteApp(packageInfo);
+        } else{
+            addApp(packageInfo);
+        }
+    }
 
     private void updateObservers(){
         this.setChanged();
         notifyObservers();
         clearChanged();
+    }
+    private boolean isSystemPackage(PackageInfo pkgInfo) {
+        return (pkgInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
     }
 }

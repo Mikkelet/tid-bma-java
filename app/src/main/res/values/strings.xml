@@ -10,5 +10,6 @@
     <string name="SeekbarExercises" > Minutes in Exercises</string>
     <string name="minutes_in_blocked_apps">Minutes in Blocked Apps</string>
     <string name="blacklist">Blacklist</string>
+    <string name="block_apps">Block apps</string>
 
 </resources>

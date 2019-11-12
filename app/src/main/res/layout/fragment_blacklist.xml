@@ -17,31 +17,27 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:text="@string/blacklist"
-            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Spinner
-            android:id="@+id/BlacklistSpinnerBlock"
-            android:layout_width="395dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listOfAppRecyclerView"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="52dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/BlackListTextViewTitle" />
 
-        <Spinner
-            android:id="@+id/blacklistSpinnerAdd"
+        <Button
+            android:id="@+id/blacklistButtonAdd"
             android:layout_width="395dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="77dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/block_apps"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/BlacklistSpinnerBlock" />
+            app:layout_constraintTop_toBottomOf="@+id/listOfAppRecyclerView" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
