@@ -75,7 +75,6 @@ public class BlackListAdapter extends RecyclerView.Adapter<BlackListAdapter.Blac
         @Override
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
-            AppsDB.
         }
     }
 }
