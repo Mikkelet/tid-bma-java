@@ -17,6 +17,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:text="@string/blacklist"
+            android:textSize="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -39,12 +40,21 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/blacklistButtonAdd"
+            android:id="@+id/blacklistButtonBlock"
             android:layout_width="395dp"
             android:layout_height="wrap_content"
             android:text="@string/block_apps"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout"
             tools:layout_editor_absoluteX="9dp" />
+
+        <Button
+            android:id="@+id/blacklistButtonUnblock"
+            android:layout_width="395dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/unblock_apps"
+            app:layout_constraintTop_toBottomOf="@+id/blacklistButtonBlock"
+            tools:layout_editor_absoluteX="10dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

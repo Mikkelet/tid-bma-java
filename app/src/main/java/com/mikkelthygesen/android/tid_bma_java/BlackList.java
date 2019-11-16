@@ -1,5 +1,6 @@
 package com.mikkelthygesen.android.tid_bma_java;
 
+import android.content.pm.PackageInfo;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -22,10 +25,13 @@ import java.util.Observer;
 public class BlackList extends Fragment implements Observer {
 
     //Button to add apps to the Blacklist
-    private Button addAppsButton;
+    private Button mBlockAppsButton;
+    private Button mUnblockAppsButton;
 
     private RecyclerView mBlockedAppsView;
     private BlackListAdapter appsAdapter;
+
+    private AppsDB mAppsDB;
 
     public BlackList() {
         // Required empty public constructor
@@ -51,12 +57,14 @@ public class BlackList extends Fragment implements Observer {
         mBlockedAppsView = v.findViewById(R.id.listOfAppRecyclerView);
         mBlockedAppsView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        AppsDB.get(getActivity());
+        mAppsDB = AppsDB.get(getActivity());
+
+        mAppsDB.updateBlockedApps();
 
         updateUI();
 
-        addAppsButton = v.findViewById(R.id.blacklistButtonAdd);
-        addAppsButton.setOnClickListener(new View.OnClickListener() {
+        mBlockAppsButton = v.findViewById(R.id.blacklistButtonBlock);
+        mBlockAppsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Fragment listOfAppsOnDevice = ListOfAppsOnDevice.newInstance();
@@ -64,6 +72,13 @@ public class BlackList extends Fragment implements Observer {
             }
         });
 
+        mUnblockAppsButton = v.findViewById(R.id.blacklistButtonUnblock);
+        mUnblockAppsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAppsDB.removeBlockedApps();
+            }
+        });
         return v;
     }
 

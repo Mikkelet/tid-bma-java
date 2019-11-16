@@ -16,6 +16,7 @@ public class AppsDB extends Observable {
 
     private static List<PackageInfo> mAllAppsOnPhone;
     private static List<PackageInfo> mBlockedApps;
+    private static List<PackageInfo> mTemp;
     private static PackageManager packageManager;
 
     public static AppsDB get(Context context) {
@@ -29,6 +30,7 @@ public class AppsDB extends Observable {
     private AppsDB (){
         mAllAppsOnPhone = new ArrayList<>();
         mBlockedApps = new ArrayList<>();
+        mTemp = new ArrayList<>();
         createDB(packageManager);
     }
 
@@ -86,29 +88,31 @@ public class AppsDB extends Observable {
         }
     }
 
+    public void updateBlockedApps(){
+        for(PackageInfo p : mTemp){
+            if(!mBlockedApps.contains(p)){
+                mBlockedApps.add(p);
+            }
+        }
+        mTemp.clear();
+        updateObservers();
+    }
+
     public void blockedApps(int position, boolean blocked){
         if(blocked){
-            deleteAppFromBlockedList(mBlockedApps.get(position));
+            PackageInfo packageInfo = mBlockedApps.get(position);
+            updateBlockedApps(packageInfo);
         } else{
-            updateBlockedApps(position);
+            PackageInfo packageInfo = mAllAppsOnPhone.get(position);
+            updateBlockedApps(packageInfo);
         }
     }
-    private void addAppToBlockedList(PackageInfo packageInfo){
-        mBlockedApps.add(packageInfo);
-        updateObservers();
-    }
 
-    private void deleteAppFromBlockedList(PackageInfo appName){
-        mBlockedApps.remove(appName);
-        updateObservers();
-    }
-
-    private void updateBlockedApps(int position){
-        PackageInfo packageInfo = mAllAppsOnPhone.get(position);
-        if(mBlockedApps.contains(packageInfo)){
-            deleteAppFromBlockedList(packageInfo);
+    private void updateBlockedApps(PackageInfo packageInfo){
+        if(mTemp.contains(packageInfo)){
+            mTemp.remove(packageInfo);
         } else{
-            addAppToBlockedList(packageInfo);
+            mTemp.add(packageInfo);
         }
     }
 
