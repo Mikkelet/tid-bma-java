@@ -79,6 +79,7 @@ public class BlackList extends Fragment implements Observer {
                 mAppsDB.removeBlockedApps();
             }
         });
+
         return v;
     }
 

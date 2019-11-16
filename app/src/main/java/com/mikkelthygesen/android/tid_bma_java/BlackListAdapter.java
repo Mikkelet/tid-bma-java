@@ -6,6 +6,8 @@ import android.content.pm.PackageManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -49,31 +51,48 @@ public class BlackListAdapter extends RecyclerView.Adapter<BlackListAdapter.Blac
 
     public class BlackListHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView appNameTextView;
-        private ImageView iconImage;
+        private TextView mAppNameTextView;
+        private ImageView mIconImage;
+        private CheckBox mSelectionState;
 
         public BlackListHolder(ViewGroup parent) {
             super(parent);
-            itemView.setOnClickListener(this);
 
             //Creating the views.
-            appNameTextView = itemView.findViewById(R.id.appName);
-            iconImage = itemView.findViewById(R.id.app_icon);
+            mAppNameTextView = parent.findViewById(R.id.appName);
+            mIconImage = parent.findViewById(R.id.app_icon);
+            mSelectionState = parent.findViewById(R.id.checkApp);
+
+            parent.setOnClickListener(this);
+
+            mSelectionState.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(isChecked){
+                        appsDB.blockedApps(getAdapterPosition(), mBlocked);
+                    }
+                }
+            });
         }
 
         public void bind(PackageInfo packageInfo) {
             //Bind the icon to the imageView.
-            iconImage.setImageDrawable(packageManager
+            mIconImage.setImageDrawable(packageManager
                     .getApplicationIcon(packageInfo.applicationInfo));
             //Bind the app's name to the textView.
-            appNameTextView.setText(packageManager.getApplicationLabel(
+            mAppNameTextView.setText(packageManager.getApplicationLabel(
                     packageInfo.applicationInfo).toString());
         }
 
         @Override
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
-            appsDB.blockedApps(adapterPosition, mBlocked);
+            if(mSelectionState.isChecked()){
+                mSelectionState.setChecked(false);
+                appsDB.blockedApps(adapterPosition, mBlocked);
+            } else{
+                mSelectionState.setChecked(true);
+            }
         }
     }
 }
