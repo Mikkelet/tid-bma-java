@@ -9,22 +9,21 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 public class BlackListAdapter extends RecyclerView.Adapter<BlackListAdapter.BlackListHolder> {
 
-    private List<PackageInfo> appNames;
     private PackageManager packageManager;
     private AppsDB appsDB;
+    private boolean mBlocked;
 
 
-    public BlackListAdapter(List<PackageInfo> appNames, PackageManager packageManager) {
-        this.appNames = appNames;
-        this.packageManager = packageManager;
+    public BlackListAdapter(AppsDB appsDB, boolean blocked) {
+        this.appsDB = appsDB;
+        this.packageManager = appsDB.getPackageManager();
+        this.mBlocked = blocked;
     }
 
     @NonNull
@@ -39,13 +38,12 @@ public class BlackListAdapter extends RecyclerView.Adapter<BlackListAdapter.Blac
 
     @Override
     public void onBindViewHolder(@NonNull BlackListHolder holder, int position) {
-        PackageInfo appName = appNames.get(position);
-        holder.bind(appName, position);
+        holder.bind(appsDB.getOneApp(position,mBlocked));
     }
 
     @Override
     public int getItemCount() {
-        return appNames.size();
+        return appsDB.getSize(mBlocked);
     }
 
 
@@ -63,7 +61,7 @@ public class BlackListAdapter extends RecyclerView.Adapter<BlackListAdapter.Blac
             iconImage = itemView.findViewById(R.id.app_icon);
         }
 
-        public void bind(PackageInfo packageInfo, int position) {
+        public void bind(PackageInfo packageInfo) {
             //Bind the icon to the imageView.
             iconImage.setImageDrawable(packageManager
                     .getApplicationIcon(packageInfo.applicationInfo));
@@ -75,7 +73,7 @@ public class BlackListAdapter extends RecyclerView.Adapter<BlackListAdapter.Blac
         @Override
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
-            AppsDB.
+            appsDB.blockedApps(adapterPosition, mBlocked);
         }
     }
 }

@@ -21,23 +21,30 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/listOfAppRecyclerView"
-            android:layout_width="300dp"
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:layout_marginStart="52dp"
+            android:layout_margin="10dp"
             android:layout_marginTop="52dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/BlackListTextViewTitle" />
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/BlackListTextViewTitle"
+            tools:layout_editor_absoluteX="10dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/listOfAppRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/blacklistButtonAdd"
             android:layout_width="395dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:text="@string/block_apps"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/listOfAppRecyclerView" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            tools:layout_editor_absoluteX="9dp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

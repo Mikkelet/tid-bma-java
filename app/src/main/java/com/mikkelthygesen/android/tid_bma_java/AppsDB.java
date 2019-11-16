@@ -1,8 +1,10 @@
 package com.mikkelthygesen.android.tid_bma_java;
+
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -12,12 +14,12 @@ import java.util.Observable;
 public class AppsDB extends Observable {
     private static AppsDB sAppsDB;
 
-    private static List<PackageInfo> appNames;
-    private static List<PackageInfo> appNamesBlacklist;
+    private static List<PackageInfo> mAllAppsOnPhone;
+    private static List<PackageInfo> mBlockedApps;
     private static PackageManager packageManager;
 
     public static AppsDB get(Context context) {
-        if (appNames == null) {
+        if (mAllAppsOnPhone == null) {
             packageManager = context.getPackageManager();
             sAppsDB = new AppsDB();
         }
@@ -25,21 +27,9 @@ public class AppsDB extends Observable {
     }
 
     private AppsDB (){
-        appNames = new ArrayList<>();
-        appNamesBlacklist = new ArrayList<>();
+        mAllAppsOnPhone = new ArrayList<>();
+        mBlockedApps = new ArrayList<>();
         createDB(packageManager);
-    }
-
-    public static List<PackageInfo> getAppNamesBlacklist() {
-        return appNamesBlacklist;
-    }
-
-    public static void setAppNamesBlacklist(PackageInfo packageInfo) {
-        appNamesBlacklist.add(packageInfo);
-    }
-
-    public List<PackageInfo> getAppsDB() {
-        return appNames;
     }
 
     private void createDB(PackageManager packageManager){
@@ -49,15 +39,15 @@ public class AppsDB extends Observable {
         for(PackageInfo pi : packageInfoList){
             boolean systemPackage = isSystemPackage(pi);
             if(!systemPackage){
-                appNames.add(pi);
+                mAllAppsOnPhone.add(pi);
             }
         }
-        sortDB();
+        sortDB(mAllAppsOnPhone);
     }
 
-    private void sortDB(){
+    private void sortDB(List<PackageInfo> list){
 
-        Collections.sort(appNames, new Comparator<PackageInfo>() {
+        Collections.sort(list, new Comparator<PackageInfo>() {
             public int compare(PackageInfo arg0, PackageInfo arg1) {
                 return
                         packageManager.getApplicationLabel(
@@ -68,34 +58,62 @@ public class AppsDB extends Observable {
         });
     }
 
-    private void addApp(PackageInfo packageInfo){
-            appNamesBlacklist.add(packageInfo);
-            updateObservers();
+    public PackageInfo getOneApp(int position, boolean blocked) {
+        if (blocked) {
+            if (!mBlockedApps.isEmpty()) {
+                return mBlockedApps.get(position);
+            } else {
+                return null;
+            }
+        } else {
+            return mAllAppsOnPhone.get(position);
+        }
     }
 
-    public void deleteApp (PackageInfo appName){
-        appNamesBlacklist.remove(appName);
+    public PackageManager getPackageManager(){
+        return packageManager;
+    }
+
+    public int getSize(boolean blocked) {
+        if (blocked) {
+            if (!mBlockedApps.isEmpty()) {
+                return mBlockedApps.size();
+            } else {
+                return 0;
+            }
+        } else {
+            return mAllAppsOnPhone.size();
+        }
+    }
+
+    public void blockedApps(int position, boolean blocked){
+        if(blocked){
+            deleteAppFromBlockedList(mBlockedApps.get(position));
+        } else{
+            updateBlockedApps(position);
+        }
+    }
+    private void addAppToBlockedList(PackageInfo packageInfo){
+        mBlockedApps.add(packageInfo);
         updateObservers();
     }
 
-    public PackageInfo getApp (PackageInfo appName){
-        for(PackageInfo a : appNames){
-            if(!a.equals(appName)) {
-            } else{
-                return a;
-            }
-        }
-        return appName;
+    private void deleteAppFromBlockedList(PackageInfo appName){
+        mBlockedApps.remove(appName);
+        updateObservers();
     }
-    public void blockedApps(PackageInfo packageInfo){
-        if(appNamesBlacklist.contains(packageInfo)){
-            deleteApp(packageInfo);
+
+    private void updateBlockedApps(int position){
+        PackageInfo packageInfo = mAllAppsOnPhone.get(position);
+        if(mBlockedApps.contains(packageInfo)){
+            deleteAppFromBlockedList(packageInfo);
         } else{
-            addApp(packageInfo);
+            addAppToBlockedList(packageInfo);
         }
     }
 
     private void updateObservers(){
+        sortDB(mBlockedApps);
         this.setChanged();
         notifyObservers();
         clearChanged();

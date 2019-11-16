@@ -1,6 +1,5 @@
 package com.mikkelthygesen.android.tid_bma_java;
 
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +20,6 @@ public class ListOfAppsOnDevice extends Fragment implements Observer {
 
     private BlackListAdapter appsAdapter;
 
-    private PackageManager packageManager;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,7 +42,6 @@ public class ListOfAppsOnDevice extends Fragment implements Observer {
 
         listOfAppsView = v.findViewById(R.id.listOfAppRecyclerView);
         listOfAppsView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        packageManager = getActivity().getPackageManager();
 
         AppsDB.get(getActivity());
 
@@ -57,7 +54,7 @@ public class ListOfAppsOnDevice extends Fragment implements Observer {
         AppsDB appsDB = AppsDB.get(getActivity());
         appsDB.addObserver(this);
 
-        appsAdapter = new BlackListAdapter(appsDB.getAppsDB(), packageManager);
+        appsAdapter = new BlackListAdapter(appsDB, false);
         listOfAppsView.setAdapter(appsAdapter);
     }
 
