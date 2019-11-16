@@ -116,6 +116,12 @@ public class AppsDB extends Observable {
         }
     }
 
+    public void removeBlockedApps(){
+        mBlockedApps.removeAll(mTemp);
+        mTemp.clear();
+        updateObservers();
+    }
+
     private void updateObservers(){
         sortDB(mBlockedApps);
         this.setChanged();
