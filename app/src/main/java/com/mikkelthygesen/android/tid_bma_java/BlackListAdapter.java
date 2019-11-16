@@ -82,6 +82,9 @@ public class BlackListAdapter extends RecyclerView.Adapter<BlackListAdapter.Blac
             //Bind the app's name to the textView.
             mAppNameTextView.setText(packageManager.getApplicationLabel(
                     packageInfo.applicationInfo).toString());
+            if(!mBlocked) {
+                mSelectionState.setChecked(appsDB.blockedApp(packageInfo));
+            }
         }
 
         @Override

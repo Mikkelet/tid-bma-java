@@ -78,22 +78,15 @@ public class AppsDB extends Observable {
 
     public int getSize(boolean blocked) {
         if (blocked) {
-            if (!mBlockedApps.isEmpty()) {
-                return mBlockedApps.size();
-            } else {
-                return 0;
-            }
+            return mBlockedApps.size();
         } else {
             return mAllAppsOnPhone.size();
         }
     }
 
     public void updateBlockedApps(){
-        for(PackageInfo p : mTemp){
-            if(!mBlockedApps.contains(p)){
-                mBlockedApps.add(p);
-            }
-        }
+        mBlockedApps.clear();
+        mBlockedApps.addAll(mTemp);
         mTemp.clear();
         updateObservers();
     }
@@ -120,6 +113,14 @@ public class AppsDB extends Observable {
         mBlockedApps.removeAll(mTemp);
         mTemp.clear();
         updateObservers();
+    }
+
+    public boolean blockedApp(PackageInfo packageInfo){
+        if(mBlockedApps.contains(packageInfo)){
+            return true;
+        } else{
+            return false;
+        }
     }
 
     private void updateObservers(){
