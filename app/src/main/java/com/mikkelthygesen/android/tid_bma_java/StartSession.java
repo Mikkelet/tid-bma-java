@@ -2,6 +2,7 @@ package com.mikkelthygesen.android.tid_bma_java;
 
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,8 @@ public class StartSession extends Fragment {
 
     private Spinner spinner;
     private Button startBlock;
+    private Button mStartSessionButtonActivateBlock;
+
 
     public StartSession() {
         // Required empty public constructor
@@ -43,6 +47,21 @@ public class StartSession extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_start_session, container, false);
         spinner = view.findViewById(R.id.StartSessionSpinnerExerciseProviders);
+        mStartSessionButtonActivateBlock = view.findViewById(R.id.StartSessionButtonActivateBlock);
+        mStartSessionButtonActivateBlock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PackageManager packageManager = getContext().getPackageManager();
+
+                Intent intent = packageManager.getLaunchIntentForPackage("com.duolingo");
+                if(intent == null) {
+                    intent = packageManager.getLaunchIntentForPackage("com.android.chrome");
+                    Toast.makeText(getContext(), "Please install Duolingo", Toast.LENGTH_SHORT).show();
+                }
+                intent.setAction("com.android.chrome");
+                startActivity(intent);
+            }
+        });
 
         List<String> myArraySpinner = new ArrayList<String>();
 
