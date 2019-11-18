@@ -7,9 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.fragment.app.Fragment;
-
 import com.xw.repo.BubbleSeekBar;
 
 
@@ -45,7 +43,6 @@ public class Timer extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_timer, container, false);
 
-
         bubbleSeekBarExercise = v.findViewById(R.id.bubbleSeekBarExercise);
 
         // get progress value from Share Preferences
@@ -61,7 +58,7 @@ public class Timer extends Fragment {
             @Override
             public void getProgressOnActionUp(int progress, float progressFloat) {
                 // Save the progress whenever it is changed
-                progressExercisesSP(progress);
+                progressExerciseSP(progress);
             }
 
             @Override
@@ -98,8 +95,8 @@ public class Timer extends Fragment {
         return v;
     }
 
-    // Here we can save any progress to the Shared Preferences
-    private void progressExercisesSP(int progress){
+    // Here we save any progress for the exercise seekbar to the Shared Preferences
+    private void progressExerciseSP(int progress){
         // get the shared preferences file "sp"
         SharedPreferences sharedPref = getActivity().getSharedPreferences("sp", Context.MODE_PRIVATE);
 
@@ -108,10 +105,9 @@ public class Timer extends Fragment {
 
         // save the progress under the key "progress"
         sharedPref.edit().putInt("progress", progress).apply();
-
     }
 
-    // Here we get the progress from shared preferences
+    // Here we get the exercise seekbar progress from shared preferences
     private void getExerciseProgress(){
 
         SharedPreferences sharedPref = getActivity().getSharedPreferences("sp", Context.MODE_PRIVATE);
@@ -125,6 +121,7 @@ public class Timer extends Fragment {
         exerciseProgress = sharedPref.getInt("progress",1);
     }
 
+    // Here we save any progress for the blocked App seekbar to the Shared Preferences
     private void progressBlockedAppsSP(int progress){
         // get the shared preferences file "sp"
         SharedPreferences sharedPref = getActivity().getSharedPreferences("sp", Context.MODE_PRIVATE);
@@ -132,13 +129,12 @@ public class Timer extends Fragment {
         // if it is null, just return
         if(sharedPref == null) return;
 
-        // save the progress under the key "progress"
+        // save the progress under the key "blocked Apps progress"
         sharedPref.edit().putInt("blockedAppsProgress", progress).apply();
-
     }
 
 
-    // Here we get the progress from shared preferences
+    // Here we get the blockedApps progress from shared preferences
     private void getBlockedAppsProgress(){
 
         SharedPreferences sharedPref = getActivity().getSharedPreferences("sp", Context.MODE_PRIVATE);
