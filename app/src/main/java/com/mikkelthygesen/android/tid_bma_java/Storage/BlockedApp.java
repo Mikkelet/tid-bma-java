@@ -9,9 +9,6 @@ public class BlockedApp {
     @PrimaryKey
     public int uid;
 
-    @ColumnInfo(name = "first_name")
-    public String firstName;
-
-    @ColumnInfo(name = "last_name")
-    public String lastName;
+    @ColumnInfo(name = "package_name")
+    public String packageName;
 }

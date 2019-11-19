@@ -14,18 +14,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 
 public class BlackListAdapter extends RecyclerView.Adapter<BlackListAdapter.BlackListHolder> {
 
     private PackageManager packageManager;
     private AppsDB appsDB;
-    private boolean mBlocked;
+    private List<PackageInfo> listOfPackageInfo;
 
 
-    public BlackListAdapter(AppsDB appsDB, boolean blocked) {
+    public BlackListAdapter(AppsDB appsDB, List<PackageInfo> listOfPackageInfo) {
         this.appsDB = appsDB;
         this.packageManager = appsDB.getPackageManager();
-        this.mBlocked = blocked;
+        this.listOfPackageInfo = listOfPackageInfo;
     }
 
     @NonNull
@@ -40,12 +42,12 @@ public class BlackListAdapter extends RecyclerView.Adapter<BlackListAdapter.Blac
 
     @Override
     public void onBindViewHolder(@NonNull BlackListHolder holder, int position) {
-        holder.bind(appsDB.getOneApp(position,mBlocked));
+        holder.bind(listOfPackageInfo.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return appsDB.getSize(mBlocked);
+        return listOfPackageInfo.size();
     }
 
 
@@ -54,6 +56,7 @@ public class BlackListAdapter extends RecyclerView.Adapter<BlackListAdapter.Blac
         private TextView mAppNameTextView;
         private ImageView mIconImage;
         private CheckBox mSelectionState;
+        private PackageInfo packageInfo;
 
         public BlackListHolder(ViewGroup parent) {
             super(parent);
@@ -68,14 +71,13 @@ public class BlackListAdapter extends RecyclerView.Adapter<BlackListAdapter.Blac
             mSelectionState.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if(isChecked){
-                        appsDB.blockedApps(getAdapterPosition(), mBlocked);
-                    }
+                        appsDB.toggleApp(isChecked,packageInfo);
                 }
             });
         }
 
         public void bind(PackageInfo packageInfo) {
+            this.packageInfo = packageInfo;
             //Bind the icon to the imageView.
             mIconImage.setImageDrawable(packageManager
                     .getApplicationIcon(packageInfo.applicationInfo));

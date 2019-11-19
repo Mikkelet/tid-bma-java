@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import com.mikkelthygesen.android.tid_bma_java.Storage.BlockedApp;
+import com.mikkelthygesen.android.tid_bma_java.Storage.BlockedAppDao;
+import com.mikkelthygesen.android.tid_bma_java.Storage.DatabaseSingleton;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,8 +18,7 @@ public class AppsDB extends Observable {
     private static AppsDB sAppsDB;
 
     private static List<PackageInfo> mAllAppsOnPhone;
-    private static List<PackageInfo> mBlockedApps;
-    private static List<PackageInfo> mTemp;
+
     private static PackageManager packageManager;
 
     public static AppsDB get(Context context) {
@@ -29,8 +31,7 @@ public class AppsDB extends Observable {
 
     private AppsDB (){
         mAllAppsOnPhone = new ArrayList<>();
-        mBlockedApps = new ArrayList<>();
-        mTemp = new ArrayList<>();
+
         createDB(packageManager);
     }
 
@@ -60,68 +61,27 @@ public class AppsDB extends Observable {
         });
     }
 
-    public PackageInfo getOneApp(int position, boolean blocked) {
-        if (blocked) {
-            if (!mBlockedApps.isEmpty()) {
-                return mBlockedApps.get(position);
-            } else {
-                return null;
-            }
-        } else {
-            return mAllAppsOnPhone.get(position);
-        }
-    }
+
 
     public PackageManager getPackageManager(){
         return packageManager;
     }
 
-    public int getSize(boolean blocked) {
-        if (blocked) {
-            return mBlockedApps.size();
-        } else {
-            return mAllAppsOnPhone.size();
+
+    public List<PackageInfo> loadBlockedApps(){
+        List<PackageInfo> allApps = new ArrayList<>();
+        List<BlockedApp> list = DatabaseSingleton.getInstance().blockedAppDao().getAll();
+        for (PackageInfo packageInfo : mAllAppsOnPhone) {
+            for (BlockedApp blockedApp : list) {
+                if (packageInfo.packageName.equals(blockedApp.packageName)) {
+                    allApps.add(packageInfo);
+                    break;
+                }
+            }
         }
+        return allApps;
     }
 
-    public void updateBlockedApps(){
-        mBlockedApps.clear();
-        mBlockedApps.addAll(mTemp);
-        mTemp.clear();
-        updateObservers();
-    }
-
-    public void blockedApps(int position, boolean blocked){
-        if(blocked){
-            PackageInfo packageInfo = mBlockedApps.get(position);
-            updateBlockedApps(packageInfo);
-        } else{
-            PackageInfo packageInfo = mAllAppsOnPhone.get(position);
-            updateBlockedApps(packageInfo);
-        }
-    }
-
-    private void updateBlockedApps(PackageInfo packageInfo){
-        if(mTemp.contains(packageInfo)){
-            mTemp.remove(packageInfo);
-        } else{
-            mTemp.add(packageInfo);
-        }
-    }
-
-    public void removeBlockedApps(){
-        mBlockedApps.removeAll(mTemp);
-        mTemp.clear();
-        updateObservers();
-    }
-
-    public boolean blockedApp(PackageInfo packageInfo){
-        if(mBlockedApps.contains(packageInfo)){
-            return true;
-        } else{
-            return false;
-        }
-    }
 
     private void updateObservers(){
         sortDB(mBlockedApps);
@@ -131,5 +91,25 @@ public class AppsDB extends Observable {
     }
     private boolean isSystemPackage(PackageInfo pkgInfo) {
         return (pkgInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
+    }
+
+    public void toggleApp(final boolean isChecked, final PackageInfo packageInfo) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (isChecked) {
+                    BlockedAppDao dao = DatabaseSingleton.getInstance().blockedAppDao();
+                    BlockedApp blockedApp = new BlockedApp();
+                    blockedApp.packageName = packageInfo.packageName;
+                    dao.insertAll(blockedApp);
+                } else {
+                    BlockedAppDao dao = DatabaseSingleton.getInstance().blockedAppDao();
+                    dao.deleteByPackageName(packageInfo.packageName);
+                }
+            }
+        });
+        thread.start();
+
+
     }
 }

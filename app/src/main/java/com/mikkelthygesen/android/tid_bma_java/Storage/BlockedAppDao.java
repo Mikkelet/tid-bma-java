@@ -17,4 +17,10 @@ public interface BlockedAppDao {
 
     @Delete
     void delete(BlockedApp blockedApp);
+
+    @Query("DELETE FROM BlockedApp")
+    void deleteAll();
+
+    @Query("DELETE FROM BlockedApp WHERE package_name = :packagename")
+     void deleteByPackageName(String packagename);
 }

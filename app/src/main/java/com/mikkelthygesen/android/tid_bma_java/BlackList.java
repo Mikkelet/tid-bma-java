@@ -1,5 +1,6 @@
 package com.mikkelthygesen.android.tid_bma_java;
 
+import android.content.pm.PackageInfo;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -56,7 +58,7 @@ public class BlackList extends Fragment implements Observer {
 
         mAppsDB = AppsDB.get(getActivity());
 
-        mAppsDB.updateBlockedApps();
+        mAppsDB.loadBlockedApps();
 
         updateUI();
 
@@ -80,11 +82,16 @@ public class BlackList extends Fragment implements Observer {
         return v;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
     private void updateUI(){
         AppsDB appsDB = AppsDB.get(getActivity());
         appsDB.addObserver(this);
 
-        appsAdapter = new BlackListAdapter(appsDB, true);
+        appsAdapter = new BlackListAdapter(appsDB);
         mBlockedAppsView.setAdapter(appsAdapter);
     }
 
