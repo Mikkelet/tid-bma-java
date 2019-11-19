@@ -9,6 +9,9 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.leanback.app.BackgroundManager;
 
 
+import android.accessibilityservice.AccessibilityService;
+import android.accessibilityservice.AccessibilityServiceInfo;
+import android.app.ActivityManager;
 import android.app.AppOpsManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -24,6 +27,7 @@ import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.accessibility.AccessibilityEvent;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -36,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private StartSession mStartSessionFragment = new StartSession();
 
     private BottomNavigationView mBottomNavigationMenu;
+    private ActivityManager mActivityManager;
 
     @Override
     protected void onResume() {
@@ -53,7 +58,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getDuolingoTime(getBaseContext());
-        BackgroundListener bglistener = new BackgroundListener();
+
+
         if (!isAccessGranted()) {
             Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
             startActivity(intent);
@@ -68,8 +74,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         startService(new Intent(this,BlockService.class));
-
-
         openFragment(mStartSessionFragment);
         mBottomNavigationMenu = findViewById(R.id.bottomNavigationView);
         mBottomNavigationMenu.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -138,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int onStartCommand(Intent intent, int flags, int startId) {
-            Log.d("Main Activity BGL", "onStartCommand: "+intent.getPackage()+", flags: "+flags+", startId: "+startId);
+
             startForeground();
             return super.onStartCommand(intent, flags, startId);
         }
@@ -152,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
             startForeground(NOTIF_ID, new NotificationCompat.Builder(this,
                     NOTIF_CHANNEL_ID) // don't forget create a notification channel first
                     .setOngoing(true)
-                    .setSmallIcon(R.drawable.activate_block_circle)
+                    .setSmallIcon(R.drawable.lb_ic_thumb_up)
                     .setContentTitle(getString(R.string.app_name))
                     .setContentText("Service is running background")
                     .setContentIntent(pendingIntent)

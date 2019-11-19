@@ -16,7 +16,7 @@ public class BlockService extends Service {
 
     private static final int NOTIF_ID = 1;
     private static final String NOTIF_CHANNEL_ID = "Channel_Id";
-    private String msg = "new bg service!";
+    private String msg = "Monitoring...";
 
     @Nullable
     @Override
@@ -33,6 +33,7 @@ public class BlockService extends Service {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         return super.onStartCommand(intent, flags, startId);
     }
 
