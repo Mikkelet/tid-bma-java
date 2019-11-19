@@ -17,4 +17,8 @@ public interface BlockedAppDao {
 
     @Delete
     void delete(BlockedApp blockedApp);
+
+    @Query("SELECT * FROM BlockedApp WHERE first_name LIKE :search " +
+            "OR last_name LIKE :search")
+     List<BlockedApp> findUserWithName(String search);
 }

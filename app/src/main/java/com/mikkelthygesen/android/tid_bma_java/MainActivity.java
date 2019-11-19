@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        DatabaseSingleton.initialize(getApplicationContext());
+        DatabaseSingleton.getInstance(getApplicationContext());
 
         openFragment(mStartSessionFragment);
         mBottomNavigationMenu = findViewById(R.id.bottomNavigationView);
