@@ -25,4 +25,13 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="2dp"/>
 
+    <CheckBox
+        android:id="@+id/checkApp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp" />
 </RelativeLayout>

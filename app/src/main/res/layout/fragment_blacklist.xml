@@ -10,40 +10,51 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- Backscreen -->
-
         <TextView
             android:id="@+id/BlackListTextViewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:text="@string/blacklist_title"
+            android:text="@string/blacklist"
+            android:textSize="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Spinner
-            android:id="@+id/BlacklistSpinnerBlock"
-            android:layout_width="395dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/BlackListTextViewTitle" />
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_margin="10dp"
+            android:layout_marginTop="52dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/BlackListTextViewTitle"
+            tools:layout_editor_absoluteX="10dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/listOfAppRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
 
         <Button
-            android:id="@+id/blacklistButtonAdd"
+            android:id="@+id/blacklistButtonBlock"
             android:layout_width="395dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="77dp"
-            android:layout_marginEnd="8dp"
-            android:text="@string/Blacklist_add_apps_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/BlacklistSpinnerBlock" />
+            android:text="@string/block_apps"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            tools:layout_editor_absoluteX="9dp" />
+
+        <Button
+            android:id="@+id/blacklistButtonUnblock"
+            android:layout_width="395dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/unblock_apps"
+            app:layout_constraintTop_toBottomOf="@+id/blacklistButtonBlock"
+            tools:layout_editor_absoluteX="10dp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">tid-bma-java</string>
+    <string name="app_name">Time to focus</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -7,8 +7,10 @@
     <string name="activate_block">Activate Block</string>
     <string name="StartSessionSpinnerExerciseProviders">Exercise provider</string>
     <string name="timer">Timer</string>
-    <string name="Timer_slider">Circular Slider</string>
-    <string name="Blacklist_add_apps_button">Blacklist apps</string>
-    <string name="blacklist_title">Blacklist</string>
+    <string name="SeekbarExercises" > Minutes in Exercises</string>
+    <string name="minutes_in_blocked_apps">Minutes in Blocked Apps</string>
+    <string name="blacklist">Blacklist</string>
+    <string name="block_apps">Block apps</string>
+    <string name="unblock_apps">Unblock apps</string>
 
 </resources>
