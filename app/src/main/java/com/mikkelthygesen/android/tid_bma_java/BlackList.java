@@ -1,75 +1,103 @@
 package com.mikkelthygesen.android.tid_bma_java;
 
-
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.Button;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.Observable;
+import java.util.Observer;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BlackList extends Fragment {
+public class BlackList extends Fragment implements Observer {
 
-    private Spinner dropdown;
+    //Button to add apps to the Blacklist
+    private Button mBlockAppsButton;
+    private Button mUnblockAppsButton;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    private RecyclerView mBlockedAppsView;
+    private BlackListAdapter appsAdapter;
 
-        View rootView = inflater.inflate(R.layout.fragment_black_list, container, false);
+    private AppsDB mAppsDB;
 
-        dropdown = rootView.findViewById(R.id.BlacklistSpinnerBlock);
-        fillTheSpinner();
-
-        return rootView;
+    public BlackList() {
+        // Required empty public constructor
     }
 
-    private void fillTheSpinner() {
-        List<String> list = new ArrayList<>();
-        PackageManager pm = ((this.getActivity())).getPackageManager();
-        List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
-        for (ApplicationInfo packageInfo : packages) {
-            list.add(packageInfo.packageName);
+    public static BlackList newInstance() {
+        
+        Bundle args = new Bundle();
+        
+        BlackList fragment = new BlackList();
+        fragment.setArguments(args);
 
-        }
-        System.out.println("test123" + list);
+        return fragment;
+    }
 
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View v = inflater.inflate(R.layout.fragment_blacklist, container, false);
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this.getActivity(),
-                android.R.layout.simple_spinner_item, list);
-       /* dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);*/
+        mBlockedAppsView = v.findViewById(R.id.listOfAppRecyclerView);
+        mBlockedAppsView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        dropdown.setAdapter(dataAdapter);
+        mAppsDB = AppsDB.get(getActivity());
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, list);
-        dropdown.setAdapter(adapter);
-        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mAppsDB.updateBlockedApps();
+
+        updateUI();
+
+        mBlockAppsButton = v.findViewById(R.id.blacklistButtonBlock);
+        mBlockAppsButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.v("item", (String) parent.getItemAtPosition(position));
-                ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // TODO Auto-generated method stub
+            public void onClick(View v) {
+                Fragment listOfAppsOnDevice = ListOfAppsOnDevice.newInstance();
+                openFragment(listOfAppsOnDevice);
             }
         });
-    }   }
+
+        mUnblockAppsButton = v.findViewById(R.id.blacklistButtonUnblock);
+        mUnblockAppsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAppsDB.removeBlockedApps();
+            }
+        });
+
+        return v;
+    }
+
+    private void updateUI(){
+        AppsDB appsDB = AppsDB.get(getActivity());
+        appsDB.addObserver(this);
+
+        appsAdapter = new BlackListAdapter(appsDB, true);
+        mBlockedAppsView.setAdapter(appsAdapter);
+    }
+
+    private void openFragment(Fragment fragment) {
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.MainFrameLayout, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        appsAdapter.notifyDataSetChanged();
+        updateUI();
+    }
+}
