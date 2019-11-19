@@ -56,6 +56,7 @@ public class BlackList extends Fragment implements Observer {
 
         mAppsDB = AppsDB.get(getActivity());
 
+
         mAppsDB.updateBlockedApps();
 
         updateUI();

@@ -69,7 +69,7 @@ public class BlackListAdapter extends RecyclerView.Adapter<BlackListAdapter.Blac
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(isChecked){
-                        appsDB.blockedApps(getAdapterPosition(), mBlocked);
+                        appsDB.isItBlocked(getAdapterPosition(), mBlocked);
                     }
                 }
             });
@@ -92,7 +92,7 @@ public class BlackListAdapter extends RecyclerView.Adapter<BlackListAdapter.Blac
             int adapterPosition = getAdapterPosition();
             if(mSelectionState.isChecked()){
                 mSelectionState.setChecked(false);
-                appsDB.blockedApps(adapterPosition, mBlocked);
+                appsDB.isItBlocked(adapterPosition, mBlocked);
             } else{
                 mSelectionState.setChecked(true);
             }

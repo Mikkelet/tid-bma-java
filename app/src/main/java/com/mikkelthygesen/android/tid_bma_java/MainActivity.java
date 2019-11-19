@@ -4,15 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.room.Room;
-import androidx.transition.Transition;
 
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.mikkelthygesen.android.tid_bma_java.Storage.AppDatabase;
-import com.mikkelthygesen.android.tid_bma_java.Storage.DatabaseSingleton;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -26,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        DatabaseSingleton.getInstance(getApplicationContext());
 
         openFragment(mStartSessionFragment);
         mBottomNavigationMenu = findViewById(R.id.bottomNavigationView);
