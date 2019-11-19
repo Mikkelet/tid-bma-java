@@ -27,7 +27,7 @@
 
         <!-- SeekBar for exercises -->
         <com.xw.repo.BubbleSeekBar
-            android:id="@+id/bubbleSeekBar3"
+            android:id="@+id/bubbleSeekBarExercise"
             android:layout_width="300dp"
             android:layout_height="40dp"
             android:layout_marginTop="80dp"
@@ -62,10 +62,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.474"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bubbleSeekBar3" />
+            app:layout_constraintTop_toBottomOf="@+id/bubbleSeekBarExercise" />
 
         <com.xw.repo.BubbleSeekBar
-            android:id="@+id/bubbleSeekBar2"
+            android:id="@+id/bubbleSeekBarBlockedApps"
             android:layout_width="300dp"
             android:layout_height="40dp"
             android:layout_marginTop="240dp"
@@ -94,7 +94,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bubbleSeekBar2" />
+            app:layout_constraintTop_toBottomOf="@+id/bubbleSeekBarBlockedApps" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

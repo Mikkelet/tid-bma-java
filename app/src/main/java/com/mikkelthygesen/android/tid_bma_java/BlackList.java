@@ -1,13 +1,8 @@
 package com.mikkelthygesen.android.tid_bma_java;
 
-
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +40,7 @@ public class BlackList extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_blacklist, container, false);
 
-        addAppsButton = v.findViewById(R.id.blacklistButtonAdd);
+        addAppsButton = v.findViewById(R.id.AppBlackLists);
         addAppsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,5 +58,4 @@ public class BlackList extends Fragment {
         transaction.addToBackStack(null);
         transaction.commit();
     }
-
 }
