@@ -1,6 +1,5 @@
 package com.mikkelthygesen.android.tid_bma_java.Storage;
 
-import android.content.pm.PackageInfo;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 
@@ -21,7 +20,7 @@ public class WrapperCursor extends CursorWrapper {
 
         BlockedAppItem blockedAppItem = new BlockedAppItem(appName, isItBlocked);
         blockedAppItem.setName(appName);
-        blockedAppItem.setIsitblocked("u");
+        blockedAppItem.toggleApp("u");
         blockedAppItem.setmId(UUID.randomUUID());
         return blockedAppItem;
     }

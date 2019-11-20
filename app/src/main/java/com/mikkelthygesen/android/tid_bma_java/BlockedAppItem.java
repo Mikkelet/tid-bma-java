@@ -44,7 +44,7 @@ public class BlockedAppItem {
         return isitblocked;
     }
 
-    public void setIsitblocked(String isitblocked) {
+    public void toggleApp(String isitblocked) {
         this.isitblocked = isitblocked;
     }
 

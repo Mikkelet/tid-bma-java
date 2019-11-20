@@ -12,8 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Set;
+import java.util.TreeSet;
 
 
 /**
@@ -35,9 +40,9 @@ public class BlackList extends Fragment implements Observer {
     }
 
     public static BlackList newInstance() {
-        
+
         Bundle args = new Bundle();
-        
+
         BlackList fragment = new BlackList();
         fragment.setArguments(args);
 
@@ -56,7 +61,15 @@ public class BlackList extends Fragment implements Observer {
 
         mAppsDB = AppsDB.get(getActivity());
 
+        Set<BlockedAppItem> onCreateViewListOfBlockedApps = new HashSet<>(mAppsDB.getListOfItems());
+        for (BlockedAppItem blockedAppItem: onCreateViewListOfBlockedApps
+             ) { if (AppsDB.getmAllAppsOnPhone().contains(blockedAppItem)){
 
+                 AppsDB.getmBlockedApps().add(blockedAppItem.getName());
+
+        }
+
+        }
         mAppsDB.updateBlockedApps();
 
         updateUI();
@@ -81,7 +94,7 @@ public class BlackList extends Fragment implements Observer {
         return v;
     }
 
-    private void updateUI(){
+    private void updateUI() {
         AppsDB appsDB = AppsDB.get(getActivity());
         appsDB.addObserver(this);
 
