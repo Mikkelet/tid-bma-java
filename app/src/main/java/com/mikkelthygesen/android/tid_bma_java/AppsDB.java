@@ -148,6 +148,13 @@ public class AppsDB extends Observable {
     public void updateBlockedApps() {
         if (mBlockedApps.size() == 0) {
             mBlockedApps.addAll(mTemp);
+        } else {
+            HashSet singleMaker = new HashSet(mBlockedApps);
+            singleMaker.addAll(mTemp);
+            mBlockedApps.clear();
+            mBlockedApps.addAll(singleMaker);
+
+
         }
         for (PackageInfo packageInfo : mTemp) {
             BlockedAppItem blockedAppItem = new BlockedAppItem("", "b");
@@ -157,14 +164,18 @@ public class AppsDB extends Observable {
             } else {
                 blockedAppItem.setIsitblocked("u");
             }
-            ContentValues values = itemValues(new BlockedAppItem(blockedAppItem.getName(), blockedAppItem.getIsitblocked(), blockedAppItem.getId()));
-            mDatabase.insert(BlockMyAppSqlite.ItemTable.HEADER, null, values);
-            setChanged();
-            notifyObservers();
+            addAppToSqliteDB(blockedAppItem);
 
         }
         mTemp.clear();
         updateObservers();
+    }
+
+    private void addAppToSqliteDB(BlockedAppItem blockedAppItem) {
+        ContentValues values = itemValues(new BlockedAppItem(blockedAppItem.getName(), blockedAppItem.getIsitblocked(), blockedAppItem.getId()));
+        mDatabase.insert(BlockMyAppSqlite.ItemTable.HEADER, null, values);
+        setChanged();
+        notifyObservers();
     }
 
     //Functionality for when user is interacting with recyclerable views

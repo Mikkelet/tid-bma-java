@@ -62,9 +62,10 @@ public class BlackList extends Fragment implements Observer {
         mBlockedAppsView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         mAppsDB = AppsDB.get(getActivity());
-        mAppsDB.updateBlockedApps();
 
         savedAppsFromSQLiteDB();
+        mAppsDB.updateBlockedApps();
+
 
         updateUI();
 
