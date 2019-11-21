@@ -1,36 +1,26 @@
 package com.mikkelthygesen.android.tid_bma_java;
 
 
-import android.content.pm.PackageInfo;
-
 import java.util.UUID;
 
 public class BlockedAppItem {
     private String name = null;
-    private String isitblocked = "U";
-    private UUID mId;
+    private String isitblocked;
+    private String mId;
 
 
     public BlockedAppItem(String name, String isitblocked) {
         this.name = name;
         this.isitblocked = isitblocked;
-        mId = UUID.randomUUID();
     }
 
-    public BlockedAppItem(String name, String isitblocked, UUID mId) {
+    public BlockedAppItem(String name, String isitblocked, String mId) {
         this.name = name;
         this.isitblocked = isitblocked;
         this.mId = mId;
     }
 
-    public BlockedAppItem(UUID mId) {
-        this.mId = mId;
-    }
 
-    @Override
-    public String toString() {
-        return oneLine("", "is here: ");
-    }
 
     public String getName() {
         return name;
@@ -44,19 +34,24 @@ public class BlockedAppItem {
         return isitblocked;
     }
 
-    public void toggleApp(String isitblocked) {
+    public void setIsitblocked(String isitblocked) {
         this.isitblocked = isitblocked;
     }
 
-    public void setmId(UUID mId) {
+    public void toggleApp(String isitblocked) {
+        if (isitblocked== "u"){
+            isitblocked.replace("u","b");
+        }else {
+            isitblocked.replace("b","u");
+        }
+        this.isitblocked = isitblocked;
+    }
+
+    public void setmId(String mId) {
         this.mId = mId;
     }
 
-    public String oneLine(String pre, String post) {
-        return pre + name + " " + post + isitblocked;
-    }
-
-    public UUID getId() {
+    public String getId() {
         return mId;
     }
 

@@ -1,5 +1,6 @@
 package com.mikkelthygesen.android.tid_bma_java;
 
+import android.content.pm.PackageInfo;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -19,6 +20,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.UUID;
 
 
 /**
@@ -60,17 +62,9 @@ public class BlackList extends Fragment implements Observer {
         mBlockedAppsView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         mAppsDB = AppsDB.get(getActivity());
-
-        Set<BlockedAppItem> onCreateViewListOfBlockedApps = new HashSet<>(mAppsDB.getListOfItems());
-        for (BlockedAppItem blockedAppItem: onCreateViewListOfBlockedApps
-             ) { if (AppsDB.getmAllAppsOnPhone().contains(blockedAppItem)){
-
-                 AppsDB.getmBlockedApps().add(blockedAppItem.getName());
-
-        }
-
-        }
         mAppsDB.updateBlockedApps();
+
+        savedAppsFromSQLiteDB();
 
         updateUI();
 
@@ -80,18 +74,38 @@ public class BlackList extends Fragment implements Observer {
             public void onClick(View v) {
                 Fragment listOfAppsOnDevice = ListOfAppsOnDevice.newInstance();
                 openFragment(listOfAppsOnDevice);
+                mAppsDB.updateBlockedApps();
             }
         });
-
         mUnblockAppsButton = v.findViewById(R.id.blacklistButtonUnblock);
         mUnblockAppsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mAppsDB.removeBlockedApps();
+                mAppsDB.updateBlockedApps();
             }
         });
 
         return v;
+    }
+
+    private void savedAppsFromSQLiteDB() {
+        List<BlockedAppItem> listOfItems = mAppsDB.getListOfItems();
+        Set<BlockedAppItem> onCreateViewListOfBlockedApps = new HashSet<>(listOfItems);
+        getSavedApps(onCreateViewListOfBlockedApps);
+    }
+
+    private void getSavedApps(Set<BlockedAppItem> onCreateViewListOfBlockedApps) {
+
+        for (BlockedAppItem blockedAppItem : onCreateViewListOfBlockedApps
+        ) {
+            if (AppsDB.getmAllAppsOnPhone().contains(blockedAppItem.getName())) {
+                String tempId = blockedAppItem.getId();
+
+                mAppsDB.updateBlockedApps();
+            }
+
+        }
     }
 
     private void updateUI() {

@@ -14,14 +14,14 @@ public class WrapperCursor extends CursorWrapper {
 
     public BlockedAppItem getItem() {
 
-        String uuid = getString(getColumnIndex(BlockMyAppSqlite.ItemTable.Cols.UUID));
+        String mId = getString(getColumnIndex(BlockMyAppSqlite.ItemTable.Cols.UUID));
         String appName = String.valueOf((getColumnIndex(BlockMyAppSqlite.ItemTable.Cols.NAME)));
         String isItBlocked = getString(getColumnIndex(BlockMyAppSqlite.ItemTable.Cols.ISITBLOCKED));
 
         BlockedAppItem blockedAppItem = new BlockedAppItem(appName, isItBlocked);
         blockedAppItem.setName(appName);
-        blockedAppItem.toggleApp("u");
-        blockedAppItem.setmId(UUID.randomUUID());
+        blockedAppItem.toggleApp(isItBlocked);
+        blockedAppItem.setmId(mId);
         return blockedAppItem;
     }
 

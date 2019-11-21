@@ -1,4 +1,5 @@
 package com.mikkelthygesen.android.tid_bma_java.Storage;
+
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -19,7 +20,6 @@ public class SQLBaseHelper extends SQLiteOpenHelper {
         String uuid = BlockMyAppSqlite.ItemTable.Cols.UUID;
         String appName = BlockMyAppSqlite.ItemTable.Cols.NAME;
         String IsItBlocked = BlockMyAppSqlite.ItemTable.Cols.ISITBLOCKED;
-
 
         db.execSQL("CREATE TABLE " + tableName + "(" + " _id integer primary key autoincrement, " +
                 uuid + " UUID, " +

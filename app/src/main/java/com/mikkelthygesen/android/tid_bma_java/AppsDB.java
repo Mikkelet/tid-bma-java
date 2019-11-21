@@ -12,15 +12,14 @@ import com.mikkelthygesen.android.tid_bma_java.Storage.BlockMyAppSqlite;
 import com.mikkelthygesen.android.tid_bma_java.Storage.SQLBaseHelper;
 import com.mikkelthygesen.android.tid_bma_java.Storage.WrapperCursor;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Observable;
-import java.util.UUID;
+import java.util.Set;
 
-import static android.icu.text.MessagePattern.ArgType.SELECT;
 
 public class AppsDB extends Observable {
     private static AppsDB sAppsDB;
@@ -30,11 +29,10 @@ public class AppsDB extends Observable {
     private static List<PackageInfo> mTemp;
     private static PackageManager packageManager;
     private static SQLiteDatabase mDatabase;
-    private static Context context;
 
 
     public static AppsDB get(Context context) {
-        if (mAllAppsOnPhone == null) {
+        if (mBlockedApps == null) {
             packageManager = context.getPackageManager();
             sAppsDB = new AppsDB();
         }
@@ -43,23 +41,6 @@ public class AppsDB extends Observable {
                 .getWritableDatabase();
 
         return sAppsDB;
-    }
-
-    public BlockedAppItem getItem(UUID id) {
-        WrapperCursor cursor = queryItems(
-                BlockMyAppSqlite.ItemTable.Cols.UUID + " = ?",
-                new String[]{id.toString()}
-        );
-        try {
-            if (cursor.getCount() == 0) {
-                return null;
-            }
-            cursor.moveToFirst();
-            return cursor.getItem();
-
-        } finally {
-            cursor.close();
-        }
     }
 
     public List<BlockedAppItem> getListOfItems() {
@@ -141,18 +122,6 @@ public class AppsDB extends Observable {
         return mAllAppsOnPhone;
     }
 
-    public static void setmAllAppsOnPhone(List<PackageInfo> mAllAppsOnPhone) {
-        AppsDB.mAllAppsOnPhone = mAllAppsOnPhone;
-    }
-
-    public static List<PackageInfo> getmBlockedApps() {
-        return mBlockedApps;
-    }
-
-    public static void setmBlockedApps(List<PackageInfo> mBlockedApps) {
-        AppsDB.mBlockedApps = mBlockedApps;
-    }
-
     public PackageManager getPackageManager() {
         return packageManager;
     }
@@ -170,32 +139,33 @@ public class AppsDB extends Observable {
 
         values.put(BlockMyAppSqlite.ItemTable.Cols.NAME, blockedAppItem.getName());
         values.put(BlockMyAppSqlite.ItemTable.Cols.ISITBLOCKED, blockedAppItem.getIsitblocked());
-        values.put(BlockMyAppSqlite.ItemTable.Cols.UUID, blockedAppItem.getId().toString());
+        values.put(BlockMyAppSqlite.ItemTable.Cols.UUID, blockedAppItem.getId());
 
         return values;
     }
 
-
     //Add or remove depending on state
     public void updateBlockedApps() {
-        mBlockedApps.clear();
-        mBlockedApps.addAll(mTemp);
+        if (mBlockedApps.size() == 0) {
+            mBlockedApps.addAll(mTemp);
+        }
         for (PackageInfo packageInfo : mTemp) {
-            BlockedAppItem blockedAppItem = new BlockedAppItem("", "u");
-            blockedAppItem.setName(packageInfo.toString());
-            blockedAppItem.toggleApp("b");
-            ContentValues values = itemValues(new BlockedAppItem(blockedAppItem.getName(), blockedAppItem.getIsitblocked(), UUID.randomUUID()));
+            BlockedAppItem blockedAppItem = new BlockedAppItem("", "b");
+            blockedAppItem.setName(packageInfo.packageName);
+            if (blockedAppItem.getIsitblocked() == "b") {
+                mBlockedApps.remove(blockedAppItem);
+            } else {
+                blockedAppItem.setIsitblocked("u");
+            }
+            ContentValues values = itemValues(new BlockedAppItem(blockedAppItem.getName(), blockedAppItem.getIsitblocked(), blockedAppItem.getId()));
             mDatabase.insert(BlockMyAppSqlite.ItemTable.HEADER, null, values);
-            System.out.println(getListOfItems() +"lol");
             setChanged();
             notifyObservers();
 
-            System.out.println();
         }
-       // mTemp.clear();
+        mTemp.clear();
         updateObservers();
     }
-
 
     //Functionality for when user is interacting with recyclerable views
     public void isItBlocked(int position, boolean blocked) {
@@ -215,7 +185,6 @@ public class AppsDB extends Observable {
             mTemp.add(packageInfo);
         }
     }
-
 
     //Remove button's method
     public void removeBlockedApps() {
