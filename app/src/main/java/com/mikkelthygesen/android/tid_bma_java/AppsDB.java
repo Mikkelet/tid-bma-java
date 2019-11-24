@@ -1,22 +1,19 @@
 package com.mikkelthygesen.android.tid_bma_java;
 
-import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
-import com.mikkelthygesen.android.tid_bma_java.Storage.BlockMyAppSqlite;
-import com.mikkelthygesen.android.tid_bma_java.Storage.SQLBaseHelper;
-import com.mikkelthygesen.android.tid_bma_java.Storage.WrapperCursor;
+import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Set;
 
@@ -25,50 +22,83 @@ public class AppsDB extends Observable {
     private static AppsDB sAppsDB;
 
     private static List<PackageInfo> mAllAppsOnPhone;
+
     private static List<PackageInfo> mBlockedApps;
     private static List<PackageInfo> mTemp;
     private static PackageManager packageManager;
-    private static SQLiteDatabase mDatabase;
+    private static SharedPreferences mDatabase;
 
 
     public static AppsDB get(Context context) {
-        if (mBlockedApps == null) {
+        if (sAppsDB == null) {
             packageManager = context.getPackageManager();
             sAppsDB = new AppsDB();
         }
 
-        mDatabase = new SQLBaseHelper(context)
-                .getWritableDatabase();
+        mDatabase = new SharedPreferences() {
+            @Override
+            public Map<String, ?> getAll() {
+                return null;
+            }
+
+            @Nullable
+            @Override
+            public String getString(String key, @Nullable String defValue) {
+                return null;
+            }
+
+            @Nullable
+            @Override
+            public Set<String> getStringSet(String key, @Nullable Set<String> defValues) {
+                return null;
+            }
+
+            @Override
+            public int getInt(String key, int defValue) {
+                return 0;
+            }
+
+            @Override
+            public long getLong(String key, long defValue) {
+                return 0;
+            }
+
+            @Override
+            public float getFloat(String key, float defValue) {
+                return 0;
+            }
+
+            @Override
+            public boolean getBoolean(String key, boolean defValue) {
+                return false;
+            }
+
+            @Override
+            public boolean contains(String key) {
+                return false;
+            }
+
+            @Override
+            public Editor edit() {
+                return null;
+            }
+
+            @Override
+            public void registerOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener listener) {
+
+            }
+
+            @Override
+            public void unregisterOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener listener) {
+
+            }
+        };
 
         return sAppsDB;
     }
 
-    public List<BlockedAppItem> getListOfItems() {
-        List<BlockedAppItem> blockedAppItems = new ArrayList<>();
-        WrapperCursor cursor = queryItems(null, null);
-        try {
-            cursor.moveToFirst();
-            while (!cursor.isAfterLast()) {
-                blockedAppItems.add(cursor.getItem());
-                cursor.moveToNext();
-            }
-        } finally {
-            cursor.close();
-        }
-        return blockedAppItems;
-    }
-
-    private WrapperCursor queryItems(String whereClause, String[] whereArgs) {
-        Cursor cursor = mDatabase.query(
-                BlockMyAppSqlite.ItemTable.HEADER,
-                null,
-                whereClause,
-                whereArgs,
-                null,
-                null,
-                null
-        );
-        return new WrapperCursor(cursor);
+    public static List<PackageInfo> getmBlockedApps() {
+        return mBlockedApps;
     }
 
 
@@ -76,10 +106,10 @@ public class AppsDB extends Observable {
         mAllAppsOnPhone = new ArrayList<>();
         mBlockedApps = new ArrayList<>();
         mTemp = new ArrayList<>();
-        createDB(packageManager);
+        collectAllApplicationsOnPhone(packageManager);
     }
 
-    private void createDB(PackageManager packageManager) {
+    private void collectAllApplicationsOnPhone(PackageManager packageManager) {
         List<PackageInfo> packageInfoList = packageManager.
                 getInstalledPackages(PackageManager.GET_PERMISSIONS);
 
@@ -122,6 +152,7 @@ public class AppsDB extends Observable {
         return mAllAppsOnPhone;
     }
 
+
     public PackageManager getPackageManager() {
         return packageManager;
     }
@@ -134,15 +165,6 @@ public class AppsDB extends Observable {
         }
     }
 
-    private static ContentValues itemValues(BlockedAppItem blockedAppItem) {
-        ContentValues values = new ContentValues();
-
-        values.put(BlockMyAppSqlite.ItemTable.Cols.NAME, blockedAppItem.getName());
-        values.put(BlockMyAppSqlite.ItemTable.Cols.ISITBLOCKED, blockedAppItem.getIsitblocked());
-        values.put(BlockMyAppSqlite.ItemTable.Cols.UUID, blockedAppItem.getId());
-
-        return values;
-    }
 
     //Add or remove depending on state
     public void updateBlockedApps() {
@@ -156,26 +178,24 @@ public class AppsDB extends Observable {
 
 
         }
+        blockOrUnBlock();
+        mTemp.clear();
+        updateObservers();
+    }
+
+    private void blockOrUnBlock() {
         for (PackageInfo packageInfo : mTemp) {
             BlockedAppItem blockedAppItem = new BlockedAppItem("", "b");
             blockedAppItem.setName(packageInfo.packageName);
             if (blockedAppItem.getIsitblocked() == "b") {
                 mBlockedApps.remove(blockedAppItem);
+
+
             } else {
                 blockedAppItem.setIsitblocked("u");
             }
-            addAppToSqliteDB(blockedAppItem);
-
+//Save to shared preferences
         }
-        mTemp.clear();
-        updateObservers();
-    }
-
-    private void addAppToSqliteDB(BlockedAppItem blockedAppItem) {
-        ContentValues values = itemValues(new BlockedAppItem(blockedAppItem.getName(), blockedAppItem.getIsitblocked(), blockedAppItem.getId()));
-        mDatabase.insert(BlockMyAppSqlite.ItemTable.HEADER, null, values);
-        setChanged();
-        notifyObservers();
     }
 
     //Functionality for when user is interacting with recyclerable views
@@ -223,4 +243,6 @@ public class AppsDB extends Observable {
     private boolean isSystemPackage(PackageInfo pkgInfo) {
         return (pkgInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
     }
+
+
 }
