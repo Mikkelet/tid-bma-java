@@ -50,16 +50,15 @@ public class FakeHomeScreen extends AppCompatActivity {
     private void launchApp(String bundleId){
         Database db = Database.getinstance();
 
-
         PackageManager packageManager = getPackageManager();
         Intent intent = packageManager.getLaunchIntentForPackage(bundleId);
         if(intent == null) {
-            intent = packageManager.getLaunchIntentForPackage("com.android.chrome");
             Toast.makeText(this, "could not find that app \n"+bundleId, Toast.LENGTH_SHORT).show();
+        }else if(db.getIsBlocking()){
+            intent = packageManager.getLaunchIntentForPackage(db.getExerciseProviderBundleId());
+            Toast.makeText(this, "App blocked!", Toast.LENGTH_SHORT).show();
         }
-        intent.setAction(bundleId);
+        db.deactivateBlocking();
         startActivity(intent);
-
-
     }
 }

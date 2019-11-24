@@ -25,7 +25,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         openFragment(mStartSessionFragment);
-
+        Intent intent = new Intent(this,FakeHomeScreen.class);
+        startActivity(intent);
 
         mBottomNavigationMenu = findViewById(R.id.bottomNavigationView);
         mBottomNavigationMenu.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
