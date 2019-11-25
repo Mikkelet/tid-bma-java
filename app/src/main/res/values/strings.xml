@@ -9,7 +9,7 @@
     <string name="timer">Timer</string>
     <string name="SeekbarExercises" > Minutes in Exercises</string>
     <string name="minutes_in_blocked_apps">Minutes in Blocked Apps</string>
-    <string name="blacklist">Blacklist</string>
+    <string name="blacklist">Blocked Apps</string>
     <string name="blacklistSpinnerAddApps"> Add Applications </string>
     <string name="blacklistSpinnerBlockApps"> Blocked Applications </string>
 

@@ -37,6 +37,7 @@
             android:text="@string/blacklistSpinnerBlockApps"
             android:textSize="12sp"
             android:textColor="#FFFFFF"
+            style="@style/spinner_style"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/BlackListTextViewTitle" />
@@ -52,6 +53,7 @@
             android:text="@string/blacklistSpinnerAddApps"
             android:textSize="12sp"
             android:textColor="#FFFFFF"
+            style="@style/spinner_style"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/BlacklistSpinnerBlock" />
