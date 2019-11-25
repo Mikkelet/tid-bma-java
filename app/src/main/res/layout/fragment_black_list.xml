@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- BlackList Title -->
         <TextView
             android:id="@+id/BlackListTextViewTitle"
             android:layout_width="wrap_content"
@@ -17,11 +18,13 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:text="@string/blacklist"
-            android:textColor="@color/white"
+            android:textColor="#FFFFFF"
+            android:textSize="26sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- BlackList Spinner blocked applications-->
         <Spinner
             android:id="@+id/BlacklistSpinnerBlock"
             android:layout_width="395dp"
@@ -33,6 +36,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/BlackListTextViewTitle" />
 
+        <!-- BlackList Spinner Add applications -->
         <Spinner
             android:id="@+id/blacklistSpinnerAdd"
             android:layout_width="395dp"
@@ -44,6 +48,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/BlacklistSpinnerBlock" />
 
+        <!-- Activate Button -->
         <Button
             android:id="@+id/AppBlackLists"
             android:layout_width="wrap_content"

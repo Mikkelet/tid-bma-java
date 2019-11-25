@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- Header Timer -->
+        <!-- Timer Title -->
         <TextView
             android:id="@+id/TimerTextViewTitle"
             android:layout_width="wrap_content"
@@ -21,6 +21,8 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:text="@string/timer"
+            android:textColor="#FFFFFF"
+            android:textSize="26sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -48,10 +50,6 @@
             app:layout_constraintTop_toBottomOf="@+id/TimerTextViewTitle" />
 
         <!-- Textview for SeekBar exercises -->
-
-
-        <!-- SeekBar for blocked apps -->
-
         <TextView
             android:id="@+id/SeekBarExercisesTextView"
             android:layout_width="wrap_content"
@@ -64,6 +62,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bubbleSeekBarExercise" />
 
+        <!-- SeekBar for blocked apps -->
         <com.xw.repo.BubbleSeekBar
             android:id="@+id/bubbleSeekBarBlockedApps"
             android:layout_width="300dp"
