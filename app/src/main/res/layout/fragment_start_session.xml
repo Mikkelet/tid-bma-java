@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         tools:context=".StartSession">
 
-        <!-- StartSession Title -->
+        <!-- Start Session Title -->
         <TextView
             android:id="@+id/StartSessionTextViewTitle"
             android:layout_width="wrap_content"
@@ -29,6 +29,7 @@
             android:gravity="top"
             />
 
+        <!-- Spinner Exercise Provider -->
         <Spinner
             android:id="@+id/StartSessionSpinnerExerciseProviders"
             android:layout_width="389dp"
@@ -39,6 +40,8 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:text="@string/StartSessionSpinnerExerciseProviders"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
             android:gravity="top"
             android:layout_centerVertical="true"
             app:layout_constraintEnd_toEndOf="parent"
@@ -47,6 +50,7 @@
             android:lineSpacingExtra="0sp"
             />
 
+        <!-- Activate Button -->
         <Button
             android:id="@+id/StartSessionButtonActivateBlock"
             android:layout_width="wrap_content"
@@ -55,11 +59,11 @@
             android:background="@drawable/activate_block_circle"
             android:text="@string/activate_block"
             android:textSize="12sp"
+            android:textColor="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
