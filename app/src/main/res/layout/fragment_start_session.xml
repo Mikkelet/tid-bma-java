@@ -29,27 +29,46 @@
             android:gravity="top"
             />
 
+        <!-- TextView Exercise Provider -->
+
         <!-- Spinner Exercise Provider -->
+
+        <!-- Activate Button -->
+
+        <TextView
+            android:id="@+id/StartSessionExerciseProvider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:text="@string/exerciseProvider"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/StartSessionSpinnerExerciseProviders"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/StartSessionTextViewTitle"
+            app:layout_constraintVertical_bias="0.819" />
+
         <Spinner
             android:id="@+id/StartSessionSpinnerExerciseProviders"
+            style="@style/spinner_style"
             android:layout_width="180dp"
             android:layout_height="40dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="96dp"
             android:layout_marginEnd="8dp"
+            android:background="@drawable/exercise_provider_spinner_background"
             android:gravity="top"
             android:lineSpacingExtra="0sp"
-            style="@style/spinner_style"
-            android:background="@drawable/exercise_provider_spinner_background"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/StartSessionTextViewTitle"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/StartSessionTextViewTitle" />
 
-        <!-- Activate Button -->
         <Button
             android:id="@+id/StartSessionButtonActivateBlock"
             android:layout_width="wrap_content"
