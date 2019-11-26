@@ -1,12 +1,17 @@
 package com.mikkelthygesen.android.tid_bma_java;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
+
 import androidx.fragment.app.Fragment;
 import com.xw.repo.BubbleSeekBar;
 
@@ -21,6 +26,7 @@ public class Timer extends Fragment {
     private BubbleSeekBar bubbleSeekBarBlockedApps;
     private int exerciseProgress;
     private int blockedAppsProgress;
+    private Button mStartSessionButtonActivateBlock;
 
     public Timer() {
         // Required empty public constructor
@@ -42,6 +48,21 @@ public class Timer extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_timer, container, false);
+        mStartSessionButtonActivateBlock = v.findViewById(R.id.StartSessionButtonActivateBlock);
+        mStartSessionButtonActivateBlock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PackageManager packageManager = getContext().getPackageManager();
+
+                Intent intent = packageManager.getLaunchIntentForPackage("com.duolingo");
+                if(intent == null) {
+                    intent = packageManager.getLaunchIntentForPackage("com.android.chrome");
+                    Toast.makeText(getContext(), "Please install Duolingo", Toast.LENGTH_SHORT).show();
+                }
+                intent.setAction("com.android.chrome");
+                startActivity(intent);
+            }
+        });
 
         bubbleSeekBarExercise = v.findViewById(R.id.bubbleSeekBarExercise);
 
