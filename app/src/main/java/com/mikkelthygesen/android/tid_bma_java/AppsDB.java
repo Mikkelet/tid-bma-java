@@ -1,32 +1,28 @@
 package com.mikkelthygesen.android.tid_bma_java;
-
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
-import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Observable;
 import java.util.Set;
 
 
-public class AppsDB extends Observable {
+public class AppsDB extends Fragment {
     private static AppsDB sAppsDB;
 
     private static List<PackageInfo> mAllAppsOnPhone;
-
     private static List<PackageInfo> mBlockedApps;
     private static List<PackageInfo> mTemp;
     private static PackageManager packageManager;
-    private static SharedPreferences mDatabase;
+
+
 
 
     public static AppsDB get(Context context) {
@@ -35,72 +31,8 @@ public class AppsDB extends Observable {
             sAppsDB = new AppsDB();
         }
 
-        mDatabase = new SharedPreferences() {
-            @Override
-            public Map<String, ?> getAll() {
-                return null;
-            }
-
-            @Nullable
-            @Override
-            public String getString(String key, @Nullable String defValue) {
-                return null;
-            }
-
-            @Nullable
-            @Override
-            public Set<String> getStringSet(String key, @Nullable Set<String> defValues) {
-                return null;
-            }
-
-            @Override
-            public int getInt(String key, int defValue) {
-                return 0;
-            }
-
-            @Override
-            public long getLong(String key, long defValue) {
-                return 0;
-            }
-
-            @Override
-            public float getFloat(String key, float defValue) {
-                return 0;
-            }
-
-            @Override
-            public boolean getBoolean(String key, boolean defValue) {
-                return false;
-            }
-
-            @Override
-            public boolean contains(String key) {
-                return false;
-            }
-
-            @Override
-            public Editor edit() {
-                return null;
-            }
-
-            @Override
-            public void registerOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener listener) {
-
-            }
-
-            @Override
-            public void unregisterOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener listener) {
-
-            }
-        };
-
         return sAppsDB;
     }
-
-    public static List<PackageInfo> getmBlockedApps() {
-        return mBlockedApps;
-    }
-
 
     private AppsDB() {
         mAllAppsOnPhone = new ArrayList<>();
@@ -148,10 +80,6 @@ public class AppsDB extends Observable {
         }
     }
 
-    public static List<PackageInfo> getmAllAppsOnPhone() {
-        return mAllAppsOnPhone;
-    }
-
 
     public PackageManager getPackageManager() {
         return packageManager;
@@ -194,7 +122,6 @@ public class AppsDB extends Observable {
             } else {
                 blockedAppItem.setIsitblocked("u");
             }
-//Save to shared preferences
         }
     }
 
@@ -233,16 +160,42 @@ public class AppsDB extends Observable {
         }
     }
 
+    public void load(Set<String> blockedAppPackageNames) {
+
+        List<PackageInfo> blocked = new ArrayList<>();
+        for (PackageInfo packageInfo : mAllAppsOnPhone) {
+            if (blockedAppPackageNames.contains(packageInfo.packageName)) {
+                blocked.add(packageInfo);
+            }
+        }
+
+        mTemp.clear();
+        mBlockedApps.clear();
+        mBlockedApps.addAll(blocked);
+        updateBlockedApps();
+    }
+
+    public Set<String> getBlockedAppNames() {
+
+        Set<String> blockedAppPackageNames = new HashSet<>();
+        for (PackageInfo mBlockedApp : mBlockedApps) {
+            blockedAppPackageNames.add(mBlockedApp.packageName);
+        }
+
+        return blockedAppPackageNames;
+    }
+
     private void updateObservers() {
         sortDB(mBlockedApps);
-        this.setChanged();
-        notifyObservers();
-        clearChanged();
+//        this.setChanged();
+  //      notifyObservers();
+    //    clearChanged();
     }
 
     private boolean isSystemPackage(PackageInfo pkgInfo) {
         return (pkgInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
     }
+
 
 
 }

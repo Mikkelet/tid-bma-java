@@ -52,8 +52,6 @@ public class ListOfAppsOnDevice extends Fragment implements Observer {
 
     private void updateUI(){
         AppsDB appsDB = AppsDB.get(getActivity());
-        appsDB.addObserver(this);
-
         appsAdapter = new BlackListAdapter(appsDB, false);
         listOfAppsView.setAdapter(appsAdapter);
     }
