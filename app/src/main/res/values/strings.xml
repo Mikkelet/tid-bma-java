@@ -12,6 +12,9 @@
     <string name="blacklist">Blocked Apps</string>
     <string name="blacklistSpinnerAddApps"> Add Applications </string>
     <string name="blacklistSpinnerBlockApps"> Blocked Applications </string>
-    <string name="exerciseProvider"> Choose Exercise Provider </string>
-    <string name="userText"> Select what you want to improve </string>
+    <string name="exerciseProvider"> Exercise Provider </string>
+    <string name="userTextProvider"> Select your favorite place to exercise. </string>
+    <string name="userTextBlock"> Choose the apps you want to spend less time on. </string>
+    <string name="userTextTimeExercise"> Choose the time you want to practice. </string>
+    <string name="userTextTimeBlocked"> Choose the time you want in blocked apps </string>
 </resources>
