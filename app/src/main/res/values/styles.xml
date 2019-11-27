@@ -8,9 +8,5 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-        <style name="spinner_style" parent="Widget.AppCompat.Spinner">
-            <item name="backgroundTint">#FFFFFF</item>
-        </style>
-
 
 </resources>

@@ -39,13 +39,28 @@
             android:id="@+id/StartSessionExerciseProvider"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
             android:gravity="top"
             android:text="@string/exerciseProvider"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/ExerciseBox"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/TextToUser"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="28dp"
+            android:textColor="#0D0D0D"
+            android:textSize="14sp"
+            android:text="@string/userText"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:background="@drawable/text_to_user_border"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/StartSessionTextViewTitle" />
 
@@ -53,13 +68,14 @@
             android:id="@+id/ExerciseBox"
             android:layout_width="280dp"
             android:layout_height="40dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="56dp"
             android:layout_weight="1"
             android:background="@drawable/exercise_provider_spinner_background"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.503"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/StartSessionExerciseProvider">
+            app:layout_constraintTop_toBottomOf="@+id/TextToUser">
 
             <ImageView
                 android:id="@+id/arrow"
@@ -70,15 +86,19 @@
                 android:paddingBottom="5dp"
                 android:src="@drawable/ic_arrow_drop_down_black_24dp" />
 
-            <Spinner
-                android:id="@+id/StartSessionSpinnerExerciseProviders"
-                android:layout_width="280dp"
-                android:layout_height="40dp"
-                android:background="@android:color/transparent"
-                android:spinnerMode="dropdown"
-                android:textSize="15sp" />
-
         </RelativeLayout>
+
+        <Spinner
+            android:id="@+id/StartSessionSpinnerExerciseProviders"
+            android:layout_width="280dp"
+            android:layout_height="40dp"
+            android:background="@android:color/transparent"
+            android:spinnerMode="dropdown"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@+id/ExerciseBox"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ExerciseBox" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

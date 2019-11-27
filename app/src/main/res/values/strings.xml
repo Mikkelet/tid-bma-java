@@ -13,4 +13,5 @@
     <string name="blacklistSpinnerAddApps"> Add Applications </string>
     <string name="blacklistSpinnerBlockApps"> Blocked Applications </string>
     <string name="exerciseProvider"> Choose Exercise Provider </string>
+    <string name="userText"> Select what you want to improve </string>
 </resources>
