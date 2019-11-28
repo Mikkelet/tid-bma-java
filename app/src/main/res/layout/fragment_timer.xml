@@ -43,11 +43,11 @@
             android:layout_width="300dp"
             android:layout_height="40dp"
             android:layout_marginTop="24dp"
-            app:bsb_bubble_color="#6f8ee2"
+            app:bsb_bubble_color="#737373"
             app:bsb_bubble_text_color="#FFFFFF"
             app:bsb_max="5"
             app:bsb_min="1"
-            app:bsb_second_track_color="#6f8ee2"
+            app:bsb_second_track_color="#FFFFFF"
             app:bsb_section_count="1"
             app:bsb_section_text_position="bottom_sides"
             app:bsb_show_progress_in_float="false"
@@ -65,11 +65,11 @@
             android:layout_width="300dp"
             android:layout_height="0dp"
             android:layout_marginTop="24dp"
-            app:bsb_bubble_color="#6f8ee2"
+            app:bsb_bubble_color="#737373"
             app:bsb_bubble_text_color="#FFFFFF"
             app:bsb_max="5"
             app:bsb_min="1"
-            app:bsb_second_track_color="#6f8ee2"
+            app:bsb_second_track_color="#FFFFFF"
             app:bsb_section_count="1"
             app:bsb_section_text_position="bottom_sides"
             app:bsb_show_progress_in_float="false"
@@ -86,7 +86,7 @@
             android:id="@+id/StartSessionButtonActivateBlock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="48dp"
             android:background="@drawable/activate_block_circle"
             android:text="@string/activate_block"
             android:textColor="#FFFFFF"
@@ -94,13 +94,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bubbleSeekBarExercise" />
+            app:layout_constraintTop_toBottomOf="@+id/bubbleSeekBarBlockedApps" />
 
         <TextView
             android:id="@+id/TextToUserTimeExercise"
             android:layout_width="300dp"
             android:layout_height="40dp"
-            android:layout_marginTop="56dp"
+            android:layout_marginTop="60dp"
             android:gravity="center"
             android:text="@string/userTextTimeExercise"
             android:textAlignment="center"
@@ -109,7 +109,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bubbleSeekBarBlockedApps" />
+            app:layout_constraintTop_toBottomOf="@+id/TimerTextViewTitle" />
 
         <TextView
             android:id="@+id/TextToUserTimeBlocked"
@@ -124,7 +124,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/TimerTextViewTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/bubbleSeekBarExercise" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
