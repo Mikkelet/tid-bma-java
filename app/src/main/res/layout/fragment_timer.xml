@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:circular="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    xmlns:circular="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
     tools:context=".Timer">
 
@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- Header Timer -->
+        <!-- Timer Title -->
         <TextView
             android:id="@+id/TimerTextViewTitle"
             android:layout_width="wrap_content"
@@ -21,59 +21,27 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:text="@string/timer"
+            android:textColor="#FFFFFF"
+            android:textSize="26sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <!-- SeekBar for exercises -->
+
+        <!-- Textview for SeekBar exercises -->
+
         <com.xw.repo.BubbleSeekBar
             android:id="@+id/bubbleSeekBarExercise"
             android:layout_width="300dp"
             android:layout_height="40dp"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="96dp"
             app:bsb_bubble_color="#6f8ee2"
-            app:bsb_bubble_text_color="@color/colorPrimaryDark"
-            app:bsb_max="20"
+            app:bsb_bubble_text_color="#FFFFFF"
+            app:bsb_max="5"
             app:bsb_min="1"
             app:bsb_second_track_color="#6f8ee2"
-            app:bsb_section_text_position="bottom_sides"
-            app:bsb_show_progress_in_float="false"
-            app:bsb_show_section_mark="false"
-            app:bsb_show_section_text="true"
-            app:bsb_show_thumb_text="true"
-            app:bsb_track_color="#c7cacc"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.504"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/TimerTextViewTitle" />
-
-        <!-- Textview for SeekBar exercises -->
-
-
-        <!-- SeekBar for blocked apps -->
-
-        <TextView
-            android:id="@+id/SeekBarExercisesTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="19dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="8dp"
-            android:text="@string/SeekbarExercises"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.474"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bubbleSeekBarExercise" />
-
-        <com.xw.repo.BubbleSeekBar
-            android:id="@+id/bubbleSeekBarBlockedApps"
-            android:layout_width="300dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="240dp"
-            app:bsb_bubble_color="#6f8ee2"
-            app:bsb_bubble_text_color="@color/colorPrimaryDark"
-            app:bsb_max="20"
-            app:bsb_min="1"
-            app:bsb_second_track_color="#6f8ee2"
+            app:bsb_section_count="1"
             app:bsb_section_text_position="bottom_sides"
             app:bsb_show_progress_in_float="false"
             app:bsb_show_section_mark="false"
@@ -85,16 +53,104 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/TimerTextViewTitle" />
 
-        <!-- Textview for blocked apps -->
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/SeekBarExercisesTextView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="19dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/SeekbarExercises"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.474"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bubbleSeekBarExercise" />
+
+        <!-- SeekBar for blocked apps -->
+
+        <!-- Textview for blocked apps -->
+
+        <!-- Activate button -->
+
+        <com.xw.repo.BubbleSeekBar
+            android:id="@+id/bubbleSeekBarBlockedApps"
+            android:layout_width="300dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="29dp"
+            app:bsb_bubble_color="#6f8ee2"
+            app:bsb_bubble_text_color="#FFFFFF"
+            app:bsb_max="5"
+            app:bsb_min="1"
+            app:bsb_second_track_color="#6f8ee2"
+            app:bsb_section_count="1"
+            app:bsb_section_text_position="bottom_sides"
+            app:bsb_show_progress_in_float="false"
+            app:bsb_show_section_mark="false"
+            app:bsb_show_section_text="true"
+            app:bsb_show_thumb_text="true"
+            app:bsb_track_color="#c7cacc"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TextToUserTimeBlocked" />
+
+        <TextView
+            android:id="@+id/SeekBarBlockedAppsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="19dp"
             android:text="@string/minutes_in_blocked_apps"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bubbleSeekBarBlockedApps" />
+
+        <Button
+            android:id="@+id/StartSessionButtonActivateBlock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/activate_block_circle"
+            android:text="@string/activate_block"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/SeekBarBlockedAppsTextView" />
+
+        <TextView
+            android:id="@+id/TextToUserTimeExercise"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="@string/userTextTimeExercise"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/bubbleSeekBarExercise"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.503"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TimerTextViewTitle"
+            app:layout_constraintVertical_bias="0.44" />
+
+        <TextView
+            android:id="@+id/TextToUserTimeBlocked"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="40dp"
+            android:gravity="center"
+            android:text="@string/userTextTimeBlocked"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.503"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/SeekBarExercisesTextView" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,52 +11,94 @@
         android:layout_height="match_parent"
         tools:context=".StartSession">
 
+        <!-- Start Session Title -->
         <TextView
             android:id="@+id/StartSessionTextViewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:gravity="top"
             android:text="@string/start_session"
-            android:textAppearance="@style/start_session"
-            android:textColor="#090101"
+            android:textColor="#FFFFFF"
+            android:textSize="26sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Spinner
-            android:id="@+id/StartSessionSpinnerExerciseProviders"
-            android:layout_width="389dp"
-            android:layout_height="29dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="8dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:text="@string/StartSessionSpinnerExerciseProviders"
-            android:textAppearance="@style/StartSessionSpinnerExerciseProviders"
-            android:gravity="top"
-            android:layout_centerVertical="true"
+        <!-- TextView Exercise Provider -->
+
+        <!-- Spinner Exercise Provider -->
+
+        <!-- Activate Button -->
+
+        <TextView
+            android:id="@+id/TextToUser"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="28dp"
+            android:gravity="center"
+            android:text="@string/userTextProvider"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/StartSessionTextViewTitle"
-            android:lineSpacingExtra="0sp"
+            app:layout_constraintTop_toBottomOf="@+id/StartSessionTextViewTitle" />
 
-            />
-
-        <Button
-            android:id="@+id/StartSessionButtonActivateBlock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/activate_block_circle"
-            android:text="@string/activate_block"
+        <TextView
+            android:id="@+id/TextToUserBlock"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="36dp"
+            android:gravity="center"
+            android:text="@string/userTextBlock"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="395dp" />
+            app:layout_constraintTop_toBottomOf="@+id/ExerciseBox" />
+
+        <RelativeLayout
+            android:id="@+id/ExerciseBox"
+            android:layout_width="280dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="56dp"
+            android:layout_weight="1"
+            android:background="@drawable/exercise_provider_spinner_background"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.503"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TextToUser">
+
+            <ImageView
+                android:id="@+id/arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="29dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:paddingBottom="5dp"
+                android:src="@drawable/ic_arrow_drop_down_black_24dp" />
+
+        </RelativeLayout>
+
+        <Spinner
+            android:id="@+id/StartSessionSpinnerExerciseProviders"
+            android:layout_width="280dp"
+            android:layout_height="40dp"
+            android:background="@android:color/black"
+            android:spinnerMode="dropdown"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@+id/ExerciseBox"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ExerciseBox" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

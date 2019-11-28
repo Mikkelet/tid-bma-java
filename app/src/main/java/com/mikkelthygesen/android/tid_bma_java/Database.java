@@ -45,11 +45,9 @@ public class Database {
         if (exerciseProviderBundleId.startsWith("com."))
             this.exerciseProviderBundleId = exerciseProviderBundleId;
     }
-
     public void setBlockedAppsBundleIds(Set<String> blockedAppsBundleIds) {
         this.blockedAppsBundleIds = blockedAppsBundleIds;
     }
-
     public boolean isAppBlocked(String bundleId) {
         return blockedAppsBundleIds.contains(bundleId);
     }

@@ -1,37 +1,12 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
- <!-- StartSessionTextViewTitle -->
-    <style name="start_session">
-
-        <item name="android:textSize">
-            24.81sp
-        </item>
-
-        <item name="android:textColor">
-            #FFFFFF
-        </item>
-
-    </style>
-
-    <!-- StartSessionSpinnerExerciseProviders -->
-    <style name="StartSessionSpinnerExerciseProviders">
-
-        <item name="android:textSize">
-            16sp
-        </item>
-
-        <item name="android:textColor">
-            #FFFFFF
-        </item>
-
-    </style>
 
 </resources>
