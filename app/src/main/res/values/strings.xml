@@ -7,8 +7,6 @@
     <string name="activate_block">Start Block</string>
     <string name="StartSessionSpinnerExerciseProviders">Exercise provider</string>
     <string name="timer">Timer</string>
-    <string name="SeekbarExercises" > Minutes of exercise</string>
-    <string name="minutes_in_blocked_apps">Minutes in blocked apps</string>
     <string name="blacklist">Blocked Apps</string>
     <string name="blacklistSpinnerAddApps"> Add Applications </string>
     <string name="blacklistSpinnerBlockApps"> Blocked Applications </string>
@@ -16,5 +14,5 @@
     <string name="userTextProvider"> Choose your favorite exercise provider. </string>
     <string name="userTextBlock"> Choose which apps you wish to block. </string>
     <string name="userTextTimeExercise"> Set minutes of time you want to practice. </string>
-    <string name="userTextTimeBlocked"> Set minutes of time you want in blocked apps. </string>
+    <string name="userTextTimeBlocked"> Set minutes of time you want in blocked applications. </string>
 </resources>
