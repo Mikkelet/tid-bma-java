@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         openFragment(mStartSessionFragment);
         Intent intent = new Intent(this,FakeHomeScreen.class);
 
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
                         openFragment(mStartSessionFragment);
                         return true;
                     case R.id.navigation_blacklist:
-                        BlackList blackList = BlackList.newInstance();
+                        BlackList blackList = new BlackList();
                         openFragment(blackList);
                         return true;
                     case R.id.navigation_timer:
