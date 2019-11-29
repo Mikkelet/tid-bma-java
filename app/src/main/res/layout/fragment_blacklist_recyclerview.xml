@@ -5,11 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
     android:layout_margin="10dp">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listOfAppRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="400dp" />
+
+    <Button
+        android:id="@+id/blacklistButtonBlock"
+        android:layout_width="395dp"
+        android:layout_height="wrap_content"
+        android:text="@string/Block_apps"
+        tools:layout_editor_absoluteX="9dp" />
 </LinearLayout>

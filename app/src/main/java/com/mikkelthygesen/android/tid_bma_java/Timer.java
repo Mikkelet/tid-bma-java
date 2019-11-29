@@ -27,6 +27,7 @@ public class Timer extends Fragment {
     private int exerciseProgress;
     private int blockedAppsProgress;
     private Button mStartSessionButtonActivateBlock;
+    private int MAX_VALUE = 5;
 
     public Timer() {
         // Required empty public constructor
@@ -53,12 +54,16 @@ public class Timer extends Fragment {
             @Override
             public void onClick(View v) {
                 PackageManager packageManager = getContext().getPackageManager();
-
-                Intent intent = packageManager.getLaunchIntentForPackage("com.duolingo");
+                Intent intent = new Intent(getActivity(), FakeHomeScreen.class);
+                startActivity(intent);
+                if(true)
+                    return;
+                Intent intent2 = packageManager.getLaunchIntentForPackage("com.duolingo");
                 if(intent == null) {
                     intent = packageManager.getLaunchIntentForPackage("com.android.chrome");
                     Toast.makeText(getContext(), "Please install Duolingo", Toast.LENGTH_SHORT).show();
                 }
+
                 intent.setAction("com.android.chrome");
                 startActivity(intent);
             }
@@ -140,6 +145,7 @@ public class Timer extends Fragment {
 
         // set our progress field to whatever is gotten from the shared preferences
         exerciseProgress = sharedPref.getInt("progress",1);
+        if(exerciseProgress > MAX_VALUE) exerciseProgress = MAX_VALUE;
     }
 
     // Here we save any progress for the blocked App seekbar to the Shared Preferences
@@ -167,6 +173,7 @@ public class Timer extends Fragment {
 
         // set our progress field to whatever is gotten from the shared preferences
         blockedAppsProgress = sharedPref.getInt("blockedAppsProgress",1);
+        if(blockedAppsProgress > MAX_VALUE) blockedAppsProgress = MAX_VALUE;
     }
 
     private void print(String mesg){

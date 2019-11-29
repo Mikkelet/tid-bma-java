@@ -5,11 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.transition.Transition;
-
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
@@ -26,6 +25,16 @@ public class MainActivity extends AppCompatActivity {
 
         openFragment(mStartSessionFragment);
         Intent intent = new Intent(this,FakeHomeScreen.class);
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                WaitTask waitTask = new WaitTask();
+                waitTask.doInBackground();
+            }
+        };
+        Thread thread = new Thread(runnable);
+        thread.run();
         //startActivity(intent);
 
         mBottomNavigationMenu = findViewById(R.id.bottomNavigationView);
@@ -55,5 +64,15 @@ public class MainActivity extends AppCompatActivity {
         transaction.replace(R.id.MainFrameLayout, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    class WaitTask extends AsyncTask<Void,Void,Void>{
+
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            Database.getinstance().startTimer();
+            return null;
+        }
     }
 }

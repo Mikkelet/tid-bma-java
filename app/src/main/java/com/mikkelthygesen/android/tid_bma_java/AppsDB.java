@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Observable;
+import java.util.Set;
 
 public class AppsDB extends Observable {
     private static AppsDB sAppsDB;
@@ -85,10 +86,13 @@ public class AppsDB extends Observable {
     }
 
     public void updateBlockedApps(){
-        mBlockedApps.clear();
         mBlockedApps.addAll(mTemp);
         mTemp.clear();
         updateObservers();
+    }
+
+    public void updateTemp(){
+        mTemp.addAll(mBlockedApps);
     }
 
     public void blockedApps(int position, boolean blocked){
