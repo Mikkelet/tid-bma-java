@@ -28,6 +28,8 @@ public class BlockedAppDB {
         edit.apply();
     }
 
+
+
     public static List<BlockedItem> collectAllApplicationsOnPhone(final PackageManager packageManager, FragmentActivity activity) {
         ArrayList<BlockedItem> blockedItems = new ArrayList<>();
 
