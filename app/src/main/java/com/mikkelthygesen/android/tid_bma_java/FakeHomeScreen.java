@@ -31,8 +31,7 @@ public class FakeHomeScreen extends AppCompatActivity {
         configureUI();
     }
 
-    private void configureUI(){
-
+    private void configureUI() {
 
 
         mImageButtonInstagram.setOnClickListener(new View.OnClickListener() {
@@ -50,21 +49,22 @@ public class FakeHomeScreen extends AppCompatActivity {
         });
     }
 
-    private void launchApp(String bundleId){
+    private void launchApp(String bundleId) {
         Database db = Database.getinstance();
 
         PackageManager packageManager = getPackageManager();
         Intent intent = packageManager.getLaunchIntentForPackage(bundleId);
-        if(intent == null) {
-            Toast.makeText(this, "could not find that app \n"+bundleId, Toast.LENGTH_SHORT).show();
-        }else if(db.getIsBlocking()){
+        if (intent == null) {
+            Toast.makeText(this, "could not find that app \n" + bundleId, Toast.LENGTH_SHORT).show();
+        } else if (db.getIsBlocking()) {
             intent = packageManager.getLaunchIntentForPackage(db.getExerciseProviderBundleId());
             //Toast.makeText(this, "App blocked!", Toast.LENGTH_SHORT).show();
-            Intent service = new Intent(FakeHomeScreen.this, BlockService.class);
-            startService(service);
+            Intent blockService = new Intent(FakeHomeScreen.this, BlockService.class);
+            startService(blockService);
         }
-        db.deactivateBlocking();
-        if(intent != null)
-        startActivity(intent);
+        Intent exerciseService = new Intent(FakeHomeScreen.this, ExerciseService.class);
+        startService(exerciseService);
+        if (intent != null)
+            startActivity(intent);
     }
 }
