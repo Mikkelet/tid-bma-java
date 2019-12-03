@@ -9,6 +9,8 @@ import android.content.pm.PackageManager;
 import androidx.fragment.app.FragmentActivity;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -26,7 +28,7 @@ public class BlockedAppDB {
         edit.apply();
     }
 
-    public static List<BlockedItem> collectAllApplicationsOnPhone(PackageManager packageManager, FragmentActivity activity) {
+    public static List<BlockedItem> collectAllApplicationsOnPhone(final PackageManager packageManager, FragmentActivity activity) {
         ArrayList<BlockedItem> blockedItems = new ArrayList<>();
 
         List<PackageInfo> packageInfoList = packageManager.
@@ -40,6 +42,19 @@ public class BlockedAppDB {
                 blockedItems.add(blockedItem);
             }
         }
+        return sortBlocked(blockedItems,packageManager);
+    }
+
+    private static List<BlockedItem> sortBlocked(List<BlockedItem> blockedItems, final PackageManager packageManager){
+        Collections.sort(blockedItems, new Comparator<BlockedItem>() {
+            public int compare(BlockedItem arg0, BlockedItem arg1) {
+                return
+                        packageManager.getApplicationLabel(
+                                arg0.getPackageInfo().applicationInfo).toString().compareTo(
+                                packageManager.getApplicationLabel(
+                                        arg1.getPackageInfo().applicationInfo).toString());
+            }
+        });
         return blockedItems;
     }
 

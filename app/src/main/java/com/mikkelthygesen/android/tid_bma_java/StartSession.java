@@ -11,9 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,6 +30,10 @@ import java.util.Map;
 public class StartSession extends Fragment {
 
     private Spinner spinner;
+
+    private ImageView arrowToTimer;
+
+    private Button mBlacklist;
 
     public StartSession() {
         // Required empty public constructor
@@ -73,10 +80,34 @@ public class StartSession extends Fragment {
             }
         });
 
+        mBlacklist = view.findViewById(R.id.GoToActivationSite);
+        mBlacklist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ListOfAppsOnDevice lst = new ListOfAppsOnDevice();
+                openFragment(lst);
+            }
+        });
+
+        arrowToTimer = view.findViewById(R.id.ArrowToTimer);
+        arrowToTimer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Timer timer = Timer.newInstance();
+                openFragment(timer);
+            }
+        });
+
         // Inflate the layout for this fragment
         return view;
     }
 
+    private void openFragment(Fragment fragment) {
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.MainFrameLayout, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
     private void saveProvderAppsToSharedPrefs(){
         SharedPreferences sharedPref = getActivity().getSharedPreferences("sp", Context.MODE_PRIVATE);
         if(sharedPref == null) return;
