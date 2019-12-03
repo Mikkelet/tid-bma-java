@@ -61,6 +61,7 @@ public class StartSession extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selected = providerAppNames.get(position);
+
                 Database.getinstance().setExerciseProviderBundleId(selected);
                 String provider = Database.getinstance().getExerciseProviderBundleId();
                 Log.d("Start Session", "onItemSelected: "+selected);
@@ -80,7 +81,7 @@ public class StartSession extends Fragment {
         SharedPreferences sharedPref = getActivity().getSharedPreferences("sp", Context.MODE_PRIVATE);
         if(sharedPref == null) return;
         Log.d("Start Session", "saveProvderAppsToSharedPrefs: ");
-        sharedPref.edit().putString(Database.SharePrefs.EXERCISE_PROVIDER, Database.getinstance().getExerciseProviderBundleId()).apply();
+        sharedPref.edit().putString(Database.SharePrefs.EXERCISE_PROVIDER, Database.getinstance().getSelectedExerciseProviderName()).apply();
     }
 
 
