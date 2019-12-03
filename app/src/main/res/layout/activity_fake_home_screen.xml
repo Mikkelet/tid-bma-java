@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fake_homescreen_constraint_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/wallpaper"
+    tools:context=".FakeHomeScreen">
+
+    <ImageButton
+        android:id="@+id/imageButton_facebook"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="128dp"
+        android:adjustViewBounds="false"
+        android:background="#FFFFFF"
+        android:cropToPadding="false"
+        android:scaleType="centerCrop"
+        android:src="@drawable/facebookpng"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:src="@drawable/facebookpng"
+        tools:srcCompat="@drawable/facebookpng" />
+
+    <ImageButton
+        android:id="@+id/imageButton_instagram"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="128dp"
+        android:background="#FFFFFF"
+        android:scaleType="centerCrop"
+        android:src="@drawable/instagrampng"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageButton_facebook"
+        tools:src="@drawable/instagrampng"
+        tools:srcCompat="@drawable/instagrampng" />
+</androidx.constraintlayout.widget.ConstraintLayout>

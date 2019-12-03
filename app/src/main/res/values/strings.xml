@@ -4,13 +4,23 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="start_session">Start Session</string>
+    <string name="Exercise_Provider">Exercise Provider</string>
     <string name="activate_block">Activate Block</string>
     <string name="StartSessionSpinnerExerciseProviders">Exercise provider</string>
     <string name="timer">Timer</string>
-    <string name="SeekbarExercises" > Minutes in Exercises</string>
+    <string name="SeekbarExercises"> Minutes in Exercises</string>
     <string name="minutes_in_blocked_apps">Minutes in Blocked Apps</string>
-    <string name="blacklist">Blacklist</string>
     <string name="block_apps">Block apps</string>
     <string name="unblock_apps">Unblock apps</string>
+    <string name="blacklist">Blocked Apps</string>
+    <string name="blacklistSpinnerAddApps"> Add Applications </string>
+    <string name="blacklistSpinnerBlockApps"> Blocked Applications </string>
+    <string name="exerciseProvider"> Exercise Provider </string>
+    <string name="userTextProvider"> Select your favorite place to exercise. </string>
+    <string name="userTextBlock"> Choose which apps you want to spend less time on. </string>
+    <string name="userTextTimeExercise"> Choose the time you want to practice. </string>
+    <string name="userTextTimeBlocked"> Choose the time you want in blocked apps. </string>
+    <string name="AppsOnDevice">Apps on device</string>
+    <string name="Block_apps">Block apps</string>
 
 </resources>

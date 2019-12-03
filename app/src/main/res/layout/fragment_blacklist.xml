@@ -43,18 +43,23 @@
             android:id="@+id/blacklistButtonBlock"
             android:layout_width="395dp"
             android:layout_height="wrap_content"
-            android:text="@string/block_apps"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            tools:layout_editor_absoluteX="9dp" />
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="7dp"
+            android:text="@string/AppsOnDevice"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
         <Button
             android:id="@+id/blacklistButtonUnblock"
             android:layout_width="395dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="20dp"
-            android:text="@string/unblock_apps"
-            app:layout_constraintTop_toBottomOf="@+id/blacklistButtonBlock"
-            tools:layout_editor_absoluteX="10dp" />
+            android:text="unblock"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/blacklistButtonBlock" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

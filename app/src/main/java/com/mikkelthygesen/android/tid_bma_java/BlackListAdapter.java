@@ -14,20 +14,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 public class BlackListAdapter extends RecyclerView.Adapter<BlackListAdapter.BlackListHolder> {
 
     private PackageManager packageManager;
-    private AppsDB appsDB;
-    private List<PackageInfo> listOfPackageInfo;
+    private List<BlockedItem> items;
 
-
-    public BlackListAdapter(AppsDB appsDB, List<PackageInfo> listOfPackageInfo) {
-        this.appsDB = appsDB;
-        this.packageManager = appsDB.getPackageManager();
-        this.listOfPackageInfo = listOfPackageInfo;
+    public BlackListAdapter(PackageManager packageManager, List<BlockedItem> items) {
+        this.packageManager = packageManager;
+        this.items = items;
     }
 
     @NonNull
@@ -42,21 +42,29 @@ public class BlackListAdapter extends RecyclerView.Adapter<BlackListAdapter.Blac
 
     @Override
     public void onBindViewHolder(@NonNull BlackListHolder holder, int position) {
-        holder.bind(listOfPackageInfo.get(position));
+        holder.bind(items.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return listOfPackageInfo.size();
+        return items.size();
     }
 
+    public Set<String> getCheckPackageNames() {
+        Set<String> packageNames = new HashSet<>();
+        for (BlockedItem item : items) {
+            if (item.isChecked()) {
+                packageNames.add(item.getPackageInfo().packageName);
+            }
+        }
+        return packageNames;
+    }
 
     public class BlackListHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView mAppNameTextView;
         private ImageView mIconImage;
         private CheckBox mSelectionState;
-        private PackageInfo packageInfo;
 
         public BlackListHolder(ViewGroup parent) {
             super(parent);
@@ -71,33 +79,27 @@ public class BlackListAdapter extends RecyclerView.Adapter<BlackListAdapter.Blac
             mSelectionState.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        appsDB.toggleApp(isChecked,packageInfo);
+                    items.get(getAdapterPosition()).setChecked(isChecked);
                 }
             });
         }
 
-        public void bind(PackageInfo packageInfo) {
-            this.packageInfo = packageInfo;
+        public void bind(BlockedItem blockedItem) {
+            PackageInfo packageInfo = blockedItem.getPackageInfo();
             //Bind the icon to the imageView.
             mIconImage.setImageDrawable(packageManager
                     .getApplicationIcon(packageInfo.applicationInfo));
             //Bind the app's name to the textView.
             mAppNameTextView.setText(packageManager.getApplicationLabel(
                     packageInfo.applicationInfo).toString());
-            if(!mBlocked) {
-                mSelectionState.setChecked(appsDB.blockedApp(packageInfo));
-            }
+            mSelectionState.setChecked(blockedItem.isChecked());
+
         }
 
         @Override
         public void onClick(View v) {
-            int adapterPosition = getAdapterPosition();
-            if(mSelectionState.isChecked()){
-                mSelectionState.setChecked(false);
-                appsDB.blockedApps(adapterPosition, mBlocked);
-            } else{
-                mSelectionState.setChecked(true);
-            }
+            BlockedItem blockedItem = items.get(getAdapterPosition());
+            blockedItem.setChecked(!blockedItem.isChecked());
         }
     }
 }

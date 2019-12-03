@@ -4,15 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.room.Room;
 import androidx.transition.Transition;
-
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.mikkelthygesen.android.tid_bma_java.Storage.AppDatabase;
-import com.mikkelthygesen.android.tid_bma_java.Storage.DatabaseSingleton;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -26,9 +23,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        DatabaseSingleton.initialize(getApplicationContext());
 
         openFragment(mStartSessionFragment);
+        Intent intent = new Intent(this,FakeHomeScreen.class);
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                WaitTask waitTask = new WaitTask();
+                waitTask.doInBackground();
+            }
+        };
+        Thread thread = new Thread(runnable);
+        thread.run();
+        //startActivity(intent);
+
         mBottomNavigationMenu = findViewById(R.id.bottomNavigationView);
         mBottomNavigationMenu.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -38,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
                         openFragment(mStartSessionFragment);
                         return true;
                     case R.id.navigation_blacklist:
-                        BlackList blackList = BlackList.newInstance();
+                        BlackList blackList = new BlackList();
                         openFragment(blackList);
                         return true;
                     case R.id.navigation_timer:
@@ -56,5 +65,15 @@ public class MainActivity extends AppCompatActivity {
         transaction.replace(R.id.MainFrameLayout, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    class WaitTask extends AsyncTask<Void,Void,Void>{
+
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            Database.getinstance().startTimer();
+            return null;
+        }
     }
 }

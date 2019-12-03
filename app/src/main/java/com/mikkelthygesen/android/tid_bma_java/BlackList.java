@@ -1,8 +1,11 @@
 package com.mikkelthygesen.android.tid_bma_java;
 
-import android.content.pm.PackageInfo;
-import android.os.Bundle;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,36 +16,36 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Set;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BlackList extends Fragment implements Observer {
+public class BlackList extends Fragment{
+    private String blockedapps = "blockedapps";
+    public static final String BLOCKEDAPPS = "blockedapps";
 
     //Button to add apps to the Blacklist
     private Button mBlockAppsButton;
     private Button mUnblockAppsButton;
-
     private RecyclerView mBlockedAppsView;
     private BlackListAdapter appsAdapter;
-
-    private AppsDB mAppsDB;
 
     public BlackList() {
         // Required empty public constructor
     }
 
     public static BlackList newInstance() {
-        
         Bundle args = new Bundle();
-        
         BlackList fragment = new BlackList();
         fragment.setArguments(args);
-
         return fragment;
     }
 
@@ -50,51 +53,46 @@ public class BlackList extends Fragment implements Observer {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_blacklist, container, false);
-
         mBlockedAppsView = v.findViewById(R.id.listOfAppRecyclerView);
         mBlockedAppsView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        mAppsDB = AppsDB.get(getActivity());
-
-        mAppsDB.loadBlockedApps();
 
         updateUI();
-
         mBlockAppsButton = v.findViewById(R.id.blacklistButtonBlock);
         mBlockAppsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment listOfAppsOnDevice = ListOfAppsOnDevice.newInstance();
+                ListOfAppsOnDevice listOfAppsOnDevice = new ListOfAppsOnDevice();
                 openFragment(listOfAppsOnDevice);
             }
         });
-
         mUnblockAppsButton = v.findViewById(R.id.blacklistButtonUnblock);
         mUnblockAppsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mAppsDB.removeBlockedApps();
+                Set<String> packageNames = appsAdapter.getCheckPackageNames();
+                BlockedAppDB.saveBlockedApps(getActivity(), packageNames);
             }
         });
-
         return v;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+
+    private void updateUI() {
+        PackageManager packageManager = getActivity().getPackageManager();
+        List<BlockedItem> blockedItems = BlockedAppDB.collectAllApplicationsOnPhone(packageManager, getActivity());
+        ListIterator<BlockedItem> iter = blockedItems.listIterator();
+        while (iter.hasNext()) {
+            BlockedItem next = iter.next();
+            if (!next.isChecked()){
+                iter.remove();
+            }
+        }
+
+        this.appsAdapter = new BlackListAdapter(packageManager, blockedItems);
+        this.mBlockedAppsView.setAdapter(appsAdapter);
     }
-
-    private void updateUI(){
-        AppsDB appsDB = AppsDB.get(getActivity());
-        appsDB.addObserver(this);
-
-        appsAdapter = new BlackListAdapter(appsDB);
-        mBlockedAppsView.setAdapter(appsAdapter);
-    }
-
     private void openFragment(Fragment fragment) {
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.MainFrameLayout, fragment);
@@ -102,9 +100,4 @@ public class BlackList extends Fragment implements Observer {
         transaction.commit();
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        appsAdapter.notifyDataSetChanged();
-        updateUI();
-    }
 }
