@@ -1,10 +1,12 @@
 package com.mikkelthygesen.android.tid_bma_java;
 
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.xw.repo.BubbleSeekBar;
 
@@ -56,6 +59,8 @@ public class Timer extends Fragment {
                 PackageManager packageManager = getContext().getPackageManager();
                 Intent intent = new Intent(getActivity(), FakeHomeScreen.class);
                 startActivity(intent);
+
+
                 if(true)
                     return;
                 Intent intent2 = packageManager.getLaunchIntentForPackage("com.duolingo");
@@ -179,5 +184,4 @@ public class Timer extends Fragment {
     private void print(String mesg){
         Log.d("Timer", mesg);
     }
-
 }
