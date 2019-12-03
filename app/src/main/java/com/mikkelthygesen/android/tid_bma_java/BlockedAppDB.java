@@ -42,10 +42,14 @@ public class BlockedAppDB {
                 blockedItems.add(blockedItem);
             }
         }
+        return sortBlocked(blockedItems,packageManager);
+    }
+
+    private static List<BlockedItem> sortBlocked(List<BlockedItem> blockedItems, final PackageManager packageManager){
         Collections.sort(blockedItems, new Comparator<BlockedItem>() {
             public int compare(BlockedItem arg0, BlockedItem arg1) {
                 return
-                         packageManager.getApplicationLabel(
+                        packageManager.getApplicationLabel(
                                 arg0.getPackageInfo().applicationInfo).toString().compareTo(
                                 packageManager.getApplicationLabel(
                                         arg1.getPackageInfo().applicationInfo).toString());
