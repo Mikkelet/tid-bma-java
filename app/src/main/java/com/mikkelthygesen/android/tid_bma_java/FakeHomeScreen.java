@@ -1,11 +1,14 @@
 package com.mikkelthygesen.android.tid_bma_java;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.Service;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -56,9 +59,12 @@ public class FakeHomeScreen extends AppCompatActivity {
             Toast.makeText(this, "could not find that app \n"+bundleId, Toast.LENGTH_SHORT).show();
         }else if(db.getIsBlocking()){
             intent = packageManager.getLaunchIntentForPackage(db.getExerciseProviderBundleId());
-            Toast.makeText(this, "App blocked!", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "App blocked!", Toast.LENGTH_SHORT).show();
+            Intent service = new Intent(FakeHomeScreen.this, BlockService.class);
+            startService(service);
         }
         db.deactivateBlocking();
+        if(intent != null)
         startActivity(intent);
     }
 }

@@ -3,7 +3,11 @@ package com.mikkelthygesen.android.tid_bma_java;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.Timer;
 
@@ -16,6 +20,7 @@ public class Database {
     private String exerciseProviderBundleId = "com.duolingo";
     private Set<String> blockedAppsBundleIds = new HashSet<>();
     private int timeLeft = 5;
+    private Map<String,String> mapProviderApps = new HashMap<>();
 
 
 
@@ -24,6 +29,10 @@ public class Database {
     private Database() {
         blockedAppsBundleIds.add("com.facebook.katana");
         blockedAppsBundleIds.add("com.instagram.android");
+
+        mapProviderApps.put("com.duolingo","Duolingo");
+        mapProviderApps.put("com.memrise.android.memrisecompanion","Memrise");
+        mapProviderApps.put("com.sololearn","SoloLearn");
     }
     
     public synchronized void startTimer(){
@@ -60,6 +69,7 @@ public class Database {
     }
 
     public void setExerciseProviderBundleId(String exerciseProviderBundleId) {
+        if(exerciseProviderBundleId == null) return;
         if (exerciseProviderBundleId.startsWith("com."))
             this.exerciseProviderBundleId = exerciseProviderBundleId;
     }
@@ -70,24 +80,18 @@ public class Database {
         return blockedAppsBundleIds.contains(bundleId);
     }
 
-    class timeCounter extends AsyncTask<Integer, Integer, Boolean> {
+    public List<String> getProviderAppNames(){
+        return new ArrayList<>(mapProviderApps.values());
+    }
+    public String getSelectedExerciseProviderName(){
+        return mapProviderApps.get(exerciseProviderBundleId);
+    }
+    public int getTimeLeftMilliseconds(){
+        return timeLeft *1000;//* 60000;
+    }
 
-
-        @Override
-        protected Boolean doInBackground(Integer... integers) {
-
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
-        }
-
-        @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            super.onPostExecute(aBoolean);
-        }
+    static class SharePrefs{
+        public static final String EXERCISE_PROVIDER = "exercise_provider";
     }
 }
 

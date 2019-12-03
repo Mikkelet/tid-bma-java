@@ -17,7 +17,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".ListOfAppsOnDevice"></activity>
+        <service android:name = ".BlockService"/>
     </application>
 
 </manifest>
