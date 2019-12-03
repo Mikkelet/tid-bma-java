@@ -6,9 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,8 @@ import java.util.List;
 public class StartSession extends Fragment {
 
     private Spinner spinner;
+
+    private ImageView arrowToTimer;
 
     public StartSession() {
         // Required empty public constructor
@@ -52,8 +56,25 @@ public class StartSession extends Fragment {
         if(arrayAdapter != null)
             spinner.setAdapter(arrayAdapter);
 
+        arrowToTimer = view.findViewById(R.id.ArrowToTimer);
+        arrowToTimer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Timer timer = Timer.newInstance();
+                openFragment(timer);
+            }
+        });
+
         // Inflate the layout for this fragment
         return view;
     }
+
+    private void openFragment(Fragment fragment) {
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.MainFrameLayout, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
 
 }
