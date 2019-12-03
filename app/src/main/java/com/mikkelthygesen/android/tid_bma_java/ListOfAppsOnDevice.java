@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,6 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,6 +35,7 @@ public class ListOfAppsOnDevice extends Fragment implements Observer {
 
     private RecyclerView listOfAppsView;
     private BlackListAdapter appsAdapter;
+    private Button mBlockAppsButton;
 
 
     @Override
@@ -50,9 +53,18 @@ public class ListOfAppsOnDevice extends Fragment implements Observer {
 
         PackageManager packageManager = getActivity().getPackageManager();
         List<BlockedItem> items = collectAllApplicationsOnPhone(packageManager, getActivity());
-        BlockedAppDB.sortDB(items);
         appsAdapter = new BlackListAdapter(packageManager, items);
         listOfAppsView.setAdapter(appsAdapter);
+
+        mBlockAppsButton = v.findViewById(R.id.blacklistButtonBlock);
+        mBlockAppsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveBlockedApps();
+                StartSession startSession = new StartSession();
+                openFragment(startSession);
+            }
+        });
 
         return v;
     }
@@ -67,6 +79,12 @@ public class ListOfAppsOnDevice extends Fragment implements Observer {
 
     private void saveBlockedApps() {
         BlockedAppDB.saveBlockedApps(getActivity(), appsAdapter.getCheckPackageNames());
+    }
+
+    private void openFragment(Fragment fragment) {
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.MainFrameLayout, fragment);
+        transaction.commit();
     }
 
     @Override
