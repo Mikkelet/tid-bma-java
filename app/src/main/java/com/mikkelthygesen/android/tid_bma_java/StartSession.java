@@ -6,9 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,9 @@ import java.util.List;
 public class StartSession extends Fragment {
 
     private Spinner spinner;
+    private BlackList blackList = BlackList.newInstance();
+    private Button mBlockAppsButton;
+
 
     public StartSession() {
         // Required empty public constructor
@@ -40,6 +45,14 @@ public class StartSession extends Fragment {
         View view = inflater.inflate(R.layout.fragment_start_session, container, false);
         spinner = view.findViewById(R.id.StartSessionSpinnerExerciseProviders);
 
+        mBlockAppsButton = view.findViewById(R.id.GoToActivationSite);
+        mBlockAppsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ListOfAppsOnDevice listOfAppsOnDevice = new ListOfAppsOnDevice();
+                openFragment(listOfAppsOnDevice);
+            }
+        });
         List<String> myArraySpinner = new ArrayList<String>();
 
         myArraySpinner.add("Duolingo");
@@ -54,6 +67,13 @@ public class StartSession extends Fragment {
 
         // Inflate the layout for this fragment
         return view;
+    }
+
+    private void openFragment(Fragment fragment) {
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.MainFrameLayout, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
 }
