@@ -6,11 +6,13 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Observable;
@@ -41,13 +43,14 @@ public class ListOfAppsOnDevice extends Fragment implements Observer {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_blacklist_recyclerview,container,false);
+        View v = inflater.inflate(R.layout.fragment_blacklist_recyclerview, container, false);
 
         listOfAppsView = v.findViewById(R.id.listOfAppRecyclerView);
         listOfAppsView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         PackageManager packageManager = getActivity().getPackageManager();
         List<BlockedItem> items = collectAllApplicationsOnPhone(packageManager, getActivity());
+        BlockedAppDB.sortDB(items);
         appsAdapter = new BlackListAdapter(packageManager, items);
         listOfAppsView.setAdapter(appsAdapter);
 

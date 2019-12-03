@@ -16,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
 
     private StartSession mStartSessionFragment = new StartSession();
 
-    private BottomNavigationView mBottomNavigationMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,39 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         openFragment(mStartSessionFragment);
-        Intent intent = new Intent(this,FakeHomeScreen.class);
 
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                WaitTask waitTask = new WaitTask();
-                waitTask.doInBackground();
-            }
-        };
-        Thread thread = new Thread(runnable);
-        thread.run();
-        //startActivity(intent);
-
-        mBottomNavigationMenu = findViewById(R.id.bottomNavigationView);
-        mBottomNavigationMenu.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch(menuItem.getItemId()){
-                    case R.id.navigation_start_session:
-                        openFragment(mStartSessionFragment);
-                        return true;
-                    case R.id.navigation_blacklist:
-                        BlackList blackList = new BlackList();
-                        openFragment(blackList);
-                        return true;
-                    case R.id.navigation_timer:
-                        Timer timer = Timer.newInstance();
-                        openFragment(timer);
-                        return true;
-                }
-                return false;
-            }
-        });
     }
 
     private void openFragment(Fragment fragment) {
@@ -67,13 +34,4 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    class WaitTask extends AsyncTask<Void,Void,Void>{
-
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            Database.getinstance().startTimer();
-            return null;
-        }
-    }
 }

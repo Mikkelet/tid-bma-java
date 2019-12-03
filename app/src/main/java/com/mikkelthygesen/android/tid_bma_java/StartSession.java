@@ -51,6 +51,7 @@ public class StartSession extends Fragment {
             public void onClick(View v) {
                 ListOfAppsOnDevice listOfAppsOnDevice = new ListOfAppsOnDevice();
                 openFragment(listOfAppsOnDevice);
+
             }
         });
         List<String> myArraySpinner = new ArrayList<String>();
