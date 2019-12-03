@@ -100,6 +100,7 @@ public class BlackListAdapter extends RecyclerView.Adapter<BlackListAdapter.Blac
         public void onClick(View v) {
             BlockedItem blockedItem = items.get(getAdapterPosition());
             blockedItem.setChecked(!blockedItem.isChecked());
+            mSelectionState.setChecked(blockedItem.isChecked());
         }
     }
 }
