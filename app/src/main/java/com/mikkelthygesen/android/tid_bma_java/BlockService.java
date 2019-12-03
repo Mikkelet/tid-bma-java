@@ -4,13 +4,13 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
-import android.util.TimeUtils;
 
 import androidx.annotation.Nullable;
 
 public class BlockService extends Service {
 
-        @Override
+
+    @Override
         public int onStartCommand(Intent intent, int flags, int startId) {
 
 
@@ -22,6 +22,9 @@ public class BlockService extends Service {
 
             while(time < endTime){
                 time = System.currentTimeMillis();
+                Log.d("Block Service", "onStartCommand: "+((endTime-time)/1000));
+                if((endTime-time)%1000 == 0)
+                    Log.d("Block Service", "onStartCommand: One second passed");
             }
             Database.getinstance().activateBlocking();
             return super.onStartCommand(intent, flags, startId);
