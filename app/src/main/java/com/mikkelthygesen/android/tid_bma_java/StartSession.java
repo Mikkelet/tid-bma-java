@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
@@ -31,6 +32,8 @@ public class StartSession extends Fragment {
     private Spinner spinner;
 
     private ImageView arrowToTimer;
+
+    private Button mBlacklist;
 
     public StartSession() {
         // Required empty public constructor
@@ -73,6 +76,15 @@ public class StartSession extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        mBlacklist = view.findViewById(R.id.GoToActivationSite);
+        mBlacklist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ListOfAppsOnDevice lst = new ListOfAppsOnDevice();
+                openFragment(lst);
             }
         });
 
