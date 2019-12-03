@@ -12,40 +12,31 @@
         tools:context=".StartSession">
 
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="193dp"
-            android:layout_marginTop="58dp"
-            android:layout_marginEnd="194dp"
-            android:src="@drawable/ic_arrow_forward_black_24dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/StartSessionSpinnerExerciseProviders" />
+
 
         <TextView
             android:id="@+id/StartSessionTextViewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="134dp"
-            android:layout_marginEnd="132dp"
+            android:layout_marginTop="40dp"
             android:gravity="top"
             android:text="@string/start_session"
             android:textColor="#FFFFFF"
             android:textSize="26sp"
+            app:layout_constraintBottom_toTopOf="@+id/GoToActivationSite"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.3" />
 
         <Button
             android:id="@+id/GoToActivationSite"
-            android:layout_width="395dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:text="@string/AppsOnDevice"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.53"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/StartSessionTextViewTitle" />
 
@@ -54,10 +45,11 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_margin="10dp"
-            android:layout_marginTop="52dp"
             android:gravity="center"
             android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/ExerciseProviderText"
             app:layout_constraintTop_toBottomOf="@+id/GoToActivationSite"
+            app:layout_constraintVertical_bias="0.95"
             tools:layout_editor_absoluteX="10dp">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -70,26 +62,25 @@
             android:id="@+id/ExerciseProviderText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginTop="40dp"
             android:gravity="top"
             android:text="@string/Exercise_Provider"
             android:textAppearance="@style/start_session"
             android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toTopOf="@+id/StartSessionSpinnerExerciseProviders"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
         <Spinner
             android:id="@+id/StartSessionSpinnerExerciseProviders"
-            android:layout_width="389dp"
+            android:layout_width="wrap_content"
             android:layout_height="29dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+
+            android:layout_marginTop="15dp"
             android:gravity="top"
             android:lineSpacingExtra="0sp"
             android:text="@string/StartSessionSpinnerExerciseProviders"
@@ -97,9 +88,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ExerciseProviderText"
+            app:layout_constraintTop_toBottomOf="@+id/ExerciseProviderText" />
 
-            />
+        <ImageView
+            android:id="@+id/ArrowToTimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:src="@drawable/ic_arrow_forward_black_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

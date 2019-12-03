@@ -1,18 +1,24 @@
 package com.mikkelthygesen.android.tid_bma_java;
 
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.xw.repo.BubbleSeekBar;
 
 
@@ -24,6 +30,9 @@ public class Timer extends Fragment {
 
     private BubbleSeekBar bubbleSeekBarExercise;
     private BubbleSeekBar bubbleSeekBarBlockedApps;
+
+    private ImageView arrowToStartSession;
+
     private int exerciseProgress;
     private int blockedAppsProgress;
     private Button mStartSessionButtonActivateBlock;
@@ -56,6 +65,8 @@ public class Timer extends Fragment {
                 PackageManager packageManager = getContext().getPackageManager();
                 Intent intent = new Intent(getActivity(), FakeHomeScreen.class);
                 startActivity(intent);
+
+
                 if(true)
                     return;
                 Intent intent2 = packageManager.getLaunchIntentForPackage("com.duolingo");
@@ -66,6 +77,15 @@ public class Timer extends Fragment {
 
                 intent.setAction("com.android.chrome");
                 startActivity(intent);
+            }
+        });
+
+        arrowToStartSession = v.findViewById(R.id.ArrowToStartSession);
+        arrowToStartSession.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StartSession session = StartSession.newInstance();
+                openFragment(session);
             }
         });
 
@@ -178,6 +198,13 @@ public class Timer extends Fragment {
 
     private void print(String mesg){
         Log.d("Timer", mesg);
+    }
+
+    private void openFragment(Fragment fragment) {
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.MainFrameLayout, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
 }

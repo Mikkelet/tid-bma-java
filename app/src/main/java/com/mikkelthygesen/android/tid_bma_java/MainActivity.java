@@ -1,30 +1,27 @@
 package com.mikkelthygesen.android.tid_bma_java;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.transition.Transition;
-import android.content.Intent;
-import android.os.AsyncTask;
+
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.MenuItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    private StartSession mStartSessionFragment = new StartSession();
+    private StartSession mStartSessionFragment = StartSession.newInstance();
 
+    private BottomNavigationView mBottomNavigationMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
         openFragment(mStartSessionFragment);
-
+        getSelectedExerciseProvider();
     }
 
     private void openFragment(Fragment fragment) {
@@ -34,4 +31,14 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    private void getSelectedExerciseProvider(){
+        SharedPreferences sharedPref = getSharedPreferences("sp", Context.MODE_PRIVATE);
+        if(sharedPref == null){
+            return;
+        }
+        String epFromSp = sharedPref.getString(Database.SharePrefs.EXERCISE_PROVIDER,"");
+        Database.getinstance().setExerciseProviderBundleId(epFromSp);
+
+
+    }
 }
