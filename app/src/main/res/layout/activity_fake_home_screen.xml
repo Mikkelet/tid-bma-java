@@ -37,4 +37,14 @@
         app:layout_constraintStart_toEndOf="@+id/imageButton_facebook"
         tools:src="@drawable/instagrampng"
         tools:srcCompat="@drawable/instagrampng" />
+
+    <ImageView
+        android:id="@+id/notificationBtn"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/colorPrimary"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
