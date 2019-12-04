@@ -3,8 +3,8 @@ package com.mikkelthygesen.android.tid_bma_java;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +17,12 @@ import android.widget.Spinner;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import static com.mikkelthygesen.android.tid_bma_java.BlockedAppDB.collectAllBlockedApplications;
 
 
 /**
@@ -34,6 +35,9 @@ public class StartSession extends Fragment {
     private ImageView arrowToTimer;
 
     private Button mBlacklist;
+    private BlackListAdapter appsAdapter;
+    private RecyclerView listOfAppsView;
+
 
     public StartSession() {
         // Required empty public constructor
@@ -88,6 +92,15 @@ public class StartSession extends Fragment {
                 openFragment(lst);
             }
         });
+
+        listOfAppsView = view.findViewById(R.id.listOfAppRecyclerView);
+        listOfAppsView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        PackageManager packageManager = getActivity().getPackageManager();
+        List<BlockedItem> items = collectAllBlockedApplications(packageManager, getActivity());
+        if(!items.isEmpty()) {
+            appsAdapter = new BlackListAdapter(packageManager, items, true);
+            listOfAppsView.setAdapter(appsAdapter);
+        }
 
         arrowToTimer = view.findViewById(R.id.ArrowToTimer);
         arrowToTimer.setOnClickListener(new View.OnClickListener() {

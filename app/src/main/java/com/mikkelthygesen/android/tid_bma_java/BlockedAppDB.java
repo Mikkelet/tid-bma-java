@@ -47,6 +47,27 @@ public class BlockedAppDB {
         return sortBlocked(blockedItems,packageManager);
     }
 
+    public static List<BlockedItem> collectAllBlockedApplications(final PackageManager packageManager, FragmentActivity activity) {
+        ArrayList<BlockedItem> blockedItems = new ArrayList<>();
+
+        List<PackageInfo> packageInfoList = packageManager.
+                getInstalledPackages(PackageManager.GET_PERMISSIONS);
+
+        Set<String> blockedPackageNames = loadBlockedApps(activity);
+        if(blockedPackageNames.isEmpty()){
+            return blockedItems;
+        }
+        for (PackageInfo pi : packageInfoList) {
+            if (!isSystemPackage(pi)) {
+                BlockedItem blockedItem = new BlockedItem(pi);
+                blockedItem.setChecked(blockedPackageNames.contains(pi.packageName));
+                if(blockedItem.isChecked())
+                    blockedItems.add(blockedItem);
+            }
+        }
+        return sortBlocked(blockedItems,packageManager);
+    }
+
     private static List<BlockedItem> sortBlocked(List<BlockedItem> blockedItems, final PackageManager packageManager){
         Collections.sort(blockedItems, new Comparator<BlockedItem>() {
             public int compare(BlockedItem arg0, BlockedItem arg1) {

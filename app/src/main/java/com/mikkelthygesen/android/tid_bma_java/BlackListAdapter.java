@@ -14,7 +14,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,10 +23,17 @@ public class BlackListAdapter extends RecyclerView.Adapter<BlackListAdapter.Blac
 
     private PackageManager packageManager;
     private List<BlockedItem> items;
+    private boolean blocked;
 
     public BlackListAdapter(PackageManager packageManager, List<BlockedItem> items) {
         this.packageManager = packageManager;
         this.items = items;
+        blocked = false;
+    }
+    public BlackListAdapter(PackageManager packageManager, List<BlockedItem> items, boolean blocked){
+        this.packageManager = packageManager;
+        this.items = items;
+        this.blocked = blocked;
     }
 
     @NonNull
@@ -92,7 +98,8 @@ public class BlackListAdapter extends RecyclerView.Adapter<BlackListAdapter.Blac
             //Bind the app's name to the textView.
             mAppNameTextView.setText(packageManager.getApplicationLabel(
                     packageInfo.applicationInfo).toString());
-            mSelectionState.setChecked(blockedItem.isChecked());
+            if(!blocked)mSelectionState.setChecked(blockedItem.isChecked());
+            else mSelectionState.setVisibility(View.INVISIBLE);
 
         }
 

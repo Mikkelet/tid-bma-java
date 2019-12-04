@@ -18,6 +18,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.util.List;
+
+import static com.mikkelthygesen.android.tid_bma_java.BlockedAppDB.collectAllBlockedApplications;
+
 public class FakeHomeScreen extends AppCompatActivity {
 
     private ImageButton mImageButtonFacebook;
@@ -38,6 +42,7 @@ public class FakeHomeScreen extends AppCompatActivity {
         mImageButtonInstagram = findViewById(R.id.imageButton_instagram);
         mConstraintLayout = findViewById(R.id.fake_homescreen_constraint_layout);
         notificationBtn = findViewById(R.id.notificationBtn);
+
         configureUI();
     }
 
@@ -53,7 +58,7 @@ public class FakeHomeScreen extends AppCompatActivity {
         mImageButtonFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showNotification();
+                launchApp("com.facebook.katana");
             }
         });
 
