@@ -22,5 +22,6 @@
     <string name="userTextTimeBlocked"> Choose the time you want in blocked apps. </string>
     <string name="AppsOnDevice">Apps on device</string>
     <string name="Block_apps">Block apps</string>
+    <string name="choose_some_apps_to_block">Choose the apps you want to block</string>
 
 </resources>

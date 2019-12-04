@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -37,6 +38,7 @@ public class StartSession extends Fragment {
     private Button mBlacklist;
     private BlackListAdapter appsAdapter;
     private RecyclerView listOfAppsView;
+    private TextView emptyView;
 
 
     public StartSession() {
@@ -95,11 +97,19 @@ public class StartSession extends Fragment {
 
         listOfAppsView = view.findViewById(R.id.listOfAppRecyclerView);
         listOfAppsView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        emptyView = view.findViewById(R.id.empty_view);
+
         PackageManager packageManager = getActivity().getPackageManager();
         List<BlockedItem> items = collectAllBlockedApplications(packageManager, getActivity());
         if(!items.isEmpty()) {
+            listOfAppsView.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
             appsAdapter = new BlackListAdapter(packageManager, items, true);
             listOfAppsView.setAdapter(appsAdapter);
+        } else{
+            listOfAppsView.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
         }
 
         arrowToTimer = view.findViewById(R.id.ArrowToTimer);
