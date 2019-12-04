@@ -36,6 +36,7 @@ public class FakeHomeScreen extends AppCompatActivity {
     private String channelId = "channelId";
     private Integer notificationId = 1234;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
