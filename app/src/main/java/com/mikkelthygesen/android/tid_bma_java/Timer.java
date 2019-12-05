@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
@@ -17,9 +18,12 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.xw.repo.BubbleSeekBar;
+
+import java.util.List;
 
 
 /**
@@ -56,29 +60,37 @@ public class Timer extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_timer, container, false);
+
+        List<BlockedItem> tempList = BlockedAppDB.collectAllBlockedApplications(getActivity().getPackageManager(), getActivity() );
         mStartSessionButtonActivateBlock = v.findViewById(R.id.StartSessionButtonActivateBlock);
+
+        if (tempList.size() > 0){
+
+mStartSessionButtonActivateBlock.setTextColor(Color.GREEN);
+        }
+
         mStartSessionButtonActivateBlock.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PackageManager packageManager = getContext().getPackageManager();
-                Intent intent = new Intent(getActivity(), FakeHomeScreen.class);
-                startActivity(intent);
+                @Override
+                public void onClick(View v) {
+                    PackageManager packageManager = getContext().getPackageManager();
+                    Intent intent = new Intent(getActivity(), FakeHomeScreen.class);
+                    startActivity(intent);
 
 
-                if(true)
-                    return;
-                Intent intent2 = packageManager.getLaunchIntentForPackage("com.duolingo");
-                if(intent == null) {
-                    intent = packageManager.getLaunchIntentForPackage("com.android.chrome");
-                    Toast.makeText(getContext(), "Please install Duolingo", Toast.LENGTH_SHORT).show();
+                    if(true)
+                        return;
+                    Intent intent2 = packageManager.getLaunchIntentForPackage("com.duolingo");
+                    if(intent == null) {
+                        intent = packageManager.getLaunchIntentForPackage("com.android.chrome");
+                        Toast.makeText(getContext(), "Please install Duolingo", Toast.LENGTH_SHORT).show();
+                    }
+
+                    intent.setAction("com.android.chrome");
+                    startActivity(intent);
                 }
+            });
 
-                intent.setAction("com.android.chrome");
-                startActivity(intent);
-            }
-        });
 
         arrowToStartSession = v.findViewById(R.id.ArrowToStartSession);
         arrowToStartSession.setOnClickListener(new View.OnClickListener() {

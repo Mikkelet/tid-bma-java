@@ -118,6 +118,22 @@
             app:layout_constraintTop_toBottomOf="@+id/bubbleSeekBarBlockedApps" />
 
         <Button
+            android:id="@+id/StartSessionButtonActivateBlockGreen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/activate_block_circle"
+            android:text="@string/activate_block"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bubbleSeekBarBlockedApps"
+            app:layout_constraintVertical_bias="0.63" />
+
+        <Button
             android:id="@+id/StartSessionButtonActivateBlock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
