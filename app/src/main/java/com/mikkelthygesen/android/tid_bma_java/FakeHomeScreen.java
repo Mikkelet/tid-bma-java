@@ -13,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -128,9 +129,11 @@ public class FakeHomeScreen extends AppCompatActivity {
             //Toast.makeText(this, "App blocked!", Toast.LENGTH_SHORT).show();
             Intent blockService = new Intent(FakeHomeScreen.this, BlockService.class);
             startService(blockService);
+        } else {
+            Log.d("Fakehomescreen", "launchApp: blocked!");
+            Intent exerciseService = new Intent(FakeHomeScreen.this, ExerciseService.class);
+            startService(exerciseService);
         }
-        Intent exerciseService = new Intent(FakeHomeScreen.this, ExerciseService.class);
-        startService(exerciseService);
         if (intent != null)
             startActivity(intent);
     }

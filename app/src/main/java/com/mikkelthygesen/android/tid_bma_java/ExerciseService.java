@@ -24,11 +24,11 @@ public class ExerciseService extends Service {
         while(time<endTime)
         {
             time = System.currentTimeMillis();
-            Log.d("Block Service", "onStartCommand: " + ((endTime - time) / 1000));
+            Log.d("Exercise Service", "onStartCommand: " + ((endTime - time) / 1000));
             if ((endTime - time) % 1000 == 0)
                 Log.d("Block Service", "onStartCommand: One second passed");
         }
-        Database.getinstance().deactivateBlocking();
+        Database.getinstance().activateBlocking();
 
         return super.onStartCommand(intent, flags, startId);
     }
