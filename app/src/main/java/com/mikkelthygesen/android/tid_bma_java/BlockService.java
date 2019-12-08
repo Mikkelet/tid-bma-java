@@ -12,9 +12,7 @@ public class BlockService extends Service {
 
     @Override
         public int onStartCommand(Intent intent, int flags, int startId) {
-
-
-            Log.d("block service", "onStartCommand: service stared!");
+            Log.d("block service", "onStartCommand: service started!");
 
             long startTime = System.currentTimeMillis();
             long time = startTime;
@@ -26,7 +24,7 @@ public class BlockService extends Service {
                 if((endTime-time)%1000 == 0)
                     Log.d("Block Service", "onStartCommand: One second passed");
             }
-            Database.getinstance().activateBlocking();
+            Database.getinstance().deactivateBlocking();
             return super.onStartCommand(intent, flags, startId);
         }
 
