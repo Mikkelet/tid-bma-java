@@ -2,23 +2,21 @@
     <string name="app_name">Time to focus</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="start_session">Preferences</string>
+    <string name="HeaderOfApp">Block My App</string>
     <string name="activate_block">Start Block</string>
     <string name="StartSessionSpinnerExerciseProviders">Exercise provider</string>
     <string name="Exercise_Provider">Exercise Provider</string>
-    <string name="timer">Timer</string>
     <string name="block_apps">Block apps</string>
     <string name="unblock_apps">Unblock apps</string>
     <string name="blacklist">Blocked Apps</string>
     <string name="blacklistSpinnerAddApps"> Add Applications </string>
     <string name="blacklistSpinnerBlockApps"> Blocked Applications </string>
     <string name="exerciseProvider"> Exercise Provider </string>
-    <string name="AppsOnDevice">Block apps on device</string>
+    <string name="AppsOnDevice">Choose apps to block</string>
     <string name="Block_apps">Block apps</string>
-    <string name="choose_some_apps_to_block">Choose the apps you want to block</string>
-    <string name="userTextExerciseProvider"> Choose your favorite exercise provider. </string>
-    <string name="userTextTimeExercise"> Set minutes you want to practice. </string>
-    <string name="userTextTimeBlocked"> Set minutes you want in blocked apps. </string>
+    <string name="userTextExerciseProvider"> Choose exercise provider </string>
+    <string name="userTextTimeExercise"> Set minutes you want to exercise </string>
+    <string name="userTextTimeBlocked"> Set minutes you want in blocked apps </string>
     <string name="userTextNext"> Next page </string>
 
 </resources>
