@@ -18,6 +18,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.xw.repo.BubbleSeekBar;
 
+import java.util.List;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,7 +62,16 @@ public class Timer extends Fragment {
         View v = inflater.inflate(R.layout.fragment_timer, container, false);
      mStartSessionButtonActivateBlock = v.findViewById(R.id.StartSessionButtonActivateBlock);
 
-       mStartSessionButtonActivateBlock.setOnClickListener(new View.OnClickListener() {
+        List<BlockedItem> tempList = BlockedAppDB.collectAllBlockedApplications(getActivity().getPackageManager(), getActivity() );
+        mStartSessionButtonActivateBlock = v.findViewById(R.id.StartSessionButtonActivateBlock);
+
+        if (tempList.size() > 0){
+
+            mStartSessionButtonActivateBlock.setBackgroundResource(R.drawable.change_of_color_block_circle);
+        }
+
+
+        mStartSessionButtonActivateBlock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PackageManager packageManager = getContext().getPackageManager();
