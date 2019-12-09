@@ -3,7 +3,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="HeaderOfApp">Block My App</string>
-    <string name="activate_block">Start Block</string>
+    <string name="activate_block">Activate and close</string>
     <string name="StartSessionSpinnerExerciseProviders">Exercise provider</string>
     <string name="Exercise_Provider">Exercise Provider</string>
     <string name="block_apps">Block apps</string>
@@ -13,7 +13,7 @@
     <string name="blacklistSpinnerBlockApps"> Blocked Applications </string>
     <string name="exerciseProvider"> Exercise Provider </string>
     <string name="AppsOnDevice">Choose apps to block</string>
-    <string name="Block_apps">Block apps</string>
+    <string name="Block_apps">Block chosen apps</string>
     <string name="userTextExerciseProvider"> Choose exercise provider </string>
     <string name="userTextTimeExercise"> Set minutes you want to exercise </string>
     <string name="userTextTimeBlocked"> Set minutes you want in blocked apps </string>

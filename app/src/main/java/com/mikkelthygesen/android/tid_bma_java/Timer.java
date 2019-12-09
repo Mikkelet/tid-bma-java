@@ -1,5 +1,6 @@
 package com.mikkelthygesen.android.tid_bma_java;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -35,8 +36,6 @@ public class Timer extends Fragment {
     private int exerciseProgress;
     private int blockedAppsProgress;
     private Button mStartSessionButtonActivateBlock;
-    private Button activate;
-    private boolean isDefault = true;
     private int MAX_VALUE = 5;
 
 
@@ -55,6 +54,7 @@ public class Timer extends Fragment {
     }
 
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -68,6 +68,7 @@ public class Timer extends Fragment {
         if (tempList.size() > 0){
 
             mStartSessionButtonActivateBlock.setBackgroundResource(R.drawable.activate_block_circle_pressed);
+
         }
 
 

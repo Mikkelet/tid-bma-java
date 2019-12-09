@@ -11,8 +11,8 @@
         android:color="#2D3921"/>
 
     <size
-        android:width="120dp"
-        android:height="120dp"/>
+        android:width="140dp"
+        android:height="140dp"/>
 
     <stroke
         android:width="6dp"
