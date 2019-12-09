@@ -14,11 +14,11 @@
     <string name="blacklistSpinnerAddApps"> Add Applications </string>
     <string name="blacklistSpinnerBlockApps"> Blocked Applications </string>
     <string name="exerciseProvider"> Exercise Provider </string>
-    <string name="userTextProvider"> Choose your favorite exercise provider. </string>
-    <string name="userTextBlock"> Choose which apps you wish to block. </string>
-    <string name="userTextTimeExercise"> Set minutes of time you want to practice. </string>
-    <string name="userTextTimeBlocked"> Set minutes of time you want in blocked applications. </string>
     <string name="AppsOnDevice">Apps on device</string>
     <string name="Block_apps">Block apps</string>
     <string name="choose_some_apps_to_block">Choose the apps you want to block</string>
+    <string name="userTextExerciseProvider"> Choose your favorite exercise provider. </string>
+    <string name="userTextTimeExercise"> Set minutes you want to practice. </string>
+    <string name="userTextTimeBlocked"> Set minutes you want in blocked apps. </string>
+
 </resources>
