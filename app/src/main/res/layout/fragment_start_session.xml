@@ -88,7 +88,7 @@
             android:id="@+id/TextToUserBlock"
             android:layout_width="300dp"
             android:layout_height="40dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="68dp"
             android:gravity="center"
             android:text="@string/userTextBlock"
             android:textAlignment="center"
@@ -103,11 +103,12 @@
             android:id="@+id/ExerciseBox"
             android:layout_width="180dp"
             android:layout_height="40dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="156dp"
             android:layout_weight="1"
             android:background="@drawable/exercise_provider_spinner_background"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/TextToUser">
 
@@ -119,14 +120,6 @@
                 android:layout_centerVertical="true"
                 android:paddingBottom="5dp"
                 android:src="@drawable/ic_arrow_drop_down_black_24dp" />
-
-            <Spinner
-                android:id="@+id/StartSessionSpinnerExerciseProviders"
-                android:layout_width="180dp"
-                android:layout_height="40dp"
-                android:background="@android:color/transparent"
-                android:spinnerMode="dropdown"
-                android:textSize="15sp" />
 
         </RelativeLayout>
 
@@ -140,6 +133,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <Spinner
+            android:id="@+id/StartSessionSpinnerExerciseProviders"
+            android:layout_width="180dp"
+            android:layout_height="40dp"
+            android:background="@android:color/transparent"
+            android:spinnerMode="dropdown"
+            android:textSize="15sp"
+            tools:layout_editor_absoluteX="115dp"
+            tools:layout_editor_absoluteY="331dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

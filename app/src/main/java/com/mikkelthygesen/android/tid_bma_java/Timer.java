@@ -1,19 +1,15 @@
 package com.mikkelthygesen.android.tid_bma_java;
 
-import android.app.Service;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -34,7 +30,10 @@ public class Timer extends Fragment {
     private int exerciseProgress;
     private int blockedAppsProgress;
     private Button mStartSessionButtonActivateBlock;
+    private Button activate;
+    private boolean isDefault = true;
     private int MAX_VALUE = 5;
+
 
     public Timer() {
         // Required empty public constructor
@@ -81,7 +80,7 @@ public class Timer extends Fragment {
         */
 
 
-        activate = v.findViewById(R.id.StartSessionButtonActivateBlock);
+     activate = v.findViewById(R.id.StartSessionButtonActivateBlock);
 
         activate.setOnClickListener(new View.OnClickListener() {
             @Override
