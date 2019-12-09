@@ -67,7 +67,7 @@ public class Timer extends Fragment {
 
         if (tempList.size() > 0){
 
-            mStartSessionButtonActivateBlock.setBackgroundResource(R.drawable.change_of_color_block_circle);
+            mStartSessionButtonActivateBlock.setBackgroundResource(R.drawable.activate_block_circle_pressed);
         }
 
 
