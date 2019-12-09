@@ -15,7 +15,7 @@
             android:id="@+id/TimerTextViewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="30dp"
             android:text="@string/timer"
             android:textColor="#FFFFFF"
             android:textSize="26sp"
@@ -88,12 +88,10 @@
             android:text="@string/activate_block"
             android:textColor="#FFFFFF"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bubbleSeekBarBlockedApps"
-            app:layout_constraintVertical_bias="0.043" />
+            app:layout_constraintTop_toBottomOf="@+id/bubbleSeekBarBlockedApps" />
 
         <TextView
             android:id="@+id/TextToUserTimeExercise"

@@ -98,18 +98,13 @@ public class StartSession extends Fragment {
         listOfAppsView = view.findViewById(R.id.listOfAppRecyclerView);
         listOfAppsView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        emptyView = view.findViewById(R.id.empty_view);
-
         PackageManager packageManager = getActivity().getPackageManager();
         List<BlockedItem> items = collectAllBlockedApplications(packageManager, getActivity());
-        if(!items.isEmpty()) {
-            listOfAppsView.setVisibility(View.VISIBLE);
-            emptyView.setVisibility(View.GONE);
+
+       if(!items.isEmpty()) {
+           listOfAppsView.setVisibility(View.VISIBLE);
             appsAdapter = new BlackListAdapter(packageManager, items, true);
             listOfAppsView.setAdapter(appsAdapter);
-        } else{
-            listOfAppsView.setVisibility(View.GONE);
-            emptyView.setVisibility(View.VISIBLE);
         }
 
         arrowToTimer = view.findViewById(R.id.ArrowToTimer);
