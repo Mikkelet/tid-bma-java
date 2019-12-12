@@ -9,16 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.mikkelthygesen.android.tid_bma_java.R;
 import com.mikkelthygesen.android.tid_bma_java.data.BlockedAppsManager;
+import com.mikkelthygesen.android.tid_bma_java.data.Database;
 import com.mikkelthygesen.android.tid_bma_java.data.SharedPrefs;
 import com.mikkelthygesen.android.tid_bma_java.models.BlockedItem;
-import com.mikkelthygesen.android.tid_bma_java.data.Database;
-import com.mikkelthygesen.android.tid_bma_java.R;
 import com.xw.repo.BubbleSeekBar;
 
 import java.util.List;
@@ -38,17 +37,14 @@ public class Timer extends Fragment {
     private int blockTimeProgress;
     private int funTimeProgress;
     private Button mStartSessionButtonActivateBlock;
-    private int MAX_VALUE = 5;
     private SharedPrefs mSharedPrefs;
 
 
     public Timer() {
         // Required empty public constructor
-
     }
 
     public static Timer newInstance() {
-
         Bundle args = new Bundle();
         Timer fragment = new Timer();
         fragment.setArguments(args);
@@ -62,39 +58,27 @@ public class Timer extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_timer, container, false);
-     mStartSessionButtonActivateBlock = v.findViewById(R.id.StartSessionButtonActivateBlock);
+        mStartSessionButtonActivateBlock = v.findViewById(R.id.StartSessionButtonActivateBlock);
 
         List<BlockedItem> tempList = BlockedAppsManager.collectAllBlockedApplications(getActivity().getPackageManager(), getActivity() );
         mStartSessionButtonActivateBlock = v.findViewById(R.id.StartSessionButtonActivateBlock);
 
+        // if shared preferences are set turn button green
         if (tempList.size() > 0){
-
             mStartSessionButtonActivateBlock.setBackgroundResource(R.drawable.activate_block_circle_pressed);
-
         }
 
-
+        // when 'activate and close' button pressed redirect to FakeHomeScreen.
         mStartSessionButtonActivateBlock.setOnClickListener(new View.OnClickListener() {
             @Override   
             public void onClick(View v) {
                 PackageManager packageManager = getContext().getPackageManager();
                 Intent intent = new Intent(getActivity(), FakeHomeScreen.class);
                 startActivity(intent);
-
-                if(true)
-                    return;
-                Intent intent2 = packageManager.getLaunchIntentForPackage("com.duolingo");
-                if (intent == null) {
-                    intent = packageManager.getLaunchIntentForPackage("com.android.chrome");
-                    Toast.makeText(getContext(), "Please install Duolingo", Toast.LENGTH_SHORT).show();
-                }
-
-                intent.setAction("com.android.chrome");
-                startActivity(intent);
             }
         });
 
-
+        // arrow back to previous screen
         arrowToStartSession = v.findViewById(R.id.ArrowToStartSession);
         arrowToStartSession.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,14 +90,14 @@ public class Timer extends Fragment {
 
         bubbleSeekBarBlockTime = v.findViewById(R.id.bubbleSeekBarBlockTime);
 
-        // get progress value from Share Preferences
+        // get progress value from Shared Preferences
         mSharedPrefs = new SharedPrefs(getContext());
         mSharedPrefs.getBlockTime();
         mSharedPrefs.getFunTime();
         blockTimeProgress = Database.getinstance().getBlockTime();
         funTimeProgress = Database.getinstance().getFunTime();
 
-        // set the progress
+        // set the progress of blocked time
         bubbleSeekBarBlockTime.setProgress(blockTimeProgress);
         bubbleSeekBarBlockTime.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListener() {
             @Override
@@ -122,7 +106,7 @@ public class Timer extends Fragment {
 
             @Override
             public void getProgressOnActionUp(int progress, float progressFloat) {
-                // Save the progress whenever it is changed
+                // Save the progress of blocked time whenever it is changed
                 mSharedPrefs.setBlockTime(progress);
                 Database.getinstance().setBlockTime(progress);
             }
@@ -134,7 +118,7 @@ public class Timer extends Fragment {
 
         bubbleSeekBarFunTime = v.findViewById(R.id.bubbleSeekBarFunTime);
 
-        // set the progress
+        // set the progress fun time
         bubbleSeekBarFunTime.setProgress(funTimeProgress);
         bubbleSeekBarFunTime.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListener() {
             @Override
@@ -144,6 +128,7 @@ public class Timer extends Fragment {
 
             @Override
             public void getProgressOnActionUp(int progress, float progressFloat) {
+                // Save the progress of fun time whenever it is changed
                 mSharedPrefs.setFunTime(progress);
                 Database.getinstance().setFunTime(progress);
             }
@@ -157,7 +142,10 @@ public class Timer extends Fragment {
         return v;
     }
 
-
+    /**
+    *  Replaces the main fragment layout on the activity with a new one.
+    * @param fragment the one replacing the other.
+     */
     private void openFragment(Fragment fragment) {
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.MainFrameLayout, fragment);
