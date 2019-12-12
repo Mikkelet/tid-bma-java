@@ -10,7 +10,7 @@ git clone https://github.com/Mikkelet/tid-bma-java
 * Run in Android studio on the Emulator or Device.
 
 ## Operating
-1) Opening the application for the first time, you are presented with a scren containing three clickable objects:
+1) Opening the application for the first time, you are presented with a screen containing three clickable objects:
 - "Choose apps to block"
 - "Choose exercise provider"
 - An Arrow, which when clicked will send the user to the next screen.
