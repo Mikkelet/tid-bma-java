@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.mikkelthygesen.android.tid_bma_java.controllers.BlackList.BLOCKEDAPPS;
 
 public class SharedPrefs {
     Context mContext;
@@ -68,20 +67,7 @@ public class SharedPrefs {
         if (exerciseProgress > MAX_VALUE) exerciseProgress = MAX_VALUE;
         Database.getinstance().setFunTime(exerciseProgress);
     }
-    public Set getBlockedApps(){
-        SharedPreferences sharedPreferences = mContext.getSharedPreferences(BLOCKEDAPPS, Context.MODE_PRIVATE);
-        if (sharedPreferences != null) {
-            Set<String> stringSet = sharedPreferences.getStringSet(BLOCKEDAPPS, new HashSet<String>());
-            return stringSet;
-        }
-        return new HashSet<String>();
-    }
-    public void setBlockedApps(Set<String> checkPackageNames) {
-        SharedPreferences sharedPreferences = mContext.getSharedPreferences(BLOCKEDAPPS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor edit = sharedPreferences.edit();
-        edit.putStringSet(BLOCKEDAPPS, checkPackageNames);
-        edit.apply();
-    }
+
     public void setProviderApp(){
         SharedPreferences sharedPref = mContext.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         if(sharedPref == null) return;

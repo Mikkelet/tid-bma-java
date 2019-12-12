@@ -47,7 +47,7 @@ public class ListOfAppsOnDevice extends Fragment implements Observer {
         listOfAppsView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         PackageManager packageManager = getActivity().getPackageManager();
-        List<BlockedItem> items = collectAllApplicationsOnPhone(packageManager, getActivity());
+        List<BlockedItem> items = collectAllApplicationsOnPhone(getActivity());
         appsAdapter = new BlackListAdapter(packageManager, items);
         listOfAppsView.setAdapter(appsAdapter);
 
@@ -87,7 +87,7 @@ public class ListOfAppsOnDevice extends Fragment implements Observer {
         appsAdapter.notifyDataSetChanged();
 
         PackageManager packageManager = getActivity().getPackageManager();
-        List<BlockedItem> items = BlockedAppsManager.collectAllApplicationsOnPhone(packageManager, getActivity());
+        List<BlockedItem> items = BlockedAppsManager.collectAllApplicationsOnPhone(getActivity());
         appsAdapter = new BlackListAdapter(packageManager, items);
         listOfAppsView.setAdapter(appsAdapter);
     }
