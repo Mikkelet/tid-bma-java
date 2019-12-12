@@ -88,20 +88,19 @@ public class Database {
         }
         return name;
     }
-    public void setBrowseTime(int browseTime){
+    public void setFunTime(int browseTime){
         if (browseTime > 0 && browseTime <= 5)
             this.browseTime = browseTime;
     }
-    public int getBrowseTime(){
-        return browseTime * 1000;
+    public int getFunTime(){
+        return browseTime;
     }
-    public void setExerciseTime(int exerciseTime){
+    public void setBlockTime(int exerciseTime){
         if(exerciseTime > 0 && exerciseTime <= 5){
             this.exerciseTime = exerciseTime;
         }
     }
-    public int getExerciseTime(){
-        return exerciseTime * 1000;
-    }
+    public int getBlockTime(){
+        return exerciseTime;    }
 }
 

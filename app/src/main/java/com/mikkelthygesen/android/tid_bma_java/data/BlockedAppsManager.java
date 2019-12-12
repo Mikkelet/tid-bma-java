@@ -19,9 +19,17 @@ import java.util.Set;
 
 import static com.mikkelthygesen.android.tid_bma_java.controllers.BlackList.BLOCKEDAPPS;
 
-public class BlockedAppDB {
+/**
+ * Class that manages the blocked apps
+ */
+public class BlockedAppsManager {
 
 
+    /**
+     * Save the current list of blocked apps to Shared Preferences
+     * @param activity required activity to make use of Shared Preferences
+     * @param checkPackageNames new list of blocked apps that will overwrite previous
+     */
     public static void saveBlockedApps(FragmentActivity activity, Set<String> checkPackageNames) {
 
         SharedPreferences sharedPreferences = activity.getSharedPreferences(BLOCKEDAPPS, Context.MODE_PRIVATE);
@@ -30,8 +38,12 @@ public class BlockedAppDB {
         edit.apply();
     }
 
-
-
+    /**
+     *
+     * @param packageManager
+     * @param activity
+     * @return
+     */
     public static List<BlockedItem> collectAllApplicationsOnPhone(final PackageManager packageManager, FragmentActivity activity) {
         ArrayList<BlockedItem> blockedItems = new ArrayList<>();
 

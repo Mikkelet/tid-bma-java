@@ -1,12 +1,9 @@
 package com.mikkelthygesen.android.tid_bma_java.controllers;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +14,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.mikkelthygesen.android.tid_bma_java.data.BlockedAppDB;
+import com.mikkelthygesen.android.tid_bma_java.data.BlockedAppsManager;
 import com.mikkelthygesen.android.tid_bma_java.data.SharedPrefs;
 import com.mikkelthygesen.android.tid_bma_java.models.BlockedItem;
 import com.mikkelthygesen.android.tid_bma_java.data.Database;
@@ -33,13 +30,13 @@ import java.util.List;
 public class Timer extends Fragment {
 
 
-    private BubbleSeekBar bubbleSeekBarExercise;
-    private BubbleSeekBar bubbleSeekBarBlockedApps;
+    private BubbleSeekBar bubbleSeekBarBlockTime;
+    private BubbleSeekBar bubbleSeekBarFunTime;
 
     private ImageView arrowToStartSession;
 
-    private int exerciseProgress;
-    private int blockedAppsProgress;
+    private int blockTimeProgress;
+    private int funTimeProgress;
     private Button mStartSessionButtonActivateBlock;
     private int MAX_VALUE = 5;
     private SharedPrefs mSharedPrefs;
@@ -47,7 +44,7 @@ public class Timer extends Fragment {
 
     public Timer() {
         // Required empty public constructor
-        mSharedPrefs = new SharedPrefs(getContext());
+
     }
 
     public static Timer newInstance() {
@@ -67,7 +64,7 @@ public class Timer extends Fragment {
         View v = inflater.inflate(R.layout.fragment_timer, container, false);
      mStartSessionButtonActivateBlock = v.findViewById(R.id.StartSessionButtonActivateBlock);
 
-        List<BlockedItem> tempList = BlockedAppDB.collectAllBlockedApplications(getActivity().getPackageManager(), getActivity() );
+        List<BlockedItem> tempList = BlockedAppsManager.collectAllBlockedApplications(getActivity().getPackageManager(), getActivity() );
         mStartSessionButtonActivateBlock = v.findViewById(R.id.StartSessionButtonActivateBlock);
 
         if (tempList.size() > 0){
@@ -107,17 +104,18 @@ public class Timer extends Fragment {
             }
         });
 
-        bubbleSeekBarExercise = v.findViewById(R.id.bubbleSeekBarExercise);
+        bubbleSeekBarBlockTime = v.findViewById(R.id.bubbleSeekBarBlockTime);
 
         // get progress value from Share Preferences
+        mSharedPrefs = new SharedPrefs(getContext());
         mSharedPrefs.getBlockTime();
         mSharedPrefs.getFunTime();
-        exerciseProgress = Database.getinstance().getExerciseTime();
-        blockedAppsProgress = Database.getinstance().getBrowseTime();
+        blockTimeProgress = Database.getinstance().getBlockTime();
+        funTimeProgress = Database.getinstance().getFunTime();
 
         // set the progress
-        bubbleSeekBarExercise.setProgress(exerciseProgress);
-        bubbleSeekBarExercise.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListener() {
+        bubbleSeekBarBlockTime.setProgress(blockTimeProgress);
+        bubbleSeekBarBlockTime.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListener() {
             @Override
             public void onProgressChanged(int progress, float progressFloat) {
             }
@@ -126,7 +124,7 @@ public class Timer extends Fragment {
             public void getProgressOnActionUp(int progress, float progressFloat) {
                 // Save the progress whenever it is changed
                 mSharedPrefs.setBlockTime(progress);
-                Database.getinstance().setExerciseTime(progress);
+                Database.getinstance().setBlockTime(progress);
             }
 
             @Override
@@ -134,11 +132,11 @@ public class Timer extends Fragment {
             }
         });
 
-        bubbleSeekBarBlockedApps = v.findViewById(R.id.bubbleSeekBarBlockedApps);
+        bubbleSeekBarFunTime = v.findViewById(R.id.bubbleSeekBarFunTime);
 
         // set the progress
-        bubbleSeekBarBlockedApps.setProgress(blockedAppsProgress);
-        bubbleSeekBarBlockedApps.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListener() {
+        bubbleSeekBarFunTime.setProgress(funTimeProgress);
+        bubbleSeekBarFunTime.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListener() {
             @Override
             public void onProgressChanged(int progress, float progressFloat) {
 
@@ -147,7 +145,7 @@ public class Timer extends Fragment {
             @Override
             public void getProgressOnActionUp(int progress, float progressFloat) {
                 mSharedPrefs.setFunTime(progress);
-                Database.getinstance().setBrowseTime(progress);
+                Database.getinstance().setFunTime(progress);
             }
 
             @Override

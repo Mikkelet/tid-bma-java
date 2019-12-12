@@ -35,7 +35,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.xw.repo.BubbleSeekBar
-            android:id="@+id/bubbleSeekBarExercise"
+            android:id="@+id/bubbleSeekBarBlockTime"
             android:layout_width="300dp"
             android:layout_height="40dp"
             android:layout_marginTop="36dp"
@@ -57,7 +57,7 @@
             app:layout_constraintTop_toBottomOf="@+id/TextToUserTimeExercise" />
 
         <com.xw.repo.BubbleSeekBar
-            android:id="@+id/bubbleSeekBarBlockedApps"
+            android:id="@+id/bubbleSeekBarFunTime"
             android:layout_width="300dp"
             android:layout_height="0dp"
             android:layout_marginTop="36dp"
@@ -93,7 +93,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bubbleSeekBarBlockedApps" />
+            app:layout_constraintTop_toBottomOf="@+id/bubbleSeekBarFunTime" />
 
         <TextView
             android:id="@+id/TextToUserTimeExercise"
@@ -123,7 +123,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bubbleSeekBarExercise" />
+            app:layout_constraintTop_toBottomOf="@+id/bubbleSeekBarBlockTime" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

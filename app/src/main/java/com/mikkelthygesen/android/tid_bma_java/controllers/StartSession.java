@@ -27,7 +27,7 @@ import com.mikkelthygesen.android.tid_bma_java.data.SharedPrefs;
 
 import java.util.List;
 
-import static com.mikkelthygesen.android.tid_bma_java.data.BlockedAppDB.collectAllBlockedApplications;
+import static com.mikkelthygesen.android.tid_bma_java.data.BlockedAppsManager.collectAllBlockedApplications;
 
 
 /**

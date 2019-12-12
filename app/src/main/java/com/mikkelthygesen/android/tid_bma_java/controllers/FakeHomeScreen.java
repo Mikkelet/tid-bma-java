@@ -134,6 +134,7 @@ public class FakeHomeScreen extends AppCompatActivity {
             if(intent == null) {
                 Log.d(TAG, "launchApp: please install..."+db.getSelectedExerciseProviderName());
                 Toast.makeText(getBaseContext(), "Please install "+db.getSelectedExerciseProviderName(), Toast.LENGTH_SHORT).show();
+                return;
             }
             startService(blockService);
         } else {

@@ -20,11 +20,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mikkelthygesen.android.tid_bma_java.BlackListAdapter;
-import com.mikkelthygesen.android.tid_bma_java.data.BlockedAppDB;
+import com.mikkelthygesen.android.tid_bma_java.data.BlockedAppsManager;
 import com.mikkelthygesen.android.tid_bma_java.R;
 import com.mikkelthygesen.android.tid_bma_java.models.BlockedItem;
 
-import static com.mikkelthygesen.android.tid_bma_java.data.BlockedAppDB.collectAllApplicationsOnPhone;
+import static com.mikkelthygesen.android.tid_bma_java.data.BlockedAppsManager.collectAllApplicationsOnPhone;
 
 public class ListOfAppsOnDevice extends Fragment implements Observer {
 
@@ -73,7 +73,7 @@ public class ListOfAppsOnDevice extends Fragment implements Observer {
 
 
     private void saveBlockedApps() {
-        BlockedAppDB.saveBlockedApps(getActivity(), appsAdapter.getCheckPackageNames());
+        BlockedAppsManager.saveBlockedApps(getActivity(), appsAdapter.getCheckPackageNames());
     }
 
     private void openFragment(Fragment fragment) {
@@ -87,7 +87,7 @@ public class ListOfAppsOnDevice extends Fragment implements Observer {
         appsAdapter.notifyDataSetChanged();
 
         PackageManager packageManager = getActivity().getPackageManager();
-        List<BlockedItem> items = BlockedAppDB.collectAllApplicationsOnPhone(packageManager, getActivity());
+        List<BlockedItem> items = BlockedAppsManager.collectAllApplicationsOnPhone(packageManager, getActivity());
         appsAdapter = new BlackListAdapter(packageManager, items);
         listOfAppsView.setAdapter(appsAdapter);
     }

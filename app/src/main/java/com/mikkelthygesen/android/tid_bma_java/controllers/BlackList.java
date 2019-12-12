@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.mikkelthygesen.android.tid_bma_java.BlackListAdapter;
-import com.mikkelthygesen.android.tid_bma_java.data.BlockedAppDB;
+import com.mikkelthygesen.android.tid_bma_java.data.BlockedAppsManager;
 import com.mikkelthygesen.android.tid_bma_java.models.BlockedItem;
 import com.mikkelthygesen.android.tid_bma_java.R;
 
@@ -70,7 +70,7 @@ public class BlackList extends Fragment{
             @Override
             public void onClick(View v) {
                 Set<String> packageNames = appsAdapter.getCheckPackageNames();
-                BlockedAppDB.saveBlockedApps(getActivity(), packageNames);
+                BlockedAppsManager.saveBlockedApps(getActivity(), packageNames);
             }
         });
         return v;
@@ -79,7 +79,7 @@ public class BlackList extends Fragment{
 
     private void updateUI() {
         PackageManager packageManager = getActivity().getPackageManager();
-        List<BlockedItem> blockedItems = BlockedAppDB.collectAllApplicationsOnPhone(packageManager, getActivity());
+        List<BlockedItem> blockedItems = BlockedAppsManager.collectAllApplicationsOnPhone(packageManager, getActivity());
         ListIterator<BlockedItem> iter = blockedItems.listIterator();
         while (iter.hasNext()) {
             BlockedItem next = iter.next();
