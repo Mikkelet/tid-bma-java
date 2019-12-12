@@ -17,8 +17,13 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.mikkelthygesen.android.tid_bma_java.data.Database;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+
 import com.mikkelthygesen.android.tid_bma_java.R;
+import com.mikkelthygesen.android.tid_bma_java.data.Database;
 import com.mikkelthygesen.android.tid_bma_java.services.BlockService;
 import com.mikkelthygesen.android.tid_bma_java.services.FunService;
 
