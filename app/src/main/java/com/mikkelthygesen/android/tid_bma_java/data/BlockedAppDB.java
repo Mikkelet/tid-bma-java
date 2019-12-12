@@ -1,4 +1,4 @@
-package com.mikkelthygesen.android.tid_bma_java;
+package com.mikkelthygesen.android.tid_bma_java.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -8,6 +8,8 @@ import android.content.pm.PackageManager;
 
 import androidx.fragment.app.FragmentActivity;
 
+import com.mikkelthygesen.android.tid_bma_java.models.BlockedItem;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -15,7 +17,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static com.mikkelthygesen.android.tid_bma_java.BlackList.BLOCKEDAPPS;
+import static com.mikkelthygesen.android.tid_bma_java.controllers.BlackList.BLOCKEDAPPS;
 
 public class BlockedAppDB {
 

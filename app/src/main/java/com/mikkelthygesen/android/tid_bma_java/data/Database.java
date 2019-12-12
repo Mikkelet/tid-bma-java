@@ -1,17 +1,12 @@
-package com.mikkelthygesen.android.tid_bma_java;
+package com.mikkelthygesen.android.tid_bma_java.data;
 
-import android.os.AsyncTask;
-import android.os.Parcel;
 import android.util.Log;
 import android.util.Pair;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.Timer;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
@@ -21,7 +16,6 @@ public class Database {
     private boolean isBlocking = true;
     private String exerciseProviderBundleId = "com.duolingo";
     private Set<String> blockedAppsBundleIds = new HashSet<>();
-    private int timeLeft = 5;
     private int exerciseTime = 1;
     private int browseTime = 1;
     private List<Pair<String,String>> lsPairs = new ArrayList<>();
@@ -35,16 +29,6 @@ public class Database {
         lsPairs.add(new Pair<String, String>("com.duolingo","Duolingo"));
         lsPairs.add(new Pair<String, String>("com.memrise.android.memrisecompanion","Memrise"));
         lsPairs.add(new Pair<String, String>("com.sololearn","SoloLearn"));
-    }
-    
-    public synchronized void startTimer(){
-        Log.d(TAG, "startTimer: Started");
-        try {
-             wait(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        Log.d(TAG, "startTimer: Stopped!");
     }
 
     public static Database getinstance() {

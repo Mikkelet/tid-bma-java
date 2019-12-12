@@ -1,8 +1,6 @@
-package com.mikkelthygesen.android.tid_bma_java;
+package com.mikkelthygesen.android.tid_bma_java.controllers;
 
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,9 +19,15 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.mikkelthygesen.android.tid_bma_java.BlackListAdapter;
+import com.mikkelthygesen.android.tid_bma_java.models.BlockedItem;
+import com.mikkelthygesen.android.tid_bma_java.data.Database;
+import com.mikkelthygesen.android.tid_bma_java.R;
+import com.mikkelthygesen.android.tid_bma_java.data.SharedPrefs;
+
 import java.util.List;
 
-import static com.mikkelthygesen.android.tid_bma_java.BlockedAppDB.collectAllBlockedApplications;
+import static com.mikkelthygesen.android.tid_bma_java.data.BlockedAppDB.collectAllBlockedApplications;
 
 
 /**
@@ -78,7 +82,9 @@ public class StartSession extends Fragment {
                 Database.getinstance().setExerciseProviderBundleId(selected);
                 String provider = Database.getinstance().getExerciseProviderBundleId();
                 Log.d("Start Session", "onItemSelected: "+selected);
-                saveProvderAppsToSharedPrefs();
+                SharedPrefs sharedPrefs = new SharedPrefs(getContext());
+                sharedPrefs.setProviderApp();
+
             }
 
             @Override
@@ -98,18 +104,13 @@ public class StartSession extends Fragment {
         listOfAppsView = view.findViewById(R.id.listOfAppRecyclerView);
         listOfAppsView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        emptyView = view.findViewById(R.id.empty_view);
-
         PackageManager packageManager = getActivity().getPackageManager();
         List<BlockedItem> items = collectAllBlockedApplications(packageManager, getActivity());
-        if(!items.isEmpty()) {
-            listOfAppsView.setVisibility(View.VISIBLE);
-            emptyView.setVisibility(View.GONE);
+
+       if(!items.isEmpty()) {
+           listOfAppsView.setVisibility(View.VISIBLE);
             appsAdapter = new BlackListAdapter(packageManager, items, true);
             listOfAppsView.setAdapter(appsAdapter);
-        } else{
-            listOfAppsView.setVisibility(View.GONE);
-            emptyView.setVisibility(View.VISIBLE);
         }
 
         arrowToTimer = view.findViewById(R.id.ArrowToTimer);
@@ -130,11 +131,5 @@ public class StartSession extends Fragment {
         transaction.replace(R.id.MainFrameLayout, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
-    }
-    private void saveProvderAppsToSharedPrefs(){
-        SharedPreferences sharedPref = getActivity().getSharedPreferences("sp", Context.MODE_PRIVATE);
-        if(sharedPref == null) return;
-        Log.d("Start Session", "saveProvderAppsToSharedPrefs: ");
-        sharedPref.edit().putString(Database.SharePrefs.EXERCISE_PROVIDER, Database.getinstance().getSelectedExerciseProviderName()).apply();
     }
 }

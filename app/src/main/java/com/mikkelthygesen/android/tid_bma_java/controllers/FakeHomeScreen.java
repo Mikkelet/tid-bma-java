@@ -1,4 +1,4 @@
-package com.mikkelthygesen.android.tid_bma_java;
+package com.mikkelthygesen.android.tid_bma_java.controllers;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -19,9 +19,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.util.List;
-
-import static com.mikkelthygesen.android.tid_bma_java.BlockedAppDB.collectAllBlockedApplications;
+import com.mikkelthygesen.android.tid_bma_java.data.Database;
+import com.mikkelthygesen.android.tid_bma_java.R;
+import com.mikkelthygesen.android.tid_bma_java.services.BlockService;
+import com.mikkelthygesen.android.tid_bma_java.services.ExerciseService;
 
 public class FakeHomeScreen extends AppCompatActivity {
 
@@ -129,18 +130,22 @@ public class FakeHomeScreen extends AppCompatActivity {
             intent = packageManager.getLaunchIntentForPackage(db.getExerciseProviderBundleId());
             //Toast.makeText(this, "App blocked!", Toast.LENGTH_SHORT).show();
             Intent blockService = new Intent(FakeHomeScreen.this, BlockService.class);
+
+            if(intent == null) {
+                Log.d(TAG, "launchApp: please install..."+db.getSelectedExerciseProviderName());
+                Toast.makeText(getBaseContext(), "Please install "+db.getSelectedExerciseProviderName(), Toast.LENGTH_SHORT).show();
+            }
             startService(blockService);
         } else {
             Log.d("Fakehomescreen", "launchApp: blocked!");
             Intent exerciseService = new Intent(FakeHomeScreen.this, ExerciseService.class);
             startService(exerciseService);
         }
-        if (intent != null)
+        if (intent != null) {
             startActivity(intent);
+        }
         else if(db.getIsBlocking()){
             Log.d(TAG, "please install "+db.getSelectedExerciseProviderName());
-            Toast.makeText(this, "Please install "+db.getSelectedExerciseProviderName(), Toast.LENGTH_SHORT).show();
         }
-
     }
 }

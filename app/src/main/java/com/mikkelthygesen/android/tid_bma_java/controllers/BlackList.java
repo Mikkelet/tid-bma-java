@@ -1,9 +1,6 @@
-package com.mikkelthygesen.android.tid_bma_java;
+package com.mikkelthygesen.android.tid_bma_java.controllers;
 
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -16,12 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+import com.mikkelthygesen.android.tid_bma_java.BlackListAdapter;
+import com.mikkelthygesen.android.tid_bma_java.data.BlockedAppDB;
+import com.mikkelthygesen.android.tid_bma_java.models.BlockedItem;
+import com.mikkelthygesen.android.tid_bma_java.R;
+
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.Set;
 
 

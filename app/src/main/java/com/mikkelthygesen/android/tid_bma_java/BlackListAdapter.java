@@ -14,6 +14,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.mikkelthygesen.android.tid_bma_java.models.BlockedItem;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

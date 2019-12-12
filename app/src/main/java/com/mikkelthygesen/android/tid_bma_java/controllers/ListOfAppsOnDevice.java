@@ -1,4 +1,4 @@
-package com.mikkelthygesen.android.tid_bma_java;
+package com.mikkelthygesen.android.tid_bma_java.controllers;
 
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -19,7 +19,12 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import static com.mikkelthygesen.android.tid_bma_java.BlockedAppDB.collectAllApplicationsOnPhone;
+import com.mikkelthygesen.android.tid_bma_java.BlackListAdapter;
+import com.mikkelthygesen.android.tid_bma_java.data.BlockedAppDB;
+import com.mikkelthygesen.android.tid_bma_java.R;
+import com.mikkelthygesen.android.tid_bma_java.models.BlockedItem;
+
+import static com.mikkelthygesen.android.tid_bma_java.data.BlockedAppDB.collectAllApplicationsOnPhone;
 
 public class ListOfAppsOnDevice extends Fragment implements Observer {
 

@@ -9,8 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".FakeHomeScreen"></activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".controllers.FakeHomeScreen"></activity>
+        <activity android:name=".controllers.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,9 +18,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ListOfAppsOnDevice"></activity>
-        <service android:name = ".BlockService"/>
-        <service android:name=".ExerciseService" />
+        <activity android:name=".controllers.ListOfAppsOnDevice"></activity>
+        <service android:name = ".services.BlockService"/>
+        <service android:name=".services.ExerciseService" />
     </application>
 
 </manifest>

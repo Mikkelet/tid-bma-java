@@ -1,8 +1,8 @@
-package com.mikkelthygesen.android.tid_bma_java;
+package com.mikkelthygesen.android.tid_bma_java.models;
 
 import android.content.pm.PackageInfo;
 
-class BlockedItem {
+public class BlockedItem {
 
     private final PackageInfo packageInfo;
     private boolean checked;
