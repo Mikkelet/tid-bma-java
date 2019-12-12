@@ -1,7 +1,6 @@
 package com.mikkelthygesen.android.tid_bma_java.controllers;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
@@ -16,22 +15,18 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.mikkelthygesen.android.tid_bma_java.data.Database;
 import com.mikkelthygesen.android.tid_bma_java.R;
 import com.mikkelthygesen.android.tid_bma_java.services.BlockService;
-import com.mikkelthygesen.android.tid_bma_java.services.ExerciseService;
+import com.mikkelthygesen.android.tid_bma_java.services.FunService;
 
 public class FakeHomeScreen extends AppCompatActivity {
 
     private static final String TAG = "FakeHomeScreen";
     private ImageButton mImageButtonFacebook;
     private ImageButton mImageButtonInstagram;
-    private ConstraintLayout mConstraintLayout;
-
-    private ImageView notificationBtn;
     private String channelId = "channelId";
     private Integer notificationId = 1234;
 
@@ -43,8 +38,6 @@ public class FakeHomeScreen extends AppCompatActivity {
 
         mImageButtonFacebook = findViewById(R.id.imageButton_facebook);
         mImageButtonInstagram = findViewById(R.id.imageButton_instagram);
-        mConstraintLayout = findViewById(R.id.fake_homescreen_constraint_layout);
-        notificationBtn = findViewById(R.id.notificationBtn);
 
         configureUI();
     }
@@ -62,13 +55,6 @@ public class FakeHomeScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 launchApp("com.facebook.katana");
-            }
-        });
-
-        notificationBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showNotification();
             }
         });
     }
@@ -139,7 +125,7 @@ public class FakeHomeScreen extends AppCompatActivity {
             startService(blockService);
         } else {
             Log.d("Fakehomescreen", "launchApp: blocked!");
-            Intent exerciseService = new Intent(FakeHomeScreen.this, ExerciseService.class);
+            Intent exerciseService = new Intent(FakeHomeScreen.this, FunService.class);
             startService(exerciseService);
         }
         if (intent != null) {

@@ -110,7 +110,7 @@ public class BlockedAppsManager {
     }
 
     /**
-     *
+     * load blocked apps set from shared preferences
      * @param activity
      * @return
      */
@@ -123,6 +123,11 @@ public class BlockedAppsManager {
         return new HashSet<>();
     }
 
+    /**
+     * check if package is a system package
+     * @param pkgInfo
+     * @return true if package is system package
+     */
     private static boolean isSystemPackage(PackageInfo pkgInfo) {
         return (pkgInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
     }

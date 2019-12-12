@@ -3,9 +3,6 @@ package com.mikkelthygesen.android.tid_bma_java.data;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import java.util.HashSet;
-import java.util.Set;
-
 
 public class SharedPrefs {
     Context mContext;
@@ -53,6 +50,10 @@ public class SharedPrefs {
         // save the progress under the key "progress"
         sharedPref.edit().putInt(FUN_TIME, value).apply();
     }
+
+    /**
+     * get fun time from shared preferences and updates the value in the database instance
+     */
     public void getFunTime(){
 
         SharedPreferences sharedPref = mContext.getSharedPreferences("sp", Context.MODE_PRIVATE);
@@ -68,11 +69,18 @@ public class SharedPrefs {
         Database.getinstance().setFunTime(exerciseProgress);
     }
 
+    /**
+     * Get the exercise provider app from the DB singleton and stores it in Shared Preference
+     */
     public void setProviderApp(){
         SharedPreferences sharedPref = mContext.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         if(sharedPref == null) return;
         sharedPref.edit().putString(EXERCISE_PROVIDER, Database.getinstance().getSelectedExerciseProviderName()).apply();
     }
+
+    /**
+     * Get the exercise provider bundle Id from shared preferences
+     */
     public void getProviderBundleId(){
         SharedPreferences sharedPref = mContext.getSharedPreferences("sp", Context.MODE_PRIVATE);
         if(sharedPref == null){

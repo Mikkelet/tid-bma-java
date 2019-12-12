@@ -20,7 +20,7 @@
 
         <activity android:name=".controllers.ListOfAppsOnDevice"></activity>
         <service android:name = ".services.BlockService"/>
-        <service android:name=".services.ExerciseService" />
+        <service android:name=".services.FunService" />
     </application>
 
 </manifest>
