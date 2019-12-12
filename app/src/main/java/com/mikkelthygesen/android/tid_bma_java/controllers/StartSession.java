@@ -29,21 +29,13 @@ import java.util.List;
 
 import static com.mikkelthygesen.android.tid_bma_java.data.BlockedAppsManager.collectAllBlockedApplications;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class StartSession extends Fragment {
 
     private Spinner spinner;
-
     private ImageView arrowToTimer;
-
-    private Button mBlacklist;
+    private Button mButtonToApps;
     private BlackListAdapter appsAdapter;
     private RecyclerView listOfAppsView;
-    private TextView emptyView;
-
 
     public StartSession() {
         // Required empty public constructor
@@ -62,6 +54,74 @@ public class StartSession extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_start_session, container, false);
+        setupSpinner(view);
+
+        setupButtonToApps(view);
+
+        setupRecyclerView(view);
+
+        setupArrowToTimer(view);
+
+        // Inflate the layout for this fragment
+        return view;
+    }
+
+    /**
+     * Initialize the arrow so when clicked it will take the user to
+     * the Timer class.
+     * @param view the given view where the arrow is.
+     */
+    private void setupArrowToTimer(View view) {
+        arrowToTimer = view.findViewById(R.id.ArrowToTimer);
+        arrowToTimer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Timer timer = Timer.newInstance();
+                openFragment(timer);
+            }
+        });
+    }
+
+    /**
+     * Initialize RecyclerView so it contains all blocked apps,
+     * if there are any.
+     * @param view the given view where the RecyclerView is.
+     */
+    private void setupRecyclerView(View view) {
+        listOfAppsView = view.findViewById(R.id.listOfAppRecyclerView);
+        listOfAppsView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        PackageManager packageManager = getActivity().getPackageManager();
+        List<BlockedItem> items = collectAllBlockedApplications(getActivity());
+
+        if(!items.isEmpty()) {
+            listOfAppsView.setVisibility(View.VISIBLE);
+             appsAdapter = new BlackListAdapter(packageManager, items, true);
+             listOfAppsView.setAdapter(appsAdapter);
+         }
+    }
+
+    /**
+     * Initialize the Button to all the apps on the device.
+     * @param view the given view where the Button is.
+     */
+    private void setupButtonToApps(View view) {
+        mButtonToApps = view.findViewById(R.id.GoToActivationSite);
+        mButtonToApps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ListOfAppsOnDevice lst = new ListOfAppsOnDevice();
+                openFragment(lst);
+            }
+        });
+    }
+
+    /**
+     * Initialize the Spinner with all the available
+     * exercise providers.
+     * @param view the given view where the Spinner is.
+     */
+    private void setupSpinner(View view) {
         spinner = view.findViewById(R.id.StartSessionSpinnerExerciseProviders);
         final List<String> providerAppNames = Database.getinstance().getProviderAppNames();
         int selectedItemPosition = providerAppNames.indexOf(Database.getinstance().getSelectedExerciseProviderName());
@@ -91,41 +151,12 @@ public class StartSession extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
-        mBlacklist = view.findViewById(R.id.GoToActivationSite);
-        mBlacklist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ListOfAppsOnDevice lst = new ListOfAppsOnDevice();
-                openFragment(lst);
-            }
-        });
-
-        listOfAppsView = view.findViewById(R.id.listOfAppRecyclerView);
-        listOfAppsView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        PackageManager packageManager = getActivity().getPackageManager();
-        List<BlockedItem> items = collectAllBlockedApplications(getActivity());
-
-       if(!items.isEmpty()) {
-           listOfAppsView.setVisibility(View.VISIBLE);
-            appsAdapter = new BlackListAdapter(packageManager, items, true);
-            listOfAppsView.setAdapter(appsAdapter);
-        }
-
-        arrowToTimer = view.findViewById(R.id.ArrowToTimer);
-        arrowToTimer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Timer timer = Timer.newInstance();
-                openFragment(timer);
-            }
-        });
-
-        // Inflate the layout for this fragment
-        return view;
     }
 
+    /**
+     * Replaces the main fragment layout on the activity with a new one.
+     * @param fragment The one replacing the main fragment.
+     */
     private void openFragment(Fragment fragment) {
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.MainFrameLayout, fragment);

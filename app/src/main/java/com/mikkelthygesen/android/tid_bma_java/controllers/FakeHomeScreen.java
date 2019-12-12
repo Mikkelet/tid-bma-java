@@ -36,35 +36,42 @@ public class FakeHomeScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fake_home_screen);
 
-        mImageButtonFacebook = findViewById(R.id.imageButton_facebook);
-        mImageButtonInstagram = findViewById(R.id.imageButton_instagram);
-
         configureUI();
     }
 
+    /**
+     * Initialize the UI for the fake home screen.
+     */
     private void configureUI() {
-
-        mImageButtonInstagram.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showNotification();
-            }
-        });
-
+        mImageButtonFacebook = findViewById(R.id.imageButton_facebook);
         mImageButtonFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 launchApp("com.facebook.katana");
             }
         });
+
+        mImageButtonInstagram = findViewById(R.id.imageButton_instagram);
+        mImageButtonInstagram.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showNotification();
+            }
+        });
     }
 
+    /**
+     * Shows a notification on the users device.
+     */
     private void showNotification(){
 
         createNotificationChannel();
         createNotification();
     }
 
+    /**
+     * Creates the notification for the users device.
+     */
     private void createNotification(){
 
         Intent notificationIntent = new Intent(Intent.ACTION_VIEW);
@@ -84,11 +91,13 @@ public class FakeHomeScreen extends AppCompatActivity {
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
 
-// notificationId is a unique int for each notification that you must define
+        // notificationId is a unique int for each notification that you must define
         notificationManager.notify(notificationId, builder.build());
     }
 
-
+    /**
+     * Creates the notification channel for the notification.
+     */
     private void createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
@@ -105,6 +114,10 @@ public class FakeHomeScreen extends AppCompatActivity {
         }
     }
 
+    /**
+     * Checks if the app is blocked or not.
+     * @param bundleId of the given app.
+     */
     private void launchApp(String bundleId) {
         Database db = Database.getinstance();
 
