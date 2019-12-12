@@ -7,6 +7,7 @@ git clone https://github.com/Mikkelet/tid-bma-java
 ### Additional installation instructions
 * Clone this repository
 * Run in Android studio on the Emulator or Device.
+* Download Duolingo, Sololearn and Memrise. We advice you to use Duolingo.
 
 ## Operating
 1) Opening the application for the first time, you are presented with a screen containing three clickable objects:
@@ -31,6 +32,9 @@ a button. All applications can be checked.
 2b) The bottom slider offers the user to set an amount of time that the user would like to use on the exercise application.
 
 2c) The "Start" button enables the user to start the functionality of BlockMyApp with the settings set up by the user.
+
+The user will be forwarded to a home screen, with two objects to interact with. 
+
 ## Troubleshooting
 BlockMyApp requires (API 28: Android 9.0(Pie))
 
