@@ -7,10 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -85,7 +82,7 @@ public class ListOfAppsOnDevice extends Fragment {
 
     /**
      * Replaces the main fragment layout on the activity with a new one.
-     * @param fragment the fragment which is replacing.
+     * @param fragment The one replacing the main fragment.
      */
     private void openFragment(Fragment fragment) {
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
