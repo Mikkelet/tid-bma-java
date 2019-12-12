@@ -64,7 +64,7 @@ public class Timer extends Fragment {
         View v = inflater.inflate(R.layout.fragment_timer, container, false);
      mStartSessionButtonActivateBlock = v.findViewById(R.id.StartSessionButtonActivateBlock);
 
-        List<BlockedItem> tempList = BlockedAppsManager.collectAllBlockedApplications(getActivity().getPackageManager(), getActivity() );
+        List<BlockedItem> tempList = BlockedAppsManager.collectAllBlockedApplications(getActivity());
         mStartSessionButtonActivateBlock = v.findViewById(R.id.StartSessionButtonActivateBlock);
 
         if (tempList.size() > 0){

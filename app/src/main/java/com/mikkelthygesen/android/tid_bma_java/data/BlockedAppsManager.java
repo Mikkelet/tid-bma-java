@@ -17,13 +17,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static com.mikkelthygesen.android.tid_bma_java.controllers.BlackList.BLOCKEDAPPS;
 
 /**
  * Class that manages the blocked apps
  */
 public class BlockedAppsManager {
 
+    public static final String BLOCKEDAPPS = "blockedapps";
 
     /**
      * Save the current list of blocked apps to Shared Preferences
@@ -39,15 +39,16 @@ public class BlockedAppsManager {
     }
 
     /**
-     *
-     * @param packageManager
+     * Gets all the apps currently installed on the phone
      * @param activity
      * @return
      */
-    public static List<BlockedItem> collectAllApplicationsOnPhone(final PackageManager packageManager, FragmentActivity activity) {
+    public static List<BlockedItem> collectAllApplicationsOnPhone(FragmentActivity activity) {
         ArrayList<BlockedItem> blockedItems = new ArrayList<>();
 
-        List<PackageInfo> packageInfoList = packageManager.
+        PackageManager packageManager = activity.getPackageManager();
+
+        List<PackageInfo> packageInfoList =  packageManager.
                 getInstalledPackages(PackageManager.GET_PERMISSIONS);
 
         Set<String> blockedPackageNames = loadBlockedApps(activity);
@@ -61,8 +62,15 @@ public class BlockedAppsManager {
         return sortBlocked(blockedItems,packageManager);
     }
 
-    public static List<BlockedItem> collectAllBlockedApplications(final PackageManager packageManager, FragmentActivity activity) {
+    /**
+     * Collect all blocked applications
+     * @param activity activity needed to access package manager
+     * @return a list of blocked items
+     */
+    public static List<BlockedItem> collectAllBlockedApplications(FragmentActivity activity) {
+
         ArrayList<BlockedItem> blockedItems = new ArrayList<>();
+        PackageManager packageManager = activity.getPackageManager();
 
         List<PackageInfo> packageInfoList = packageManager.
                 getInstalledPackages(PackageManager.GET_PERMISSIONS);
@@ -82,6 +90,12 @@ public class BlockedAppsManager {
         return sortBlocked(blockedItems,packageManager);
     }
 
+    /**
+     * sort list of blocked items
+     * @param blockedItems
+     * @param packageManager
+     * @return
+     */
     private static List<BlockedItem> sortBlocked(List<BlockedItem> blockedItems, final PackageManager packageManager){
         Collections.sort(blockedItems, new Comparator<BlockedItem>() {
             public int compare(BlockedItem arg0, BlockedItem arg1) {
@@ -95,6 +109,11 @@ public class BlockedAppsManager {
         return blockedItems;
     }
 
+    /**
+     *
+     * @param activity
+     * @return
+     */
     private static Set<String> loadBlockedApps(FragmentActivity activity) {
         SharedPreferences sharedPreferences = activity.getSharedPreferences(BLOCKEDAPPS, Context.MODE_PRIVATE);
         if (sharedPreferences != null) {

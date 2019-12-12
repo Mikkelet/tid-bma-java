@@ -105,7 +105,7 @@ public class StartSession extends Fragment {
         listOfAppsView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         PackageManager packageManager = getActivity().getPackageManager();
-        List<BlockedItem> items = collectAllBlockedApplications(packageManager, getActivity());
+        List<BlockedItem> items = collectAllBlockedApplications(getActivity());
 
        if(!items.isEmpty()) {
            listOfAppsView.setVisibility(View.VISIBLE);
