@@ -10,6 +10,7 @@ import android.os.Bundle;
 
 import com.mikkelthygesen.android.tid_bma_java.data.Database;
 import com.mikkelthygesen.android.tid_bma_java.R;
+import com.mikkelthygesen.android.tid_bma_java.data.SharedPrefs;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -24,24 +25,13 @@ public class MainActivity extends AppCompatActivity {
             mStartSessionFragment = StartSession.newInstance();
             openFragment(mStartSessionFragment);
         }
-        getSelectedExerciseProvider();
-
+        SharedPrefs sharedPrefs = new SharedPrefs(this);
+        sharedPrefs.getProviderBundleId();
     }
 
     private void openFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.MainFrameLayout, fragment);
         transaction.commit();
-    }
-
-    private void getSelectedExerciseProvider(){
-        SharedPreferences sharedPref = getSharedPreferences("sp", Context.MODE_PRIVATE);
-        if(sharedPref == null){
-            return;
-        }
-        String epFromSp = sharedPref.getString(Database.SharePrefs.EXERCISE_PROVIDER,"");
-        Database.getinstance().setExerciseProviderBundleId(epFromSp);
-
-
     }
 }

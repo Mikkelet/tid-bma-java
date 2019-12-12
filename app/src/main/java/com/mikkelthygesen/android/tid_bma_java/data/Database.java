@@ -10,9 +10,10 @@ import java.util.Set;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
+/**
+ * Central database singleton for global state management
+ */
 public class Database {
-
-    public int bubbleSeekBarExercise;
     private boolean isBlocking = true;
     private String exerciseProviderBundleId = "com.duolingo";
     private Set<String> blockedAppsBundleIds = new HashSet<>();
@@ -26,9 +27,9 @@ public class Database {
         blockedAppsBundleIds.add("com.facebook.katana");
         blockedAppsBundleIds.add("com.instagram.android");
 
-        lsPairs.add(new Pair<String, String>("com.duolingo","Duolingo"));
-        lsPairs.add(new Pair<String, String>("com.memrise.android.memrisecompanion","Memrise"));
-        lsPairs.add(new Pair<String, String>("com.sololearn","SoloLearn"));
+        lsPairs.add(new Pair<>("com.duolingo","Duolingo"));
+        lsPairs.add(new Pair<>("com.memrise.android.memrisecompanion","Memrise"));
+        lsPairs.add(new Pair<>("com.sololearn","SoloLearn"));
     }
 
     public static Database getinstance() {
@@ -71,12 +72,6 @@ public class Database {
         }
         Log.d(TAG, "setExerciseProviderBundleId: "+this.exerciseProviderBundleId);
     }
-    public void setBlockedAppsBundleIds(Set<String> blockedAppsBundleIds) {
-        this.blockedAppsBundleIds = blockedAppsBundleIds;
-    }
-    public boolean isAppBlocked(String bundleId) {
-        return blockedAppsBundleIds.contains(bundleId);
-    }
 
     public List<String> getProviderAppNames(){
         List ls = new ArrayList<String>();
@@ -107,10 +102,6 @@ public class Database {
     }
     public int getExerciseTime(){
         return exerciseTime * 1000;
-    }
-
-    static class SharePrefs{
-        public static final String EXERCISE_PROVIDER = "exercise_provider";
     }
 }
 

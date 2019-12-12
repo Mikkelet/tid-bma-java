@@ -14,6 +14,7 @@ public class SharedPrefs {
     private static final String SHARED_PREFS = "sp";
     private static final String BLOCK_TIME = "block_time";
     private static final String FUN_TIME = "fun_time";
+    public static final String EXERCISE_PROVIDER = "exercise_provider";
 
     public SharedPrefs(Context context) {
         mContext = context;
@@ -77,6 +78,14 @@ public class SharedPrefs {
     public void setProviderApp(){
         SharedPreferences sharedPref = mContext.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         if(sharedPref == null) return;
-        sharedPref.edit().putString(Database.SharePrefs.EXERCISE_PROVIDER, Database.getinstance().getSelectedExerciseProviderName()).apply();
+        sharedPref.edit().putString(EXERCISE_PROVIDER, Database.getinstance().getSelectedExerciseProviderName()).apply();
+    }
+    public void getProviderBundleId(){
+        SharedPreferences sharedPref = mContext.getSharedPreferences("sp", Context.MODE_PRIVATE);
+        if(sharedPref == null){
+            return;
+        }
+        String epFromSp = sharedPref.getString(EXERCISE_PROVIDER,"");
+        Database.getinstance().setExerciseProviderBundleId(epFromSp);
     }
 }
