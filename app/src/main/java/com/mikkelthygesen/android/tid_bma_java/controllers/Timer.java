@@ -28,7 +28,6 @@ import java.util.List;
  */
 public class Timer extends Fragment {
 
-
     private BubbleSeekBar bubbleSeekBarBlockTime;
     private BubbleSeekBar bubbleSeekBarFunTime;
 
@@ -58,65 +57,23 @@ public class Timer extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_timer, container, false);
-        mStartSessionButtonActivateBlock = v.findViewById(R.id.StartSessionButtonActivateBlock);
 
-        List<BlockedItem> tempList = BlockedAppsManager.collectAllBlockedApplications(getActivity());
-        mStartSessionButtonActivateBlock = v.findViewById(R.id.StartSessionButtonActivateBlock);
+        activateButton(v);
+        arrowBack(v);
+        blockedTime(v);
+        funTime(v);
 
-        // if shared preferences are set turn button green
-        if (tempList.size() > 0){
-            mStartSessionButtonActivateBlock.setBackgroundResource(R.drawable.activate_block_circle_pressed);
-        }
+        return v;
+    }
 
-        // when 'activate and close' button pressed redirect to FakeHomeScreen.
-        mStartSessionButtonActivateBlock.setOnClickListener(new View.OnClickListener() {
-            @Override   
-            public void onClick(View v) {
-                PackageManager packageManager = getContext().getPackageManager();
-                Intent intent = new Intent(getActivity(), FakeHomeScreen.class);
-                startActivity(intent);
-            }
-        });
-
-        // arrow back to previous screen
-        arrowToStartSession = v.findViewById(R.id.ArrowToStartSession);
-        arrowToStartSession.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                StartSession session = StartSession.newInstance();
-                openFragment(session);
-            }
-        });
-
-        bubbleSeekBarBlockTime = v.findViewById(R.id.bubbleSeekBarBlockTime);
-
-        // get progress value from Shared Preferences
-        mSharedPrefs = new SharedPrefs(getContext());
-        mSharedPrefs.getBlockTime();
-        mSharedPrefs.getFunTime();
-        blockTimeProgress = Database.getinstance().getBlockTime();
-        funTimeProgress = Database.getinstance().getFunTime();
-
-        // set the progress of blocked time
-        bubbleSeekBarBlockTime.setProgress(blockTimeProgress);
-        bubbleSeekBarBlockTime.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListener() {
-            @Override
-            public void onProgressChanged(int progress, float progressFloat) {
-            }
-
-            @Override
-            public void getProgressOnActionUp(int progress, float progressFloat) {
-                // Save the progress of blocked time whenever it is changed
-                mSharedPrefs.setBlockTime(progress);
-                Database.getinstance().setBlockTime(progress);
-            }
-
-            @Override
-            public void getProgressOnFinally(int progress, float progressFloat) {
-            }
-        });
-
+    /**
+     * Progress of time set in fun time and put into shared preferences
+     * @param v
+     */
+    private void funTime(View v) {
         bubbleSeekBarFunTime = v.findViewById(R.id.bubbleSeekBarFunTime);
+        funTimeProgress = Database.getinstance().getFunTime();
+        mSharedPrefs.getFunTime();
 
         // set the progress fun time
         bubbleSeekBarFunTime.setProgress(funTimeProgress);
@@ -138,8 +95,80 @@ public class Timer extends Fragment {
 
             }
         });
+    }
 
-        return v;
+    /**
+     * Progress of time set in blocked time and put into shared preferences
+     * @param v
+     */
+    private void blockedTime(View v) {
+        bubbleSeekBarBlockTime = v.findViewById(R.id.bubbleSeekBarBlockTime);
+        blockTimeProgress = Database.getinstance().getBlockTime();
+        mSharedPrefs.getBlockTime();
+
+        // set the progress of blocked time
+        bubbleSeekBarBlockTime.setProgress(blockTimeProgress);
+        bubbleSeekBarBlockTime.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListener() {
+            @Override
+            public void onProgressChanged(int progress, float progressFloat) {
+
+            }
+
+            @Override
+            public void getProgressOnActionUp(int progress, float progressFloat) {
+                // Save the progress of blocked time whenever it is changed
+                mSharedPrefs.setBlockTime(progress);
+                Database.getinstance().setBlockTime(progress);
+            }
+
+            @Override
+            public void getProgressOnFinally(int progress, float progressFloat) {
+            }
+        });
+    }
+
+    /**
+     * An arrow button which brings the user back to the previous page
+     * @param v
+     */
+    private void arrowBack(View v) {
+        // arrow back to previous screen
+        arrowToStartSession = v.findViewById(R.id.ArrowToStartSession);
+        arrowToStartSession.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StartSession session = StartSession.newInstance();
+                openFragment(session);
+            }
+        });
+    }
+
+    /**
+     * The activation button turns green when an app are chosen to be blocked.
+     * When the button clicked the user gets to the fake home screen.
+     * @param v
+     */
+    private void activateButton(View v) {
+        List<BlockedItem> tempList = BlockedAppsManager.collectAllBlockedApplications(getActivity());
+        mStartSessionButtonActivateBlock = v.findViewById(R.id.StartSessionButtonActivateBlock);
+
+        // if shared preferences are set turn button green
+        if (tempList.size() > 0){
+            mStartSessionButtonActivateBlock.setBackgroundResource(R.drawable.activate_block_circle_pressed);
+        }
+
+        // get progress value from Shared Preferences
+        mSharedPrefs = new SharedPrefs(getContext());
+
+        // when 'activate and close' button pressed redirect to FakeHomeScreen.
+        mStartSessionButtonActivateBlock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PackageManager packageManager = getContext().getPackageManager();
+                Intent intent = new Intent(getActivity(), FakeHomeScreen.class);
+                startActivity(intent);
+            }
+        });
     }
 
     /**
