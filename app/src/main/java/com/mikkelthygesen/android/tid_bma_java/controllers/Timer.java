@@ -72,8 +72,8 @@ public class Timer extends Fragment {
      */
     private void funTime(View v) {
         bubbleSeekBarFunTime = v.findViewById(R.id.bubbleSeekBarFunTime);
-        funTimeProgress = Database.getinstance().getFunTime();
         mSharedPrefs.getFunTime();
+        funTimeProgress = Database.getinstance().getFunTime();
 
         // set the progress fun time
         bubbleSeekBarFunTime.setProgress(funTimeProgress);
@@ -103,8 +103,8 @@ public class Timer extends Fragment {
      */
     private void blockedTime(View v) {
         bubbleSeekBarBlockTime = v.findViewById(R.id.bubbleSeekBarBlockTime);
-        blockTimeProgress = Database.getinstance().getBlockTime();
         mSharedPrefs.getBlockTime();
+        blockTimeProgress = Database.getinstance().getBlockTime();
 
         // set the progress of blocked time
         bubbleSeekBarBlockTime.setProgress(blockTimeProgress);
@@ -149,7 +149,7 @@ public class Timer extends Fragment {
      * @param v
      */
     private void activateButton(View v) {
-        List<BlockedItem> tempList = BlockedAppsManager.collectAllBlockedApplications(getActivity());
+        final List<BlockedItem> tempList = BlockedAppsManager.collectAllBlockedApplications(getActivity());
         mStartSessionButtonActivateBlock = v.findViewById(R.id.StartSessionButtonActivateBlock);
 
         // if shared preferences are set turn button green
@@ -166,6 +166,7 @@ public class Timer extends Fragment {
             public void onClick(View v) {
                 PackageManager packageManager = getContext().getPackageManager();
                 Intent intent = new Intent(getActivity(), FakeHomeScreen.class);
+                if(tempList.size() > 0)
                 startActivity(intent);
             }
         });
