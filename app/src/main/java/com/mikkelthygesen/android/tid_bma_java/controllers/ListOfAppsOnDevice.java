@@ -26,7 +26,7 @@ import com.mikkelthygesen.android.tid_bma_java.models.BlockedItem;
 
 import static com.mikkelthygesen.android.tid_bma_java.data.BlockedAppsManager.collectAllApplicationsOnPhone;
 
-public class ListOfAppsOnDevice extends Fragment implements Observer {
+public class ListOfAppsOnDevice extends Fragment {
 
     private RecyclerView listOfAppsView;
     private BlackListAdapter appsAdapter;
@@ -47,11 +47,17 @@ public class ListOfAppsOnDevice extends Fragment implements Observer {
         listOfAppsView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         PackageManager packageManager = getActivity().getPackageManager();
+
+        //Gets all the apps on the device.
         List<BlockedItem> items = collectAllApplicationsOnPhone(getActivity());
+
+        //Provides an adapter for the RecyclerView with all the apps.
         appsAdapter = new BlackListAdapter(packageManager, items);
         listOfAppsView.setAdapter(appsAdapter);
 
         mBlockAppsButton = v.findViewById(R.id.blacklistButtonBlock);
+
+        //Saves the blocked apps and changes the fragment.
         mBlockAppsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,29 +72,24 @@ public class ListOfAppsOnDevice extends Fragment implements Observer {
 
     @Override
     public void onDestroyView() {
-
         saveBlockedApps();
         super.onDestroyView();
     }
 
-
+    /**
+     * Updates the data of blocked apps.
+     */
     private void saveBlockedApps() {
         BlockedAppsManager.saveBlockedApps(getActivity(), appsAdapter.getCheckPackageNames());
     }
 
+    /**
+     * Replaces the main fragment layout on the activity with a new one.
+     * @param fragment the fragment which is replacing.
+     */
     private void openFragment(Fragment fragment) {
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.MainFrameLayout, fragment);
         transaction.commit();
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        appsAdapter.notifyDataSetChanged();
-
-        PackageManager packageManager = getActivity().getPackageManager();
-        List<BlockedItem> items = BlockedAppsManager.collectAllApplicationsOnPhone(getActivity());
-        appsAdapter = new BlackListAdapter(packageManager, items);
-        listOfAppsView.setAdapter(appsAdapter);
     }
 }

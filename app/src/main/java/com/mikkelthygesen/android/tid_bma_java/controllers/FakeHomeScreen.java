@@ -31,7 +31,6 @@ public class FakeHomeScreen extends AppCompatActivity {
     private ImageButton mImageButtonInstagram;
     private ConstraintLayout mConstraintLayout;
 
-    private ImageView notificationBtn;
     private String channelId = "channelId";
     private Integer notificationId = 1234;
 
@@ -44,7 +43,6 @@ public class FakeHomeScreen extends AppCompatActivity {
         mImageButtonFacebook = findViewById(R.id.imageButton_facebook);
         mImageButtonInstagram = findViewById(R.id.imageButton_instagram);
         mConstraintLayout = findViewById(R.id.fake_homescreen_constraint_layout);
-        notificationBtn = findViewById(R.id.notificationBtn);
 
         configureUI();
     }
@@ -65,12 +63,6 @@ public class FakeHomeScreen extends AppCompatActivity {
             }
         });
 
-        notificationBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showNotification();
-            }
-        });
     }
 
     private void showNotification(){
