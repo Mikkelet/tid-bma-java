@@ -27,9 +27,9 @@ a button. All applications can be checked.
 - Bottom slider to define social media (blocked application) time.
 - A button to start the defined settings.
 
-2a) The bottom slider offers the user to set an amount of time that the user would like to use on the application checked as a blocked application.
+2a) The top slider offers the user to set an amount of time that the user would like to use on the application checked as a blocked application.
 
-2b) The top slider offers the user to set an amount of time that the user would like to use on the exercise application.
+2b) The bottom slider offers the user to set an amount of time that the user would like to use on the exercise application.
 
 2c) The "Start" button enables the user to start the functionality of BlockMyApp with the settings set up by the user. 
 ## Troubleshooting
