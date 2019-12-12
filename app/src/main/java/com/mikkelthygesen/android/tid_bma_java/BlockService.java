@@ -16,7 +16,7 @@ public class BlockService extends Service {
 
             long startTime = System.currentTimeMillis();
             long time = startTime;
-            long endTime = startTime + Database.getinstance().getTimeLeftMilliseconds();
+            long endTime = startTime + Database.getinstance().getExerciseTime();
 
             while(time < endTime){
                 time = System.currentTimeMillis();

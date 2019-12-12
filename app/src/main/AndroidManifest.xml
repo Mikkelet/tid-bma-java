@@ -20,6 +20,7 @@
 
         <activity android:name=".ListOfAppsOnDevice"></activity>
         <service android:name = ".BlockService"/>
+        <service android:name=".ExerciseService" />
     </application>
 
 </manifest>

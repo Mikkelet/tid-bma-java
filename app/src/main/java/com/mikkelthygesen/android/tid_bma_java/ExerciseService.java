@@ -19,7 +19,7 @@ public class ExerciseService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         long startTime = System.currentTimeMillis();
         long time = startTime;
-        long endTime = startTime + Database.getinstance().getTimeLeftMilliseconds();
+        long endTime = startTime + Database.getinstance().getBrowseTime();
 
         while(time<endTime)
         {

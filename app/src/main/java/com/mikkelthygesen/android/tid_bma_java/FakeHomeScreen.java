@@ -25,6 +25,7 @@ import static com.mikkelthygesen.android.tid_bma_java.BlockedAppDB.collectAllBlo
 
 public class FakeHomeScreen extends AppCompatActivity {
 
+    private static final String TAG = "FakeHomeScreen";
     private ImageButton mImageButtonFacebook;
     private ImageButton mImageButtonInstagram;
     private ConstraintLayout mConstraintLayout;
@@ -136,5 +137,10 @@ public class FakeHomeScreen extends AppCompatActivity {
         }
         if (intent != null)
             startActivity(intent);
+        else if(db.getIsBlocking()){
+            Log.d(TAG, "please install "+db.getSelectedExerciseProviderName());
+            Toast.makeText(this, "Please install "+db.getSelectedExerciseProviderName(), Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

@@ -137,6 +137,4 @@ public class StartSession extends Fragment {
         Log.d("Start Session", "saveProvderAppsToSharedPrefs: ");
         sharedPref.edit().putString(Database.SharePrefs.EXERCISE_PROVIDER, Database.getinstance().getSelectedExerciseProviderName()).apply();
     }
-
-
 }

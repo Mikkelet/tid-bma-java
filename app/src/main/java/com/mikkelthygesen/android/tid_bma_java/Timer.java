@@ -18,9 +18,12 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.xw.repo.BubbleSeekBar;
+
+import java.util.List;
 
 
 /**
@@ -44,9 +47,9 @@ public class Timer extends Fragment {
     }
 
     public static Timer newInstance() {
-        
+
         Bundle args = new Bundle();
-        
+
         Timer fragment = new Timer();
         fragment.setArguments(args);
 
@@ -57,9 +60,22 @@ public class Timer extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_timer, container, false);
+
+        List<BlockedItem> tempList = BlockedAppDB.collectAllBlockedApplications(getActivity().getPackageManager(), getActivity());
         mStartSessionButtonActivateBlock = v.findViewById(R.id.StartSessionButtonActivateBlock);
+
+        if (tempList.size() > 0) {
+            mStartSessionButtonActivateBlock.setTextColor(Color.GREEN);
+        }
+        mStartSessionButtonActivateBlock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PackageManager packageManager = getContext().getPackageManager();
+                Intent intent = new Intent(getActivity(), FakeHomeScreen.class);
+                startActivity(intent);
+            }
+        });
 
         mStartSessionButtonActivateBlock.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,10 +85,10 @@ public class Timer extends Fragment {
                 startActivity(intent);
 
 
-                if(true)
+                if (true)
                     return;
                 Intent intent2 = packageManager.getLaunchIntentForPackage("com.duolingo");
-                if(intent == null) {
+                if (intent == null) {
                     intent = packageManager.getLaunchIntentForPackage("com.android.chrome");
                     Toast.makeText(getContext(), "Please install Duolingo", Toast.LENGTH_SHORT).show();
                 }
@@ -81,6 +97,7 @@ public class Timer extends Fragment {
                 startActivity(intent);
             }
         });
+
 
         arrowToStartSession = v.findViewById(R.id.ArrowToStartSession);
         arrowToStartSession.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +124,7 @@ public class Timer extends Fragment {
             public void getProgressOnActionUp(int progress, float progressFloat) {
                 // Save the progress whenever it is changed
                 progressExerciseSP(progress);
+                Database.getinstance().setExerciseTime(progress);
             }
 
             @Override
@@ -131,7 +149,7 @@ public class Timer extends Fragment {
             @Override
             public void getProgressOnActionUp(int progress, float progressFloat) {
                 progressBlockedAppsSP(progress);
-
+                Database.getinstance().setBrowseTime(progress);
             }
 
             @Override
@@ -143,40 +161,42 @@ public class Timer extends Fragment {
         return v;
     }
 
+
     // Here we save any progress for the exercise seekbar to the Shared Preferences
-    private void progressExerciseSP(int progress){
+    private void progressExerciseSP(int progress) {
         // get the shared preferences file "sp"
         SharedPreferences sharedPref = getActivity().getSharedPreferences("sp", Context.MODE_PRIVATE);
 
         // if it is null, just return
-        if(sharedPref == null) return;
+        if (sharedPref == null) return;
 
         // save the progress under the key "progress"
         sharedPref.edit().putInt("progress", progress).apply();
     }
 
     // Here we get the exercise seekbar progress from shared preferences
-    private void getExerciseProgress(){
+    private void getExerciseProgress() {
 
         SharedPreferences sharedPref = getActivity().getSharedPreferences("sp", Context.MODE_PRIVATE);
 
         // if null, return
-        if(sharedPref == null){
+        if (sharedPref == null) {
             return;
         }
 
         // set our progress field to whatever is gotten from the shared preferences
-        exerciseProgress = sharedPref.getInt("progress",1);
-        if(exerciseProgress > MAX_VALUE) exerciseProgress = MAX_VALUE;
+        exerciseProgress = sharedPref.getInt("progress", 1);
+        if (exerciseProgress > MAX_VALUE) exerciseProgress = MAX_VALUE;
+        Database.getinstance().setExerciseTime(exerciseProgress);
     }
 
     // Here we save any progress for the blocked App seekbar to the Shared Preferences
-    private void progressBlockedAppsSP(int progress){
+    private void progressBlockedAppsSP(int progress) {
         // get the shared preferences file "sp"
         SharedPreferences sharedPref = getActivity().getSharedPreferences("sp", Context.MODE_PRIVATE);
 
         // if it is null, just return
-        if(sharedPref == null) return;
+        if (sharedPref == null) return;
 
         // save the progress under the key "blocked Apps progress"
         sharedPref.edit().putInt("blockedAppsProgress", progress).apply();
@@ -184,21 +204,22 @@ public class Timer extends Fragment {
 
 
     // Here we get the blockedApps progress from shared preferences
-    private void getBlockedAppsProgress(){
+    private void getBlockedAppsProgress() {
 
         SharedPreferences sharedPref = getActivity().getSharedPreferences("sp", Context.MODE_PRIVATE);
 
         // if null, return
-        if(sharedPref == null){
+        if (sharedPref == null) {
             return;
         }
 
         // set our progress field to whatever is gotten from the shared preferences
-        blockedAppsProgress = sharedPref.getInt("blockedAppsProgress",1);
-        if(blockedAppsProgress > MAX_VALUE) blockedAppsProgress = MAX_VALUE;
+        blockedAppsProgress = sharedPref.getInt("blockedAppsProgress", 1);
+        if (blockedAppsProgress > MAX_VALUE) blockedAppsProgress = MAX_VALUE;
+        Database.getinstance().setBrowseTime(blockedAppsProgress);
     }
 
-    private void print(String mesg){
+    private void print(String mesg) {
         Log.d("Timer", mesg);
     }
 
